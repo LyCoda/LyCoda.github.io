@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Project case study from Nate Chu's biomedical engineering portfolio.">
+    <meta name="theme-color" content="#050807">
+    <title>Project | Nate Chu's Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="../style.css">
+  </head>
+  <body class="project-detail-page" data-project-slug="redcap-feedback-workflow">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header project-detail-header" aria-label="Project navigation">
+      <a class="brand ecg-home" href="../index.html#top" aria-label="Back to home">
+        <span class="ecg-home-icon" aria-hidden="true">
+          <svg viewBox="0 0 120 32" focusable="false">
+            <path d="M2 16H24L31 16L37 7L46 26L55 16H72L79 12L86 20L94 16H118"></path>
+          </svg>
+        </span>
+        <span class="brand-lockup">
+          <span class="brand-text">Nate Chu</span>
+          <span class="brand-sub">Biomedical Engineering</span>
+        </span>
+      </a>
+      <nav class="site-nav" aria-label="Project links">
+        <a href="../index.html#projects"><span aria-hidden="true">03</span>Projects</a>
+        <a href="../index.html#about"><span aria-hidden="true">01</span>About</a>
+        <a href="../index.html#contact"><span aria-hidden="true">05</span>Contact</a>
+      </nav>
+    </header>
+
+    <main class="project-detail-main" id="main">
+      <section class="case-hero section-reveal">
+        <a class="case-back-link" href="../index.html#projects">Back to Projects</a>
+        <p class="project-counter" data-project-counter></p>
+        <h1 data-project-title></h1>
+        <p class="project-status" data-project-status></p>
+        <figure class="case-hero-visual">
+          <img data-project-image src="" alt="">
+        </figure>
+      </section>
+
+      <section class="case-summary section-reveal" aria-label="Project summary">
+        <p class="case-intro" data-project-intro></p>
+        <dl class="case-meta-grid">
+          <div>
+            <dt>Description</dt>
+            <dd data-project-description></dd>
+          </div>
+          <div>
+            <dt>Role</dt>
+            <dd data-project-role></dd>
+          </div>
+          <div>
+            <dt>Focus</dt>
+            <dd data-project-focus></dd>
+          </div>
+          <div>
+            <dt>Tools</dt>
+            <dd data-project-tools></dd>
+          </div>
+          <div>
+            <dt>Status / Outcome</dt>
+            <dd data-project-outcome></dd>
+          </div>
+        </dl>
+      </section>
+
+      <div class="case-study-flow" data-project-sections></div>
+
+      <section class="case-next section-reveal">
+        <a data-next-project href="#">
+          <span></span>
+          <strong></strong>
+        </a>
+      </section>
+    </main>
+
+    <footer class="site-footer project-detail-footer">
+      <p>© 2026 Nate Chu · Biomedical Engineering Portfolio</p>
+      <a href="../index.html#projects">Projects index</a>
+    </footer>
+
+    <script src="../project-data.js"></script>
+    <script src="../project-page.js"></script>
+  </body>
+</html>

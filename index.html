@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Biomedical engineering portfolio of Nate Chu, focused on biosignals, medical robotics, AI, data analysis, medical devices, and medtech innovation."
+    >
+    <meta name="theme-color" content="#050807">
+    <title>Nate Chu | Biomedical Engineering Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" aria-label="Primary navigation">
+      <a class="brand ecg-home" href="#top" aria-label="Back to home">
+        <span class="ecg-home-icon" aria-hidden="true">
+          <svg viewBox="0 0 120 32" focusable="false">
+            <path d="M2 16H24L31 16L37 7L46 26L55 16H72L79 12L86 20L94 16H118"></path>
+          </svg>
+        </span>
+        <span class="brand-lockup">
+          <span class="brand-text">Nate Chu</span>
+          <span class="brand-sub">Biomedical Engineering</span>
+        </span>
+      </a>
+
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="#about"><span aria-hidden="true">01</span>About</a>
+        <a href="#academics"><span aria-hidden="true">02</span>Academics</a>
+        <a href="#projects"><span aria-hidden="true">03</span>Projects</a>
+        <a href="#experience"><span aria-hidden="true">04</span>Experience</a>
+        <a href="#contact"><span aria-hidden="true">05</span>Contact</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero-atmosphere" aria-hidden="true"></div>
+
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="hero-id">Biomedical Engineer · Biosignals · Robotics · AI</p>
+            <h1 id="hero-title">Nate Chu</h1>
+            <p class="hero-tagline">
+              I work where engineering meets the human body, translating
+              <strong>physiological signals, medical robotics, and AI</strong> into
+              technologies that support real clinical outcomes.
+            </p>
+
+            <dl class="hero-vitals" aria-label="Current status">
+              <div>
+                <dt>Currently</dt>
+                <dd>MSc Medical Robotics &amp; AI, UCL</dd>
+              </div>
+              <div>
+                <dt>Previously</dt>
+                <dd>BEng Biomedical Engineering, City St George's University</dd>
+              </div>
+              <div>
+                <dt>Based in</dt>
+                <dd>London, United Kingdom / Hong Kong, China</dd>
+              </div>
+            </dl>
+
+            <div class="hero-actions">
+              <a class="button button-primary" href="#projects">View Projects</a>
+              <a class="button button-secondary" href="#contact">Get in Touch</a>
+            </div>
+          </div>
+
+          <figure class="portrait-stage">
+            <div class="portrait-frame" data-reveal-shell>
+              <!-- Hero image paths: replace these files later to update the reveal pair. -->
+              <img
+                class="portrait-layer portrait-xray"
+                src="images/hero-xray.png"
+                alt="Grayscale skeletal X-ray portrait standing on a dark street"
+                width="1086"
+                height="1449"
+              >
+              <img
+                class="portrait-layer portrait-color"
+                src="images/hero-original.png"
+                alt=""
+                width="1024"
+                height="1536"
+                aria-hidden="true"
+              >
+
+              <!-- ECG video path: visible only in the X-ray state over the sky area. -->
+              <video class="portrait-ecg-video" autoplay muted loop playsinline preload="metadata">
+                <source src="videos/ecg-monitor.mp4" type="video/mp4">
+                <source src="videos/ecg-monitor.mov" type="video/quicktime">
+              </video>
+
+              <span class="scan-gloss" aria-hidden="true"></span>
+              <span class="portrait-reticle" aria-hidden="true"></span>
+
+              <button
+                class="reveal-hit-area"
+                data-reveal-zone
+                type="button"
+                aria-label="Reveal the colour portrait scan"
+                aria-pressed="false"
+              ></button>
+            </div>
+
+            <figcaption class="portrait-readout">
+              <span class="readout-label">
+                <span class="readout-dot" aria-hidden="true"></span>
+                Scan 01 / Skeletal Composite
+              </span>
+              <span class="readout-hint">Hover / tap to reveal</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <svg class="hero-ecg-divider" viewBox="0 0 1440 44" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 26 H560 L580 26 590 10 602 40 614 18 624 26 H900 L912 22 922 30 932 26 H1440"></path>
+        </svg>
+
+        <a class="scroll-cue" href="#about" aria-label="Scroll to about section">
+          <span aria-hidden="true"></span>
+          Scroll
+        </a>
+      </section>
+
+      <section class="about-section section-reveal" id="about" aria-labelledby="about-title">
+        <p class="section-kicker"><span class="kicker-num">01</span>About</p>
+
+        <div class="about-layout">
+          <div class="about-statement-wrap">
+            <!-- About statement: edit this sentence and highlighted span to adjust the section theme. -->
+            <h2 class="about-statement" id="about-title">
+              The intersection of engineering and healthcare is where we
+              <span class="statement-highlight">turn knowledge into miracles.</span>
+            </h2>
+          </div>
+
+          <div class="about-content">
+            <div class="about-copy">
+              <!-- About Me copy: replace these paragraphs with updated biography text later. -->
+              <p>
+                Hi, I'm Nate, a biomedical engineer from Hong Kong who has spent most of his
+                academic journey in the UK.
+              </p>
+              <p>
+                I graduated with First Class Honours in Biomedical Engineering from City St George's,
+                University of London, where I built a strong technical foundation in signal
+                processing, microcontrollers, biomedical instrumentation, medical physics, and
+                medical device development. These experiences shaped my interest in how engineering
+                can be used to understand the human body, improve clinical workflows, and develop
+                technologies that support better patient outcomes.
+              </p>
+              <p>
+                I am currently pursuing an MSc in Medical Robotics and Artificial Intelligence at
+                UCL, focusing on the intersection of biosignals, medical devices, data analysis,
+                robotics, and medtech innovation.
+              </p>
+              <p>
+                My work sits between technical development and healthcare translation. I am
+                interested in understanding physiological signals, developing engineering systems,
+                and communicating how medical technologies can create real-world clinical and
+                commercial value.
+              </p>
+            </div>
+
+            <ul class="keyword-cluster" aria-label="Focus keywords">
+              <!-- Keywords: edit these labels as focus areas evolve. -->
+              <li>Biosignals</li>
+              <li>Robotics</li>
+              <li>Machine Learning &amp; AI</li>
+              <li>Medical Devices</li>
+              <li>Commercial Translation</li>
+              <li>Regulation Compliance</li>
+              <li>Surgical Workflow</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="academics-section section-reveal" id="academics" aria-labelledby="academics-title">
+        <header class="section-head">
+          <p class="section-kicker"><span class="kicker-num">02</span>Academics</p>
+          <h2 class="sr-only" id="academics-title">Academics</h2>
+          <p class="section-lede">
+            Postgraduate medical robotics and AI, built on a first-class biomedical
+            engineering foundation.
+          </p>
+        </header>
+
+        <ol class="education-list">
+          <!-- Education entry: update logo, duration, classification, and focus areas here. -->
+          <li class="education-entry">
+            <p class="education-index">
+              <span class="index-num">02.1</span>
+              Postgraduate
+            </p>
+
+            <div class="education-main">
+              <h3>University College London</h3>
+              <p class="education-course">MSc Medical Robotics and Artificial Intelligence</p>
+              <p class="education-tags" aria-label="Postgraduate focus areas">
+                Medical Robotics / Artificial Intelligence / Biosignals / Data Analysis / Medical Devices
+              </p>
+            </div>
+
+            <div class="education-aside">
+              <span class="education-logo">
+                <img src="images/ucl-logo.jpg" alt="University College London logo" width="645" height="363">
+              </span>
+              <dl class="education-meta">
+                <div>
+                  <dt>Duration</dt>
+                  <dd>Sep 2025 – Sep 2026</dd>
+                </div>
+                <div>
+                  <dt>Classification</dt>
+                  <dd class="education-grade">Expected Merit</dd>
+                </div>
+              </dl>
+            </div>
+          </li>
+
+          <!-- Education entry: update logo, duration, classification, and focus areas here. -->
+          <li class="education-entry">
+            <p class="education-index">
+              <span class="index-num">02.2</span>
+              Undergraduate
+            </p>
+
+            <div class="education-main">
+              <h3>City St George’s, University of London</h3>
+              <p class="education-course">BEng Biomedical Engineering</p>
+              <p class="education-tags" aria-label="Undergraduate focus areas">
+                Signal Processing / Biomedical Instrumentation / Medical Physics / Microcontrollers / Medical Device Development
+              </p>
+            </div>
+
+            <div class="education-aside">
+              <span class="education-logo">
+                <img
+                  src="images/city-st-georges-logo.png"
+                  alt="City St George's, University of London logo"
+                  width="554"
+                  height="554"
+                >
+              </span>
+              <dl class="education-meta">
+                <div>
+                  <dt>Duration</dt>
+                  <dd>Sep 2022 – Jun 2025</dd>
+                </div>
+                <div>
+                  <dt>Classification</dt>
+                  <dd class="education-grade">First Class Honours</dd>
+                </div>
+              </dl>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="projects section-reveal" id="projects" aria-labelledby="projects-title">
+        <header class="section-head projects-header">
+          <p class="section-kicker"><span class="kicker-num">03</span>Projects</p>
+          <h2 id="projects-title">Biomedical systems, signal intelligence, and medtech workflows.</h2>
+        </header>
+
+        <div class="project-scroll-showcase" data-project-carousel>
+          <div class="project-sticky">
+            <figure class="project-carousel-visual" data-active-project-visual>
+              <img data-active-project-image src="images/projects/fnirs.png" alt="" width="428" height="319">
+            </figure>
+
+            <article class="project-carousel-content" aria-live="polite">
+              <div class="project-headline">
+                <p class="project-counter" data-active-project-counter>01 / 04</p>
+                <p class="project-status" data-active-project-status>In progress</p>
+              </div>
+              <h3 data-active-project-title>fNIRS Classification for Complex Walking Tasks</h3>
+              <p class="project-description" data-active-project-description>
+                Machine learning pipeline for classifying neurotypical and neurodivergent
+                participants using fNIRS-derived features from complex walking tasks.
+              </p>
+
+              <dl class="project-meta">
+                <div>
+                  <dt>Role</dt>
+                  <dd data-active-project-role>MSc Dissertation Researcher</dd>
+                </div>
+                <div>
+                  <dt>Focus</dt>
+                  <dd data-active-project-focus>
+                    Biomedical signal analysis, feature engineering, classifier evaluation
+                  </dd>
+                </div>
+                <div>
+                  <dt>Tools</dt>
+                  <dd data-active-project-tools>
+                    Python, scikit-learn, SPM-derived features, cross-validation
+                  </dd>
+                </div>
+                <div>
+                  <dt>Outcome</dt>
+                  <dd data-active-project-outcome>
+                    Built a leakage-safe classification workflow using balanced metrics and
+                    participant-level evaluation for small-sample biomedical data. Currently in
+                    progress.
+                  </dd>
+                </div>
+              </dl>
+
+              <a class="project-explore-link" data-active-project-link href="projects/fnirs-classification.html">
+                Explore Project
+              </a>
+
+              <div class="project-step-indicators" data-project-indicators aria-label="Project selector"></div>
+            </article>
+          </div>
+        </div>
+
+        <div class="project-mobile-list" data-project-mobile-list>
+          <!-- Mobile cards are rendered from project-data.js for reduced-motion and small-screen layouts. -->
+        </div>
+      </section>
+
+      <section class="experience-section section-reveal" id="experience" aria-labelledby="experience-title">
+        <header class="section-head">
+          <p class="section-kicker"><span class="kicker-num">04</span>Experience</p>
+          <h2 class="sr-only" id="experience-title">Experience</h2>
+          <p class="section-lede">
+            Practical industry experience across medical technology, operations, and commercial
+            strategy, focused on workflow improvement, system delivery, and measurable contribution.
+          </p>
+        </header>
+
+        <div class="experience-grid">
+          <!-- Experience: KOLN 3D (logo at images/companies/koln3d.png) -->
+          <article class="experience-card">
+            <div class="experience-motif motif-grid" aria-hidden="true"></div>
+
+            <header class="experience-head">
+              <span class="experience-logo" data-monogram="K3D">
+                <img src="images/companies/koln3d.png" alt="KOLN 3D logo" loading="lazy">
+              </span>
+              <div>
+                <p class="experience-company"><span class="experience-index">EXP 01</span>KOLN 3D</p>
+                <p class="experience-meta-line">Summer Intern · Jun 2024 – Aug 2024 · Hong Kong / Medical Technology</p>
+              </div>
+            </header>
+
+            <div class="experience-body">
+              <h3>Clinical Follow-Up &amp; Surgical Outcome Data System</h3>
+              <p class="experience-desc">
+                Built automated clinical and production workflows for a medical metal 3D-printing
+                company, supporting post-operative implant feedback collection, patient/surgeon
+                outcome tracking, and production planning.
+              </p>
+
+              <p class="experience-list-label">Key deliverables</p>
+              <ul class="experience-list">
+                <li>Developed a REDCap-based automated follow-up workflow.</li>
+                <li>Automated a production Gantt chart using Excel VBA and Power Automate.</li>
+                <li>Created an internal guide on how to create a CNC mould to allow 6 DOF for CNC drilling.</li>
+                <li>Designed 3D-printed display models for commercial use.</li>
+              </ul>
+
+              <ul class="experience-tags" aria-label="Skills and tools">
+                <li>Medical Devices</li>
+                <li>REDCap</li>
+                <li>Clinical Data</li>
+                <li>Automation</li>
+                <li>Excel VBA</li>
+                <li>Power Automate</li>
+                <li>3D Printing</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Experience: Golden Cedar Ltd (logo at images/companies/golden-cedar.png) -->
+          <article class="experience-card">
+            <div class="experience-motif motif-flow" aria-hidden="true"></div>
+
+            <header class="experience-head">
+              <span class="experience-logo" data-monogram="GC">
+                <img src="images/companies/golden-cedar.png" alt="Golden Cedar Ltd logo" loading="lazy">
+              </span>
+              <div>
+                <p class="experience-company"><span class="experience-index">EXP 02</span>Golden Cedar Ltd</p>
+                <p class="experience-meta-line">Summer Intern · Jun 2023 – Aug 2023 · Hong Kong / Logistics &amp; Operations</p>
+              </div>
+            </header>
+
+            <div class="experience-body">
+              <h3>Supply Chain Coordination &amp; Order Fulfilment</h3>
+              <p class="experience-desc">
+                Supported end-to-end order fulfilment and coordinated supply chain operations across
+                quality control, logistics, invoicing, and international customer delivery.
+              </p>
+
+              <p class="experience-list-label">Key deliverables</p>
+              <ul class="experience-list">
+                <li>Tailored product selection depending on enquiry.</li>
+                <li>Conducted quality control for textile samples being delivered to clients.</li>
+                <li>Supported logistics and invoice handling.</li>
+                <li>Provided customer delivery support for international brands.</li>
+                <li>Gained operational exposure to major retail supply contracts.</li>
+              </ul>
+
+              <ul class="experience-tags" aria-label="Skills and tools">
+                <li>Supply Chain</li>
+                <li>Operations</li>
+                <li>Logistics</li>
+                <li>Client Fulfilment</li>
+                <li>Commercial Coordination</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Experience: Audrey Market (logo at images/companies/audrey-market.jpg,
+               gold-on-dark artwork, so this chip uses the dark variant). -->
+          <article class="experience-card">
+            <div class="experience-motif motif-dots" aria-hidden="true"></div>
+
+            <header class="experience-head">
+              <span class="experience-logo experience-logo-dark" data-monogram="AM">
+                <img src="images/companies/audrey-market.jpg" alt="Audrey Market logo" loading="lazy">
+              </span>
+              <div>
+                <p class="experience-company"><span class="experience-index">EXP 03</span>Audrey Market</p>
+                <p class="experience-meta-line">Marketing Intern · Jun 2022 – Aug 2022 · Hong Kong / Retail &amp; Commercial Strategy</p>
+              </div>
+            </header>
+
+            <div class="experience-body">
+              <h3>Retail Campaigns, Inventory Strategy &amp; Sales Growth</h3>
+              <p class="experience-desc">
+                Planned e-commerce marketing campaigns, supported merchandise strategy, managed
+                inventory clearance, and contributed to measurable improvements in sales and
+                customer engagement.
+              </p>
+
+              <p class="experience-list-label">Key deliverables</p>
+              <ul class="experience-list">
+                <li>Planned Meta advertising campaigns.</li>
+                <li>Created AI-assisted visual assets.</li>
+                <li>Supported tactical stock clearance strategy.</li>
+                <li>Assisted with physical retail store clearance support.</li>
+                <li>Contributed to customer engagement and sales growth.</li>
+              </ul>
+
+              <ul class="experience-tags" aria-label="Skills and tools">
+                <li>Marketing</li>
+                <li>Retail Strategy</li>
+                <li>Meta Ads</li>
+                <li>Inventory Management</li>
+                <li>Sales Growth</li>
+                <li>Customer Engagement</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="contact section-reveal" id="contact" aria-labelledby="contact-title">
+        <p class="section-kicker"><span class="kicker-num">05</span>Contact / CV</p>
+        <h2 id="contact-title">Open to biomedical engineering, robotics, and medtech innovation work.</h2>
+        <p class="contact-lede">
+          If you are hiring for biosignals, medical robotics, AI, or medtech innovation roles,
+          or simply want to talk about research, I'd like to hear from you.
+        </p>
+
+        <div class="contact-actions">
+          <a
+            class="button button-primary email-link"
+            href="mailto:Natechu65@gmail.com"
+            aria-label="Email Natechu65@gmail.com"
+            data-email="Natechu65@gmail.com"
+            title="Natechu65@gmail.com"
+          >
+            Email Me
+          </a>
+          <a class="button button-secondary" href="Long-Yin-Chu-CV.pdf" download="Long-Yin-Chu-CV.pdf">Download CV</a>
+        </div>
+
+        <ul class="contact-channels" aria-label="Contact links">
+          <li>
+            <a href="https://www.linkedin.com/in/long-yin-chu-92577a226/" target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
+          </li>
+          <li><a href="https://github.com/LyCoda" target="_blank" rel="noreferrer">GitHub</a></li>
+          <li><a href="#projects">View Projects</a></li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>© 2026 Nate Chu · Biomedical Engineering Portfolio</p>
+      <a href="#top">Back to top ↑</a>
+      <p class="footer-disclaimer">
+        This website's creation was assisted with generative AI and published on
+        <a href="https://github.com/LyCoda" target="_blank" rel="noreferrer">GitHub</a>.
+      </p>
+    </footer>
+
+    <script src="project-data.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
