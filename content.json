@@ -1,0 +1,562 @@
+[
+  {
+    "slug": "fnirs-classification",
+    "title": "What can walking tell us about the brain?",
+    "name": "fNIRS classification during complex walking",
+    "category": "Biosignals & machine learning",
+    "status": "Dissertation submitted · 2026",
+    "role": "MSc dissertation researcher",
+    "institution": "University College London",
+    "tools": "Python, scikit-learn, SciPy, pandas, pytest, SPM outputs",
+    "image": "images/projects/fnirs.png",
+    "alt": "Experimental walking route with lighting and obstacle conditions",
+    "summary": "A participant-level machine-learning study of prefrontal responses under different lighting and obstacle conditions, with careful validation of what a small dataset can support.",
+    "takeaway": "I built and tested a complete analysis pipeline. The best observed model reached 61.9% balanced accuracy, but selection-adjusted testing did not establish performance above chance.",
+    "sections": [
+      {
+        "id": "question",
+        "title": "The research question",
+        "paragraphs": [
+          "Could prefrontal brain responses recorded during walking distinguish autistic and neurotypical adults? The question moved beyond differences between group averages to ask whether those responses could classify a previously unseen participant.",
+          "I analysed an existing UCL PEARL walking-and-lighting dataset. The original experiment varied blue versus yellow illumination, dim versus bright light, and the presence of obstacles. Functional near-infrared spectroscopy (fNIRS) provided a portable measure of changes in cortical haemoglobin during these tasks.",
+          "My work began with the inherited, first-level SPM outputs. I did not collect the original recordings, repeat raw-signal preprocessing, or refit the original general linear model. My contribution was the secondary analysis: data validation, feature construction, classification, statistical testing and interpretation."
+        ]
+      },
+      {
+        "id": "data",
+        "title": "From SPM files to comparable features",
+        "paragraphs": [
+          "A file being readable did not mean it was usable. I checked the design matrices, regressor names and stored beta estimates for compatible dimensions, finite values and the required task conditions. Four of the 36 participants had a required task column containing only zeros and were excluded before model fitting.",
+          "The final analytical cohort contained 32 participants: 19 neurotypical and 13 autistic. I pooled condition-specific oxygenated-haemoglobin beta estimates from 22 channels into seven predefined prefrontal regions, keeping the inputs compact and anatomically interpretable."
+        ],
+        "table": {
+          "caption": "Four feature representations, each evaluated with three linear classifiers",
+          "headers": ["Representation", "Features", "Purpose"],
+          "rows": [
+            [
+              "Task-context ROI",
+              "21",
+              "Broad averages for yellow walking, blue walking and non-walking events"
+            ],
+            [
+              "Full-contrast ROI",
+              "28",
+              "Four condition differences across seven regions"
+            ],
+            [
+              "Contrast summary",
+              "32",
+              "Global, hemispheric and regional-family summaries of the four contrasts"
+            ],
+            [
+              "Blue–yellow summary",
+              "8",
+              "A focused representation of the lighting-spectrum contrast"
+            ]
+          ]
+        },
+        "after": [
+          "The four contrasts were blue minus yellow, dim minus bright, obstacle minus no obstacle, and non-walking minus walking. They were constructed without group labels. Expressing differences within each participant also reduced the emphasis on broad participant-level response offsets."
+        ]
+      },
+      {
+        "id": "validation",
+        "title": "Validation was part of the design",
+        "paragraphs": [
+          "I compared shrinkage linear discriminant analysis (LDA), L2-regularised logistic regression and a linear support vector machine. With almost as many predictors as training participants, regularised linear models offered a more defensible starting point than a highly flexible classifier.",
+          "The outer validation loop used four stratified folds repeated 25 times. Each of the 100 outer evaluations held out participants entirely. Three-fold inner validation selected hyperparameters using only the outer training set. Standardisation, optional PCA and questionnaire imputation stayed inside the fitted pipelines."
+        ],
+        "steps": [
+          [
+            "Validate",
+            "Check the SPM design and required conditions before inclusion."
+          ],
+          [
+            "Represent",
+            "Aggregate channels into regions and construct fixed feature sets."
+          ],
+          [
+            "Tune",
+            "Fit preprocessing and choose hyperparameters within training folds."
+          ],
+          [
+            "Evaluate",
+            "Score untouched participants using the same splits for all models."
+          ],
+          [
+            "Challenge",
+            "Repeat the full comparison with shuffled participant labels."
+          ]
+        ],
+        "after": [
+          "Comparing 12 configurations creates another opportunity for optimism: one configuration may look best by chance. I ran 1,000 participant-label permutations, repeating the entire nested analysis and retaining the best score across all 12 configurations for each permutation. This produced a selection-aware reference distribution."
+        ]
+      },
+      {
+        "id": "results",
+        "title": "The result, including its limits",
+        "paragraphs": [
+          "Contrast-based representations performed better descriptively than broad task-context averages. Full-contrast LDA produced the strongest observed result, but the error pattern was uneven: neurotypical specificity was high and autistic recall was low."
+        ],
+        "table": {
+          "caption": "Full-contrast LDA performance and selection-adjusted inference",
+          "headers": ["Measure", "Result"],
+          "rows": [
+            ["Balanced accuracy", "0.619"],
+            ["ROC-AUC", "0.696"],
+            ["Neurotypical specificity", "0.890"],
+            ["Autistic recall", "0.348"],
+            ["Matthews correlation coefficient", "0.286"],
+            ["Selection-adjusted permutation p-value", "0.236"]
+          ]
+        },
+        "figure": {
+          "src": "images/projects/fnirs-results.png",
+          "alt": "Dissertation Figure 4 comparing balanced accuracy, ROC-AUC and MCC across twelve model configurations",
+          "caption": "Original dissertation Figure 4. Contrast features improved descriptive performance, but the selected result remained statistically uncertain."
+        },
+        "after": [
+          "The configuration-specific p-value for full-contrast LDA was 0.0539. After selection across the 12 configurations, it was 0.2358: 235 of 1,000 shuffled-label runs achieved a best score at least as high as the observed result. The study therefore did not establish a reliable classifier or a clinically useful diagnostic tool.",
+          "The repeated evaluations reused the same 32 people. They helped characterise sensitivity to data splits; they did not turn a small cohort into 100 independent validation samples."
+        ]
+      },
+      {
+        "id": "extensions",
+        "title": "Looking beyond a single score",
+        "paragraphs": [
+          "I examined participant-level prediction stability to distinguish people who were repeatedly misclassified from people whose predictions changed across splits. Errors were concentrated among a subset of autistic participants, making the overall score an incomplete description of model behaviour.",
+          "Adding the Sensory Perception Quotient (SPQ) to the full-contrast features produced small, classifier-dependent changes. It mainly changed the balance between recall and specificity rather than adding a consistent predictive benefit.",
+          "PCA provided a useful counterexample to the assumption that preserving variance preserves useful information. It retained a median of five components and 95.2% of total feature variance, yet balanced accuracy fell from 0.6185 to 0.5881. I projected PCA-space classifier coefficients back into the original standardised feature space and numerically checked their reconstructed decision scores."
+        ]
+      },
+      {
+        "id": "engineering",
+        "title": "Making the analysis reproducible",
+        "paragraphs": [
+          "The final dissertation reports 87 passing automated tests across seven modules, with two expected questionnaire-merge warnings. Tests covered SPM validation, synthetic ROI calculations, contrast directions, invalid feature tables, nested-validation outputs, participant summaries, questionnaire matching and permutation statistics.",
+          "I documented random seeds, software versions, analysis scripts and aggregate outputs. The result is a reproducible research workflow whose assumptions and failure cases can be inspected, even when the scientific answer is inconclusive.",
+          "The next useful step is stronger evidence: a larger independent cohort, richer metadata and external validation. More model searching on the same small sample would not resolve the underlying uncertainty."
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "label": "Read the full dissertation",
+        "href": "../documents/fnirs-dissertation.pdf",
+        "detail": "PDF · 64 pages"
+      },
+      {
+        "label": "Explore the analysis code",
+        "href": "https://github.com/LyCoda/fnirs-walking-autism-classification",
+        "detail": "Code, aggregate results and reproducibility notes"
+      }
+    ]
+  },
+  {
+    "slug": "bone-healing-monitoring-device",
+    "title": "OsteoTrack: a path from device concept to clinical use",
+    "name": "OsteoTrack bone-healing monitoring",
+    "category": "Medical devices & translation",
+    "status": "Group concept project · 2026",
+    "role": "Communications & Fundraising Officer",
+    "institution": "UCL · Group D",
+    "tools": "Clinical literature, competitor research, IP research, commercial planning, launch-page design",
+    "image": "images/projects/bone-healing.png",
+    "alt": "OsteoTrack non-invasive bone-healing monitoring concept",
+    "summary": "A non-invasive fracture-monitoring proposal, connecting vibration sensing with a realistic plan for evidence, adoption and funding.",
+    "takeaway": "My contribution connected the device's technical premise to its identity, clinical positioning and funding pathway. OsteoTrack remained an academic concept, with validation and deployment proposed as future stages.",
+    "sections": [
+      {
+        "id": "context",
+        "title": "The follow-up problem",
+        "paragraphs": [
+          "Our group explored how a non-invasive device might support follow-up after a fracture. The clinical motivation was to observe healing over time and identify patients who might need further assessment, without treating every follow-up as an isolated measurement.",
+          "We compared bone-assessment approaches including DEXA, CT, MRI, ultrasound, implant-based sensing and vibration-based monitoring. The concept we developed used an external vibration source and accelerometers to track changes in the limb's mechanical response.",
+          "The intended setting was a community or clinical point of care. A clinician would review longitudinal measurements and decide whether a patient needed fracture-clinic review or imaging. This was a proposal for decision support, with clinical effectiveness still to be established."
+        ]
+      },
+      {
+        "id": "concept",
+        "title": "How the proposed device worked",
+        "paragraphs": [
+          "The team's mechanical concept combined an inflatable cuff, a vibration motor with a contact disc, and two accelerometers on adjustable mounting strips. The adjustable geometry was intended to accommodate different patients and maintain consistent contact.",
+          "A controlled frequency sweep would produce a measured response spectrum. Repeated visits would build a patient-specific trajectory. The proposed software would compare this trajectory with labelled clinical data to support assessment of non-union risk."
+        ],
+        "figure": {
+          "src": "images/projects/osteotrack-assembly.png",
+          "alt": "Two annotated CAD views of the proposed cuff assembly, with and without the motor housing",
+          "caption": "Group D concept drawings: adjustable accelerometer positions, cuff attachment and the motor/contact-disc assembly. This is a proposed design, not a clinically validated device."
+        },
+        "steps": [
+          ["Position", "Fit the cuff and align the sensing points."],
+          [
+            "Measure",
+            "Apply a controlled vibration sweep and record the response."
+          ],
+          ["Compare", "Track the spectrum against earlier visits."],
+          ["Review", "Present the trend to a clinician for assessment."]
+        ],
+        "after": [
+          "The group report explored cross-spectrum features and a supervised model trained on future clinical-trial data. Patient-labelled training data, repeatability testing and clinical validation were dependencies, rather than completed capabilities."
+        ]
+      },
+      {
+        "id": "contribution",
+        "title": "My contribution",
+        "paragraphs": [
+          "As Communications and Fundraising Officer, I initially expected to concentrate on presentation and funding sources. The work quickly became more technical: explaining a medical-device venture credibly required understanding its mechanism, evidence and place in the clinical workflow."
+        ],
+        "subsections": [
+          {
+            "title": "Identity and digital presence",
+            "text": "I worked with the Chief Designer and Market Researcher on the OsteoTrack logo, brand identity and launch page. The aim was to present an orthopaedic monitoring platform in a professional, recognisable way, consistent with its early stage of development."
+          },
+          {
+            "title": "Clinical and commercial positioning",
+            "text": "I helped distinguish the person benefiting from the device from the organisation buying it. Patients were the intended beneficiaries, while clinicians, fracture-clinic leads and procurement teams would influence adoption. That distinction shaped the communication strategy."
+          },
+          {
+            "title": "Intellectual property and funding",
+            "text": "I researched relevant intellectual property, early-stage startup planning and fundraising routes. A preliminary patent review raised questions for a future freedom-to-operate assessment; it did not establish freedom to operate or secure patent protection."
+          }
+        ]
+      },
+      {
+        "id": "strategy",
+        "title": "A staged route to adoption",
+        "paragraphs": [
+          "I helped frame the venture around milestones that could reduce technical and commercial uncertainty. Early communication would support prototype refinement and pilot engagement, then grow with the quality of the clinical evidence.",
+          "The group considered private orthopaedic clinics as an initial route for feedback, with NHS adoption as a longer-term objective. Conference presentations, professional engagement and clinical white papers were proposed channels for reaching the people who would evaluate the device."
+        ],
+        "table": {
+          "caption": "The proposed funding sequence",
+          "headers": ["Stage", "Evidence to establish", "Funding direction"],
+          "rows": [
+            [
+              "Feasibility",
+              "Prototype refinement, IP review and initial repeatability",
+              "University and early translational support"
+            ],
+            [
+              "Proof of concept",
+              "Technical evidence and credible clinical partners",
+              "Non-dilutive health-innovation grants"
+            ],
+            [
+              "Pilot readiness",
+              "Quality processes and a clinical validation plan",
+              "Larger translational programmes"
+            ],
+            [
+              "Commercial development",
+              "Stronger evidence of utility and adoption",
+              "Seed investment or debt where appropriate"
+            ]
+          ]
+        },
+        "after": [
+          "The report explored a per-patient pricing model and longer-term financial projections. These were planning assumptions, not sales, funding secured or demonstrated NHS savings. I treated grants and accelerators as routes to investigate against the venture's stage, rather than promises of available capital."
+        ]
+      },
+      {
+        "id": "tradeoffs",
+        "title": "A technical idea still has to fit the brief",
+        "paragraphs": [
+          "I questioned how readily vibration-based evidence from modelled bones would translate into measurements in patients. During competitor research, I explored whether a resonance approach used for implants could inform long-bone assessment, potentially alongside fixation plates.",
+          "The group decided that an implant-linked direction would move away from our non-invasive objective and complicate the development pathway. The research still helped us understand the competitive landscape and sharpen the boundaries of the concept.",
+          "The team also considered electrical safety, data handling, software governance and clinical investigation requirements. Those topics informed the development plan; they were not claims that the concept had received regulatory approval."
+        ]
+      },
+      {
+        "id": "reflection",
+        "title": "What I took from the project",
+        "paragraphs": [
+          "Around fifteen weekly meetings, with clear goals for the next week, helped a multidisciplinary team maintain progress. My own role depended on translating between the technical work and the questions an adopter or funder would ask.",
+          "The strongest outcome for me was learning to tie communication to evidence. A professional identity can make an idea understandable, but a convincing medtech proposition also needs a plausible path through validation, procurement and use.",
+          "If repeating the project, I would start that work earlier, link technical milestones to communication outputs, and test the proposal with clinicians and procurement stakeholders sooner. I would also keep a regular reflective log to capture how the strategy changed."
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "label": "Read the group concept report",
+        "href": "../documents/osteotrack-report.pdf",
+        "detail": "PDF · 44 pages · Revision 0.0, draft"
+      },
+      {
+        "label": "Read my project reflection",
+        "href": "../documents/osteotrack-reflection.pdf",
+        "detail": "PDF · 3 pages"
+      },
+      {
+        "label": "View the original launch-page concept",
+        "href": "https://osteo-track-flow.base44.app",
+        "detail": "Early digital demonstration"
+      }
+    ]
+  },
+  {
+    "slug": "emg-controlled-robotic-arm",
+    "title": "Turning muscle activity into a working grasp",
+    "name": "Low-cost EMG-controlled robotic arm",
+    "category": "Robotics & embedded systems",
+    "status": "Undergraduate prototype · 2025",
+    "role": "BEng dissertation researcher",
+    "institution": "City St George's, University of London",
+    "tools": "Arduino Nano, C++, analogue EMG electronics, SolidWorks, Fusion 360, FDM 3D printing",
+    "image": "images/projects/emg-arm.jpg",
+    "alt": "CAD visualisation of the robotic hand and forearm design",
+    "summary": "An Arduino-controlled, tendon-driven hand and wrist, bringing surface EMG sensing, analogue electronics and 3D-printed mechanics into one prototype.",
+    "takeaway": "I developed a low-cost hand-and-wrist prototype around a sub-£100 parts budget. The work centred on integrating a noisy biological input with a simple, maintainable mechanical system.",
+    "sections": [
+      {
+        "id": "brief",
+        "title": "The design brief",
+        "paragraphs": [
+          "My undergraduate dissertation investigated a low-cost EMG-controlled prosthetic-arm concept using desktop 3D printing and Arduino-compatible electronics. The target was basic grasping within a parts budget below £100, excluding in-house printing labour.",
+          "The final scope was a hand and wrist, without an articulated elbow. It was an engineering proof of concept, rather than a patient-ready prosthesis. I worked across sensing, electronics, firmware, CAD, assembly and initial evaluation under the supervision of Dr James May."
+        ]
+      },
+      {
+        "id": "signal",
+        "title": "From a muscle signal to a command",
+        "paragraphs": [
+          "Surface electrodes captured muscle activity. Because the small, rapidly changing signal could not directly drive a motor, the analogue front end amplified it, rectified it and filtered it into an envelope related to contraction intensity. A DC offset made that signal compatible with the Arduino's input range.",
+          "The design used an AD8226 instrumentation amplifier and TL084 stages for rectification and filtering. The important system-level choice was to condition the biological signal before applying a deliberately simple control rule."
+        ],
+        "steps": [
+          ["Sense", "Surface electrodes detect muscle activity."],
+          [
+            "Condition",
+            "Amplification, rectification and filtering produce an envelope."
+          ],
+          [
+            "Interpret",
+            "Arduino estimates activity relative to a changing baseline."
+          ],
+          ["Actuate", "Servo pulleys pull the tendons to close the hand."]
+        ],
+        "after": [
+          "The firmware used a running root-mean-square estimate and an adaptive baseline. Separate thresholds for closing and opening introduced hysteresis, reducing repeated switching near a single threshold. A short post-command interval gave the servos time to respond.",
+          "This was binary open/close control, not independent finger classification or proportional grip control. That limit kept the algorithm understandable and the hardware cost manageable."
+        ]
+      },
+      {
+        "id": "mechanics",
+        "title": "Mechanical iteration",
+        "paragraphs": [
+          "The hand used PLA finger segments and a tendon-and-pulley transmission driven by three hobby servos. Fishing line provided a low-cost tendon material, while the forearm housed the motors, electronics and wiring."
+        ],
+        "table": {
+          "caption": "Design changes made to simplify assembly and improve consistency",
+          "headers": ["Part", "Problem", "Design response"],
+          "rows": [
+            [
+              "Fingers",
+              "Segments could skew under tendon tension",
+              "Reinforced hinge geometry, pins and centred tendon channels"
+            ],
+            [
+              "Palm",
+              "Wall flex and friction around tendon exits",
+              "Thicker local geometry and an accessible palm lid"
+            ],
+            [
+              "Wrist",
+              "A geared concept introduced backlash and print-tolerance demands",
+              "A simpler ball-and-socket direction with tendon anchors"
+            ],
+            [
+              "Forearm",
+              "Fragile segmented clips and trapped wiring",
+              "A shell with removable access panels and internal mounting features"
+            ]
+          ]
+        },
+        "after": [
+          "Repair access mattered as much as initial assembly. The palm lid exposed tendon adjustment points; removable forearm panels made the servos and electronics accessible. Standardising finger geometry also reduced the number of unique replacement parts.",
+          "The trade-off was coupled movement. Sharing actuators and tendon routes lowered cost and complexity, while limiting fine dexterity and making slack and friction central performance constraints."
+        ]
+      },
+      {
+        "id": "integration",
+        "title": "Keeping sensing and actuation stable",
+        "paragraphs": [
+          "Servo current demand and analogue signal quality had to be considered together. The architecture separated the EMG supply from the servo power rails, with a common grounding arrangement and attention to routing noisy power wiring away from the sensing path.",
+          "The integration work involved electrode placement, baseline calibration, mechanical tendon tension and power stability. A threshold that worked well in one setup could become unreliable when contact shifted or the mechanical load changed.",
+          "Those interactions were the main lesson of the build: a clean control diagram does not remove the need to test the complete physical system."
+        ]
+      },
+      {
+        "id": "evaluation",
+        "title": "Initial evaluation",
+        "paragraphs": [
+          "The presentation summary reports approximately £91 in parts and around 6 N of combined fingertip force from simple scale measurements. These are prototype-level observations, not independent product benchmarks."
+        ],
+        "table": {
+          "caption": "Reported fingertip measurements from the presentation summary",
+          "headers": ["Digit", "Flexion", "Fingertip force"],
+          "rows": [
+            ["Index", "61.2°", "1.42 N"],
+            ["Middle", "59.8°", "1.50 N"],
+            ["Ring", "48.5°", "0.98 N"],
+            ["Little finger", "44.3°", "0.97 N"],
+            ["Thumb", "46.5°", "1.32 N"]
+          ]
+        },
+        "after": [
+          "A short timing test reported five values between 264 and 288 ms, averaging approximately 275 ms. The summary describes the measurement endpoints inconsistently, so this should be read as an indicative control-timing observation rather than a verified muscle-to-motion latency.",
+          "The control test was also too small for a dependable accuracy claim. Its stated percentage does not reconcile with the listed event counts. A larger, consistently labelled trial is needed before reporting control accuracy as a performance result.",
+          "These limitations do not erase the integration work; they define the next evaluation task. Mechanical force, complete movement time, missed commands and unintended commands need separate, repeatable protocols."
+        ]
+      },
+      {
+        "id": "next",
+        "title": "What I would improve next",
+        "paragraphs": [
+          "My first priorities would be reducing tendon friction and slack, improving repeatability of electrode placement, and checking the power system under realistic loads. Durability and maintenance would need longer tests than the initial demonstration.",
+          "A better controller could use a shorter, carefully evaluated processing window and an additional EMG channel. Proportional grip or multiple gesture classes would then need to justify their added sensing, calibration and computational demands.",
+          "Before any clinical use, the design would require formal safety work, appropriate user studies, comfort and socket-fit evaluation, and robust long-term testing. The project established a platform for investigating those questions, not their answers."
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "label": "Read the dissertation presentation summary",
+        "href": "../documents/robotic-arm-summary.pdf",
+        "detail": "PDF · 24 pages · Includes original reported measurements"
+      }
+    ]
+  },
+  {
+    "slug": "redcap-feedback-workflow",
+    "title": "Making implant follow-up easier to collect and review",
+    "name": "REDCap orthopaedic outcome tracking",
+    "category": "Clinical workflows & automation",
+    "status": "KOLN 3D internship · Summer 2024",
+    "role": "Workflow automation developer · Summer intern",
+    "institution": "KOLN 3D · Hong Kong",
+    "tools": "REDCap, questionnaire design, calculated fields, survey distribution, team training",
+    "image": "images/projects/redcap.png",
+    "alt": "REDCap research data capture platform logo",
+    "summary": "A structured post-operative feedback workflow for patient-specific implants, organising anatomy-specific assessments and automated survey follow-up.",
+    "takeaway": "I built questionnaires, organised the clinical data structure, configured survey distribution and trained the R&D team. The result was a repeatable workflow for reviewing implant feedback.",
+    "sections": [
+      {
+        "id": "context",
+        "title": "The operational problem",
+        "paragraphs": [
+          "At KOLN 3D, a manufacturer of metallic surgical implants, post-operative feedback had to connect the implant, the operation and the patient's recovery. A general feedback question could not capture the different functional concerns of a hip, an elbow or an orbital procedure.",
+          "The project translated that need into a REDCap workflow for structured patient and surgeon feedback. My work covered questionnaire implementation, anatomy-specific organisation, automated email distribution and training the R&D team to manage the process."
+        ]
+      },
+      {
+        "id": "structure",
+        "title": "Start with the operation, then the assessment",
+        "paragraphs": [
+          "The form began with patient-specific implant details, serial number, operation location and date, and follow-up date. A surgical-region selection then organised the relevant clinical assessment. Skull procedures included an additional region choice.",
+          "The assessment structure combined named orthopaedic instruments with custom post-operative sections. Keeping that distinction visible matters: implementing questions in REDCap does not itself validate a questionnaire, a calculated field or a new scoring interpretation."
+        ],
+        "table": {
+          "caption": "Assessment coverage in the project materials",
+          "headers": [
+            "Region",
+            "Instrument or assessment",
+            "Status in this workflow"
+          ],
+          "rows": [
+            [
+              "Foot / ankle",
+              "AOFAS ankle–hindfoot score",
+              "Named instrument implemented as a digital form"
+            ],
+            [
+              "Hip / pelvis",
+              "Harris Hip Score",
+              "Named instrument implemented as a digital form"
+            ],
+            [
+              "Knee",
+              "Knee Society Score",
+              "Named instrument implemented as a digital form"
+            ],
+            [
+              "Shoulder",
+              "Rowe Shoulder Score",
+              "Named instrument implemented as a digital form"
+            ],
+            [
+              "Elbow",
+              "Mayo Elbow Performance Score",
+              "Named instrument implemented as a digital form"
+            ],
+            [
+              "Orbit",
+              "Orbital post-operative assessment",
+              "Custom project assessment"
+            ],
+            [
+              "TMJ",
+              "Temporomandibular-joint assessment",
+              "Custom project assessment"
+            ],
+            [
+              "Thoracic / respiratory",
+              "Lung-function assessment",
+              "Custom project assessment"
+            ]
+          ]
+        },
+        "after": [
+          "Depending on the region, questions captured pain, stability, motion, walking support, daily activities or procedure-specific symptoms. Calculated fields gave each assessment a consistent place in the record, alongside the underlying responses."
+        ]
+      },
+      {
+        "id": "workflow",
+        "title": "The feedback workflow",
+        "steps": [
+          ["Record", "Associate the implant and operation with the follow-up."],
+          ["Route", "Present the relevant anatomical assessment."],
+          ["Collect", "Distribute surveys and capture structured responses."],
+          [
+            "Calculate",
+            "Store the assessment output alongside its source answers."
+          ],
+          ["Review", "Make the feedback available to the R&D team."]
+        ],
+        "paragraphs": [
+          "I recreated the question and response structures in REDCap and configured automated email workflows to support repeatable survey distribution. Organising the records consistently made it easier to follow the same implant through successive feedback points.",
+          "Training was part of delivery. The R&D team needed to understand how to manage the surveys, monitor responses and interpret the collection workflow after the implementation work ended."
+        ]
+      },
+      {
+        "id": "scores",
+        "title": "Making sense of the scores",
+        "paragraphs": [
+          "I also prepared a short interpretation reference to accompany the calculated outputs. This mapped each assessment to its own score bands, rather than assuming that the same numeric value meant the same thing across all instruments.",
+          "The supplied scoring notes make that need clear: different instruments use different boundaries and category labels. Custom orbital, TMJ and lung-function sections were explicitly marked as self-implemented. They should be understood as project-specific collection tools, with clinical review required before any decision-making use.",
+          "The portfolio describes the structure and engineering work. It does not provide a clinical calculator or reproduce completed patient records."
+        ]
+      },
+      {
+        "id": "outcome",
+        "title": "What the work delivered",
+        "paragraphs": [
+          "The deliverable was a structured, repeatable way to collect post-operative feedback and organise it for review. It brought the survey, scoring fields and operational handover into one workflow.",
+          "The project materials demonstrate the form structure and interpretation notes. They do not quantify response-rate improvements, time saved or improved patient outcomes, so those are not claimed here.",
+          "The wider internship also included production-planning automation with Excel VBA and Power Automate, an internal CNC mould guide supporting six-degree-of-freedom drilling setup, and 3D-printed display models for commercial use."
+        ]
+      },
+      {
+        "id": "reflection",
+        "title": "What this taught me about clinical software",
+        "paragraphs": [
+          "The hard part was translating a clinical process into something consistent enough to operate repeatedly. That meant asking what each field represented, when a question was relevant and who would use the result.",
+          "A useful next iteration would make formula verification, instrument-version tracking and missing-response handling explicit, then evaluate the workflow against agreed operational measures. That would allow usability and efficiency claims to be backed by evidence."
+        ]
+      }
+    ],
+    "resources": [],
+    "sourceNote": "Based on the blank 11-page REDCap form exported in June 2024, the accompanying score-interpretation notes and the original portfolio's internship record. The internal form is described here without publishing its original export."
+  }
+]

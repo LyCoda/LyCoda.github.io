@@ -1,94 +1,425 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Project case study from Nate Chu's biomedical engineering portfolio.">
-    <meta name="theme-color" content="#050807">
-    <title>Project | Nate Chu's Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>OsteoTrack bone-healing monitoring | Nate Chu</title>
+    <meta
+      name="description"
+      content="A non-invasive fracture-monitoring proposal, connecting vibration sensing with a realistic plan for evidence, adoption and funding."
+    />
+    <meta name="theme-color" content="#f7f8fa" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    >
-    <link rel="stylesheet" href="../style.css">
+      rel="canonical"
+      href="https://lycoda.github.io/projects/bone-healing-monitoring-device.html"
+    />
+    <meta
+      property="og:title"
+      content="OsteoTrack bone-healing monitoring | Nate Chu"
+    />
+    <meta
+      property="og:description"
+      content="A non-invasive fracture-monitoring proposal, connecting vibration sensing with a realistic plan for evidence, adoption and funding."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://lycoda.github.io/images/hero-original.png"
+    />
+    <link rel="stylesheet" href="../fonts.css" />
+    <link rel="stylesheet" href="../theme.css" />
+    <script src="../main.js" defer></script>
   </head>
-  <body class="project-detail-page" data-project-slug="bone-healing-monitoring-device">
+  <body class="case-page" id="top">
     <a class="skip-link" href="#main">Skip to content</a>
-
-    <header class="site-header project-detail-header" aria-label="Project navigation">
-      <a class="brand ecg-home" href="../index.html#top" aria-label="Back to home">
-        <span class="ecg-home-icon" aria-hidden="true">
-          <svg viewBox="0 0 120 32" focusable="false">
-            <path d="M2 16H24L31 16L37 7L46 26L55 16H72L79 12L86 20L94 16H118"></path>
-          </svg>
-        </span>
-        <span class="brand-lockup">
-          <span class="brand-text">Nate Chu</span>
-          <span class="brand-sub">Biomedical Engineering</span>
-        </span>
-      </a>
-      <nav class="site-nav" aria-label="Project links">
-        <a href="../index.html#projects"><span aria-hidden="true">03</span>Projects</a>
-        <a href="../index.html#about"><span aria-hidden="true">01</span>About</a>
-        <a href="../index.html#contact"><span aria-hidden="true">05</span>Contact</a>
-      </nav>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="../index.html#top" aria-label="Nate Chu home"
+          ><svg class="brand-mark" viewBox="0 0 40 24" aria-hidden="true">
+            <path d="M1 12h9l4-7 7 15 5-8h13" /></svg
+          ><span
+            >Nate Chu<span class="brand-sub">Biomedical engineering</span></span
+          ></a
+        ><button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          hidden
+        >
+          Menu
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="../index.html#about">About</a
+          ><a href="../index.html#academics">Academics</a
+          ><a href="../index.html#projects">Projects</a
+          ><a href="../index.html#experience">Experience</a
+          ><a href="../index.html#contact">Contact</a>
+        </nav>
+      </div>
     </header>
-
-    <main class="project-detail-main" id="main">
-      <section class="case-hero section-reveal">
-        <a class="case-back-link" href="../index.html#projects">Back to Projects</a>
-        <p class="project-counter" data-project-counter></p>
-        <h1 data-project-title></h1>
-        <p class="project-status" data-project-status></p>
-        <figure class="case-hero-visual">
-          <img data-project-image src="" alt="">
+    <main id="main">
+      <header class="case-header wrap">
+        <a class="back-link" href="../index.html#projects"
+          >All projects<svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6" /></svg
+        ></a>
+        <h1>OsteoTrack: a path from device concept to clinical use</h1>
+        <p class="case-intro">
+          A non-invasive fracture-monitoring proposal, connecting vibration
+          sensing with a realistic plan for evidence, adoption and funding.
+        </p>
+        <div class="case-meta">
+          <div>
+            <span>My role</span
+            ><strong>Communications &amp; Fundraising Officer</strong>
+          </div>
+          <div><span>Context</span><strong>UCL · Group D</strong></div>
+          <div>
+            <span>Project stage</span
+            ><strong>Group concept project · 2026</strong>
+          </div>
+        </div>
+      </header>
+      <div class="case-lead wrap">
+        <figure class="case-image">
+          <img
+            src="../images/projects/bone-healing.png"
+            alt="OsteoTrack non-invasive bone-healing monitoring concept"
+            width="640"
+            height="440"
+          />
         </figure>
-      </section>
-
-      <section class="case-summary section-reveal" aria-label="Project summary">
-        <p class="case-intro" data-project-intro></p>
-        <dl class="case-meta-grid">
-          <div>
-            <dt>Description</dt>
-            <dd data-project-description></dd>
-          </div>
-          <div>
-            <dt>Role</dt>
-            <dd data-project-role></dd>
-          </div>
-          <div>
-            <dt>Focus</dt>
-            <dd data-project-focus></dd>
-          </div>
-          <div>
-            <dt>Tools</dt>
-            <dd data-project-tools></dd>
-          </div>
-          <div>
-            <dt>Status / Outcome</dt>
-            <dd data-project-outcome></dd>
-          </div>
-        </dl>
-      </section>
-
-      <div class="case-study-flow" data-project-sections></div>
-
-      <section class="case-next section-reveal">
-        <a data-next-project href="#">
-          <span></span>
-          <strong></strong>
-        </a>
-      </section>
+        <div class="case-summary">
+          <h2>At a glance</h2>
+          <p>
+            My contribution connected the device&#x27;s technical premise to its
+            identity, clinical positioning and funding pathway. OsteoTrack
+            remained an academic concept, with validation and deployment
+            proposed as future stages.
+          </p>
+          <dl>
+            <dt>Tools &amp; methods</dt>
+            <dd>
+              Clinical literature, competitor research, IP research, commercial
+              planning, launch-page design
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="article-layout wrap">
+        <aside class="article-nav">
+          <nav aria-label="On this page">
+            <p>In this project</p>
+            <a href="#context">The follow-up problem</a
+            ><a href="#concept">How the proposed device worked</a
+            ><a href="#contribution">My contribution</a
+            ><a href="#strategy">A staged route to adoption</a
+            ><a href="#tradeoffs">A technical idea still has to fit the brief</a
+            ><a href="#reflection">What I took from the project</a
+            ><a href="#sources">Project material</a>
+          </nav>
+        </aside>
+        <article class="article-body">
+          <section id="context" class="article-section">
+            <h2>The follow-up problem</h2>
+            <p>
+              Our group explored how a non-invasive device might support
+              follow-up after a fracture. The clinical motivation was to observe
+              healing over time and identify patients who might need further
+              assessment, without treating every follow-up as an isolated
+              measurement.
+            </p>
+            <p>
+              We compared bone-assessment approaches including DEXA, CT, MRI,
+              ultrasound, implant-based sensing and vibration-based monitoring.
+              The concept we developed used an external vibration source and
+              accelerometers to track changes in the limb&#x27;s mechanical
+              response.
+            </p>
+            <p>
+              The intended setting was a community or clinical point of care. A
+              clinician would review longitudinal measurements and decide
+              whether a patient needed fracture-clinic review or imaging. This
+              was a proposal for decision support, with clinical effectiveness
+              still to be established.
+            </p>
+          </section>
+          <section id="concept" class="article-section">
+            <h2>How the proposed device worked</h2>
+            <p>
+              The team&#x27;s mechanical concept combined an inflatable cuff, a
+              vibration motor with a contact disc, and two accelerometers on
+              adjustable mounting strips. The adjustable geometry was intended
+              to accommodate different patients and maintain consistent contact.
+            </p>
+            <p>
+              A controlled frequency sweep would produce a measured response
+              spectrum. Repeated visits would build a patient-specific
+              trajectory. The proposed software would compare this trajectory
+              with labelled clinical data to support assessment of non-union
+              risk.
+            </p>
+            <ol class="workflow">
+              <li>
+                <strong>Position</strong
+                ><span>Fit the cuff and align the sensing points.</span>
+              </li>
+              <li>
+                <strong>Measure</strong
+                ><span
+                  >Apply a controlled vibration sweep and record the
+                  response.</span
+                >
+              </li>
+              <li>
+                <strong>Compare</strong
+                ><span>Track the spectrum against earlier visits.</span>
+              </li>
+              <li>
+                <strong>Review</strong
+                ><span>Present the trend to a clinician for assessment.</span>
+              </li>
+            </ol>
+            <figure class="article-figure">
+              <a
+                href="../images/projects/osteotrack-assembly.png"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open figure at full size"
+                ><img
+                  src="../images/projects/osteotrack-assembly.png"
+                  alt="Two annotated CAD views of the proposed cuff assembly, with and without the motor housing"
+                  loading="lazy"
+              /></a>
+              <figcaption>
+                Group D concept drawings: adjustable accelerometer positions,
+                cuff attachment and the motor/contact-disc assembly. This is a
+                proposed design, not a clinically validated device.
+              </figcaption>
+            </figure>
+            <p>
+              The group report explored cross-spectrum features and a supervised
+              model trained on future clinical-trial data. Patient-labelled
+              training data, repeatability testing and clinical validation were
+              dependencies, rather than completed capabilities.
+            </p>
+          </section>
+          <section id="contribution" class="article-section">
+            <h2>My contribution</h2>
+            <p>
+              As Communications and Fundraising Officer, I initially expected to
+              concentrate on presentation and funding sources. The work quickly
+              became more technical: explaining a medical-device venture
+              credibly required understanding its mechanism, evidence and place
+              in the clinical workflow.
+            </p>
+            <h3>Identity and digital presence</h3>
+            <p>
+              I worked with the Chief Designer and Market Researcher on the
+              OsteoTrack logo, brand identity and launch page. The aim was to
+              present an orthopaedic monitoring platform in a professional,
+              recognisable way, consistent with its early stage of development.
+            </p>
+            <h3>Clinical and commercial positioning</h3>
+            <p>
+              I helped distinguish the person benefiting from the device from
+              the organisation buying it. Patients were the intended
+              beneficiaries, while clinicians, fracture-clinic leads and
+              procurement teams would influence adoption. That distinction
+              shaped the communication strategy.
+            </p>
+            <h3>Intellectual property and funding</h3>
+            <p>
+              I researched relevant intellectual property, early-stage startup
+              planning and fundraising routes. A preliminary patent review
+              raised questions for a future freedom-to-operate assessment; it
+              did not establish freedom to operate or secure patent protection.
+            </p>
+          </section>
+          <section id="strategy" class="article-section">
+            <h2>A staged route to adoption</h2>
+            <p>
+              I helped frame the venture around milestones that could reduce
+              technical and commercial uncertainty. Early communication would
+              support prototype refinement and pilot engagement, then grow with
+              the quality of the clinical evidence.
+            </p>
+            <p>
+              The group considered private orthopaedic clinics as an initial
+              route for feedback, with NHS adoption as a longer-term objective.
+              Conference presentations, professional engagement and clinical
+              white papers were proposed channels for reaching the people who
+              would evaluate the device.
+            </p>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="The proposed funding sequence"
+            >
+              <table>
+                <caption>
+                  The proposed funding sequence
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Stage</th>
+                    <th scope="col">Evidence to establish</th>
+                    <th scope="col">Funding direction</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Feasibility</th>
+                    <td>
+                      Prototype refinement, IP review and initial repeatability
+                    </td>
+                    <td>University and early translational support</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Proof of concept</th>
+                    <td>Technical evidence and credible clinical partners</td>
+                    <td>Non-dilutive health-innovation grants</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Pilot readiness</th>
+                    <td>Quality processes and a clinical validation plan</td>
+                    <td>Larger translational programmes</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Commercial development</th>
+                    <td>Stronger evidence of utility and adoption</td>
+                    <td>Seed investment or debt where appropriate</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              The report explored a per-patient pricing model and longer-term
+              financial projections. These were planning assumptions, not sales,
+              funding secured or demonstrated NHS savings. I treated grants and
+              accelerators as routes to investigate against the venture&#x27;s
+              stage, rather than promises of available capital.
+            </p>
+          </section>
+          <section id="tradeoffs" class="article-section">
+            <h2>A technical idea still has to fit the brief</h2>
+            <p>
+              I questioned how readily vibration-based evidence from modelled
+              bones would translate into measurements in patients. During
+              competitor research, I explored whether a resonance approach used
+              for implants could inform long-bone assessment, potentially
+              alongside fixation plates.
+            </p>
+            <p>
+              The group decided that an implant-linked direction would move away
+              from our non-invasive objective and complicate the development
+              pathway. The research still helped us understand the competitive
+              landscape and sharpen the boundaries of the concept.
+            </p>
+            <p>
+              The team also considered electrical safety, data handling,
+              software governance and clinical investigation requirements. Those
+              topics informed the development plan; they were not claims that
+              the concept had received regulatory approval.
+            </p>
+          </section>
+          <section id="reflection" class="article-section">
+            <h2>What I took from the project</h2>
+            <p>
+              Around fifteen weekly meetings, with clear goals for the next
+              week, helped a multidisciplinary team maintain progress. My own
+              role depended on translating between the technical work and the
+              questions an adopter or funder would ask.
+            </p>
+            <p>
+              The strongest outcome for me was learning to tie communication to
+              evidence. A professional identity can make an idea understandable,
+              but a convincing medtech proposition also needs a plausible path
+              through validation, procurement and use.
+            </p>
+            <p>
+              If repeating the project, I would start that work earlier, link
+              technical milestones to communication outputs, and test the
+              proposal with clinicians and procurement stakeholders sooner. I
+              would also keep a regular reflective log to capture how the
+              strategy changed.
+            </p>
+          </section>
+          <section class="article-section resources" id="sources">
+            <h2>Project material</h2>
+            <ul>
+              <li>
+                <a class="text-link" href="../documents/osteotrack-report.pdf"
+                  >Read the group concept report<svg
+                    class="arrow"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14m-6-6 6 6-6 6" /></svg></a
+                ><span>PDF · 44 pages · Revision 0.0, draft</span>
+              </li>
+              <li>
+                <a
+                  class="text-link"
+                  href="../documents/osteotrack-reflection.pdf"
+                  >Read my project reflection<svg
+                    class="arrow"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14m-6-6 6 6-6 6" /></svg></a
+                ><span>PDF · 3 pages</span>
+              </li>
+              <li>
+                <a
+                  class="text-link"
+                  href="https://osteo-track-flow.base44.app"
+                  target="_blank"
+                  rel="noreferrer"
+                  >View the original launch-page concept<svg
+                    class="arrow"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14m-6-6 6 6-6 6" /></svg></a
+                ><span>Early digital demonstration</span>
+              </li>
+            </ul>
+          </section>
+        </article>
+      </div>
+      <nav class="next-project wrap" aria-label="Project navigation">
+        <span>Next project</span
+        ><a class="text-link" href="emg-controlled-robotic-arm.html"
+          >Low-cost EMG-controlled robotic arm<svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6" /></svg></a
+        ><a class="back-link" href="../index.html#projects"
+          >All projects<svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6" /></svg
+        ></a>
+      </nav>
     </main>
-
-    <footer class="site-footer project-detail-footer">
-      <p>© 2026 Nate Chu · Biomedical Engineering Portfolio</p>
-      <a href="../index.html#projects">Projects index</a>
+    <footer class="site-footer">
+      <p>© 2026 Nate Chu</p>
+      <p>Biomedical engineering · London / Hong Kong</p>
+      <a class="text-link" href="#top"
+        >Back to top<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 12h14m-6-6 6 6-6 6" /></svg
+      ></a>
     </footer>
-
-    <script src="../project-data.js"></script>
-    <script src="../project-page.js"></script>
   </body>
 </html>

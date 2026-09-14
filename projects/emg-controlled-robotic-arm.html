@@ -1,94 +1,436 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Project case study from Nate Chu's biomedical engineering portfolio.">
-    <meta name="theme-color" content="#050807">
-    <title>Project | Nate Chu's Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Low-cost EMG-controlled robotic arm | Nate Chu</title>
+    <meta
+      name="description"
+      content="An Arduino-controlled, tendon-driven hand and wrist, bringing surface EMG sensing, analogue electronics and 3D-printed mechanics into one prototype."
+    />
+    <meta name="theme-color" content="#f7f8fa" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    >
-    <link rel="stylesheet" href="../style.css">
+      rel="canonical"
+      href="https://lycoda.github.io/projects/emg-controlled-robotic-arm.html"
+    />
+    <meta
+      property="og:title"
+      content="Low-cost EMG-controlled robotic arm | Nate Chu"
+    />
+    <meta
+      property="og:description"
+      content="An Arduino-controlled, tendon-driven hand and wrist, bringing surface EMG sensing, analogue electronics and 3D-printed mechanics into one prototype."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://lycoda.github.io/images/hero-original.png"
+    />
+    <link rel="stylesheet" href="../fonts.css" />
+    <link rel="stylesheet" href="../theme.css" />
+    <script src="../main.js" defer></script>
   </head>
-  <body class="project-detail-page" data-project-slug="emg-controlled-robotic-arm">
+  <body class="case-page" id="top">
     <a class="skip-link" href="#main">Skip to content</a>
-
-    <header class="site-header project-detail-header" aria-label="Project navigation">
-      <a class="brand ecg-home" href="../index.html#top" aria-label="Back to home">
-        <span class="ecg-home-icon" aria-hidden="true">
-          <svg viewBox="0 0 120 32" focusable="false">
-            <path d="M2 16H24L31 16L37 7L46 26L55 16H72L79 12L86 20L94 16H118"></path>
-          </svg>
-        </span>
-        <span class="brand-lockup">
-          <span class="brand-text">Nate Chu</span>
-          <span class="brand-sub">Biomedical Engineering</span>
-        </span>
-      </a>
-      <nav class="site-nav" aria-label="Project links">
-        <a href="../index.html#projects"><span aria-hidden="true">03</span>Projects</a>
-        <a href="../index.html#about"><span aria-hidden="true">01</span>About</a>
-        <a href="../index.html#contact"><span aria-hidden="true">05</span>Contact</a>
-      </nav>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="../index.html#top" aria-label="Nate Chu home"
+          ><svg class="brand-mark" viewBox="0 0 40 24" aria-hidden="true">
+            <path d="M1 12h9l4-7 7 15 5-8h13" /></svg
+          ><span
+            >Nate Chu<span class="brand-sub">Biomedical engineering</span></span
+          ></a
+        ><button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          hidden
+        >
+          Menu
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="../index.html#about">About</a
+          ><a href="../index.html#academics">Academics</a
+          ><a href="../index.html#projects">Projects</a
+          ><a href="../index.html#experience">Experience</a
+          ><a href="../index.html#contact">Contact</a>
+        </nav>
+      </div>
     </header>
-
-    <main class="project-detail-main" id="main">
-      <section class="case-hero section-reveal">
-        <a class="case-back-link" href="../index.html#projects">Back to Projects</a>
-        <p class="project-counter" data-project-counter></p>
-        <h1 data-project-title></h1>
-        <p class="project-status" data-project-status></p>
-        <figure class="case-hero-visual">
-          <img data-project-image src="" alt="">
+    <main id="main">
+      <header class="case-header wrap">
+        <a class="back-link" href="../index.html#projects"
+          >All projects<svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6" /></svg
+        ></a>
+        <h1>Turning muscle activity into a working grasp</h1>
+        <p class="case-intro">
+          An Arduino-controlled, tendon-driven hand and wrist, bringing surface
+          EMG sensing, analogue electronics and 3D-printed mechanics into one
+          prototype.
+        </p>
+        <div class="case-meta">
+          <div>
+            <span>My role</span><strong>BEng dissertation researcher</strong>
+          </div>
+          <div>
+            <span>Context</span
+            ><strong>City St George&#x27;s, University of London</strong>
+          </div>
+          <div>
+            <span>Project stage</span
+            ><strong>Undergraduate prototype · 2025</strong>
+          </div>
+        </div>
+      </header>
+      <div class="case-lead wrap">
+        <figure class="case-image">
+          <img
+            src="../images/projects/emg-arm.jpg"
+            alt="CAD visualisation of the robotic hand and forearm design"
+            width="640"
+            height="440"
+          />
         </figure>
-      </section>
-
-      <section class="case-summary section-reveal" aria-label="Project summary">
-        <p class="case-intro" data-project-intro></p>
-        <dl class="case-meta-grid">
-          <div>
-            <dt>Description</dt>
-            <dd data-project-description></dd>
-          </div>
-          <div>
-            <dt>Role</dt>
-            <dd data-project-role></dd>
-          </div>
-          <div>
-            <dt>Focus</dt>
-            <dd data-project-focus></dd>
-          </div>
-          <div>
-            <dt>Tools</dt>
-            <dd data-project-tools></dd>
-          </div>
-          <div>
-            <dt>Status / Outcome</dt>
-            <dd data-project-outcome></dd>
-          </div>
-        </dl>
-      </section>
-
-      <div class="case-study-flow" data-project-sections></div>
-
-      <section class="case-next section-reveal">
-        <a data-next-project href="#">
-          <span></span>
-          <strong></strong>
-        </a>
-      </section>
+        <div class="case-summary">
+          <h2>At a glance</h2>
+          <p>
+            I developed a low-cost hand-and-wrist prototype around a sub-£100
+            parts budget. The work centred on integrating a noisy biological
+            input with a simple, maintainable mechanical system.
+          </p>
+          <dl>
+            <dt>Tools &amp; methods</dt>
+            <dd>
+              Arduino Nano, C++, analogue EMG electronics, SolidWorks, Fusion
+              360, FDM 3D printing
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="article-layout wrap">
+        <aside class="article-nav">
+          <nav aria-label="On this page">
+            <p>In this project</p>
+            <a href="#brief">The design brief</a
+            ><a href="#signal">From a muscle signal to a command</a
+            ><a href="#mechanics">Mechanical iteration</a
+            ><a href="#integration">Keeping sensing and actuation stable</a
+            ><a href="#evaluation">Initial evaluation</a
+            ><a href="#next">What I would improve next</a
+            ><a href="#sources">Project material</a>
+          </nav>
+        </aside>
+        <article class="article-body">
+          <section id="brief" class="article-section">
+            <h2>The design brief</h2>
+            <p>
+              My undergraduate dissertation investigated a low-cost
+              EMG-controlled prosthetic-arm concept using desktop 3D printing
+              and Arduino-compatible electronics. The target was basic grasping
+              within a parts budget below £100, excluding in-house printing
+              labour.
+            </p>
+            <p>
+              The final scope was a hand and wrist, without an articulated
+              elbow. It was an engineering proof of concept, rather than a
+              patient-ready prosthesis. I worked across sensing, electronics,
+              firmware, CAD, assembly and initial evaluation under the
+              supervision of Dr James May.
+            </p>
+          </section>
+          <section id="signal" class="article-section">
+            <h2>From a muscle signal to a command</h2>
+            <p>
+              Surface electrodes captured muscle activity. Because the small,
+              rapidly changing signal could not directly drive a motor, the
+              analogue front end amplified it, rectified it and filtered it into
+              an envelope related to contraction intensity. A DC offset made
+              that signal compatible with the Arduino&#x27;s input range.
+            </p>
+            <p>
+              The design used an AD8226 instrumentation amplifier and TL084
+              stages for rectification and filtering. The important system-level
+              choice was to condition the biological signal before applying a
+              deliberately simple control rule.
+            </p>
+            <ol class="workflow">
+              <li>
+                <strong>Sense</strong
+                ><span>Surface electrodes detect muscle activity.</span>
+              </li>
+              <li>
+                <strong>Condition</strong
+                ><span
+                  >Amplification, rectification and filtering produce an
+                  envelope.</span
+                >
+              </li>
+              <li>
+                <strong>Interpret</strong
+                ><span
+                  >Arduino estimates activity relative to a changing
+                  baseline.</span
+                >
+              </li>
+              <li>
+                <strong>Actuate</strong
+                ><span>Servo pulleys pull the tendons to close the hand.</span>
+              </li>
+            </ol>
+            <p>
+              The firmware used a running root-mean-square estimate and an
+              adaptive baseline. Separate thresholds for closing and opening
+              introduced hysteresis, reducing repeated switching near a single
+              threshold. A short post-command interval gave the servos time to
+              respond.
+            </p>
+            <p>
+              This was binary open/close control, not independent finger
+              classification or proportional grip control. That limit kept the
+              algorithm understandable and the hardware cost manageable.
+            </p>
+          </section>
+          <section id="mechanics" class="article-section">
+            <h2>Mechanical iteration</h2>
+            <p>
+              The hand used PLA finger segments and a tendon-and-pulley
+              transmission driven by three hobby servos. Fishing line provided a
+              low-cost tendon material, while the forearm housed the motors,
+              electronics and wiring.
+            </p>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Design changes made to simplify assembly and improve consistency"
+            >
+              <table>
+                <caption>
+                  Design changes made to simplify assembly and improve
+                  consistency
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Part</th>
+                    <th scope="col">Problem</th>
+                    <th scope="col">Design response</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Fingers</th>
+                    <td>Segments could skew under tendon tension</td>
+                    <td>
+                      Reinforced hinge geometry, pins and centred tendon
+                      channels
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Palm</th>
+                    <td>Wall flex and friction around tendon exits</td>
+                    <td>Thicker local geometry and an accessible palm lid</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Wrist</th>
+                    <td>
+                      A geared concept introduced backlash and print-tolerance
+                      demands
+                    </td>
+                    <td>
+                      A simpler ball-and-socket direction with tendon anchors
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Forearm</th>
+                    <td>Fragile segmented clips and trapped wiring</td>
+                    <td>
+                      A shell with removable access panels and internal mounting
+                      features
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Repair access mattered as much as initial assembly. The palm lid
+              exposed tendon adjustment points; removable forearm panels made
+              the servos and electronics accessible. Standardising finger
+              geometry also reduced the number of unique replacement parts.
+            </p>
+            <p>
+              The trade-off was coupled movement. Sharing actuators and tendon
+              routes lowered cost and complexity, while limiting fine dexterity
+              and making slack and friction central performance constraints.
+            </p>
+          </section>
+          <section id="integration" class="article-section">
+            <h2>Keeping sensing and actuation stable</h2>
+            <p>
+              Servo current demand and analogue signal quality had to be
+              considered together. The architecture separated the EMG supply
+              from the servo power rails, with a common grounding arrangement
+              and attention to routing noisy power wiring away from the sensing
+              path.
+            </p>
+            <p>
+              The integration work involved electrode placement, baseline
+              calibration, mechanical tendon tension and power stability. A
+              threshold that worked well in one setup could become unreliable
+              when contact shifted or the mechanical load changed.
+            </p>
+            <p>
+              Those interactions were the main lesson of the build: a clean
+              control diagram does not remove the need to test the complete
+              physical system.
+            </p>
+          </section>
+          <section id="evaluation" class="article-section">
+            <h2>Initial evaluation</h2>
+            <p>
+              The presentation summary reports approximately £91 in parts and
+              around 6 N of combined fingertip force from simple scale
+              measurements. These are prototype-level observations, not
+              independent product benchmarks.
+            </p>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Reported fingertip measurements from the presentation summary"
+            >
+              <table>
+                <caption>
+                  Reported fingertip measurements from the presentation summary
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Digit</th>
+                    <th scope="col">Flexion</th>
+                    <th scope="col">Fingertip force</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Index</th>
+                    <td>61.2°</td>
+                    <td>1.42 N</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Middle</th>
+                    <td>59.8°</td>
+                    <td>1.50 N</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Ring</th>
+                    <td>48.5°</td>
+                    <td>0.98 N</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Little finger</th>
+                    <td>44.3°</td>
+                    <td>0.97 N</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Thumb</th>
+                    <td>46.5°</td>
+                    <td>1.32 N</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              A short timing test reported five values between 264 and 288 ms,
+              averaging approximately 275 ms. The summary describes the
+              measurement endpoints inconsistently, so this should be read as an
+              indicative control-timing observation rather than a verified
+              muscle-to-motion latency.
+            </p>
+            <p>
+              The control test was also too small for a dependable accuracy
+              claim. Its stated percentage does not reconcile with the listed
+              event counts. A larger, consistently labelled trial is needed
+              before reporting control accuracy as a performance result.
+            </p>
+            <p>
+              These limitations do not erase the integration work; they define
+              the next evaluation task. Mechanical force, complete movement
+              time, missed commands and unintended commands need separate,
+              repeatable protocols.
+            </p>
+          </section>
+          <section id="next" class="article-section">
+            <h2>What I would improve next</h2>
+            <p>
+              My first priorities would be reducing tendon friction and slack,
+              improving repeatability of electrode placement, and checking the
+              power system under realistic loads. Durability and maintenance
+              would need longer tests than the initial demonstration.
+            </p>
+            <p>
+              A better controller could use a shorter, carefully evaluated
+              processing window and an additional EMG channel. Proportional grip
+              or multiple gesture classes would then need to justify their added
+              sensing, calibration and computational demands.
+            </p>
+            <p>
+              Before any clinical use, the design would require formal safety
+              work, appropriate user studies, comfort and socket-fit evaluation,
+              and robust long-term testing. The project established a platform
+              for investigating those questions, not their answers.
+            </p>
+          </section>
+          <section class="article-section resources" id="sources">
+            <h2>Project material</h2>
+            <ul>
+              <li>
+                <a class="text-link" href="../documents/robotic-arm-summary.pdf"
+                  >Read the dissertation presentation summary<svg
+                    class="arrow"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14m-6-6 6 6-6 6" /></svg></a
+                ><span
+                  >PDF · 24 pages · Includes original reported
+                  measurements</span
+                >
+              </li>
+            </ul>
+          </section>
+        </article>
+      </div>
+      <nav class="next-project wrap" aria-label="Project navigation">
+        <span>Next project</span
+        ><a class="text-link" href="redcap-feedback-workflow.html"
+          >REDCap orthopaedic outcome tracking<svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6" /></svg></a
+        ><a class="back-link" href="../index.html#projects"
+          >All projects<svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6" /></svg
+        ></a>
+      </nav>
     </main>
-
-    <footer class="site-footer project-detail-footer">
-      <p>© 2026 Nate Chu · Biomedical Engineering Portfolio</p>
-      <a href="../index.html#projects">Projects index</a>
+    <footer class="site-footer">
+      <p>© 2026 Nate Chu</p>
+      <p>Biomedical engineering · London / Hong Kong</p>
+      <a class="text-link" href="#top"
+        >Back to top<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 12h14m-6-6 6 6-6 6" /></svg
+      ></a>
     </footer>
-
-    <script src="../project-data.js"></script>
-    <script src="../project-page.js"></script>
   </body>
 </html>

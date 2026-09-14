@@ -1,94 +1,371 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Project case study from Nate Chu's biomedical engineering portfolio.">
-    <meta name="theme-color" content="#050807">
-    <title>Project | Nate Chu's Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>REDCap orthopaedic outcome tracking | Nate Chu</title>
+    <meta
+      name="description"
+      content="A structured post-operative feedback workflow for patient-specific implants, organising anatomy-specific assessments and automated survey follow-up."
+    />
+    <meta name="theme-color" content="#f7f8fa" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    >
-    <link rel="stylesheet" href="../style.css">
+      rel="canonical"
+      href="https://lycoda.github.io/projects/redcap-feedback-workflow.html"
+    />
+    <meta
+      property="og:title"
+      content="REDCap orthopaedic outcome tracking | Nate Chu"
+    />
+    <meta
+      property="og:description"
+      content="A structured post-operative feedback workflow for patient-specific implants, organising anatomy-specific assessments and automated survey follow-up."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://lycoda.github.io/images/hero-original.png"
+    />
+    <link rel="stylesheet" href="../fonts.css" />
+    <link rel="stylesheet" href="../theme.css" />
+    <script src="../main.js" defer></script>
   </head>
-  <body class="project-detail-page" data-project-slug="redcap-feedback-workflow">
+  <body class="case-page" id="top">
     <a class="skip-link" href="#main">Skip to content</a>
-
-    <header class="site-header project-detail-header" aria-label="Project navigation">
-      <a class="brand ecg-home" href="../index.html#top" aria-label="Back to home">
-        <span class="ecg-home-icon" aria-hidden="true">
-          <svg viewBox="0 0 120 32" focusable="false">
-            <path d="M2 16H24L31 16L37 7L46 26L55 16H72L79 12L86 20L94 16H118"></path>
-          </svg>
-        </span>
-        <span class="brand-lockup">
-          <span class="brand-text">Nate Chu</span>
-          <span class="brand-sub">Biomedical Engineering</span>
-        </span>
-      </a>
-      <nav class="site-nav" aria-label="Project links">
-        <a href="../index.html#projects"><span aria-hidden="true">03</span>Projects</a>
-        <a href="../index.html#about"><span aria-hidden="true">01</span>About</a>
-        <a href="../index.html#contact"><span aria-hidden="true">05</span>Contact</a>
-      </nav>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="../index.html#top" aria-label="Nate Chu home"
+          ><svg class="brand-mark" viewBox="0 0 40 24" aria-hidden="true">
+            <path d="M1 12h9l4-7 7 15 5-8h13" /></svg
+          ><span
+            >Nate Chu<span class="brand-sub">Biomedical engineering</span></span
+          ></a
+        ><button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          hidden
+        >
+          Menu
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="../index.html#about">About</a
+          ><a href="../index.html#academics">Academics</a
+          ><a href="../index.html#projects">Projects</a
+          ><a href="../index.html#experience">Experience</a
+          ><a href="../index.html#contact">Contact</a>
+        </nav>
+      </div>
     </header>
-
-    <main class="project-detail-main" id="main">
-      <section class="case-hero section-reveal">
-        <a class="case-back-link" href="../index.html#projects">Back to Projects</a>
-        <p class="project-counter" data-project-counter></p>
-        <h1 data-project-title></h1>
-        <p class="project-status" data-project-status></p>
-        <figure class="case-hero-visual">
-          <img data-project-image src="" alt="">
+    <main id="main">
+      <header class="case-header wrap">
+        <a class="back-link" href="../index.html#projects"
+          >All projects<svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6" /></svg
+        ></a>
+        <h1>Making implant follow-up easier to collect and review</h1>
+        <p class="case-intro">
+          A structured post-operative feedback workflow for patient-specific
+          implants, organising anatomy-specific assessments and automated survey
+          follow-up.
+        </p>
+        <div class="case-meta">
+          <div>
+            <span>My role</span
+            ><strong>Workflow automation developer · Summer intern</strong>
+          </div>
+          <div><span>Context</span><strong>KOLN 3D · Hong Kong</strong></div>
+          <div>
+            <span>Project stage</span
+            ><strong>KOLN 3D internship · Summer 2024</strong>
+          </div>
+        </div>
+      </header>
+      <div class="case-lead wrap">
+        <figure class="case-image">
+          <img
+            src="../images/projects/redcap.png"
+            alt="REDCap research data capture platform logo"
+            width="640"
+            height="440"
+          />
         </figure>
-      </section>
-
-      <section class="case-summary section-reveal" aria-label="Project summary">
-        <p class="case-intro" data-project-intro></p>
-        <dl class="case-meta-grid">
-          <div>
-            <dt>Description</dt>
-            <dd data-project-description></dd>
-          </div>
-          <div>
-            <dt>Role</dt>
-            <dd data-project-role></dd>
-          </div>
-          <div>
-            <dt>Focus</dt>
-            <dd data-project-focus></dd>
-          </div>
-          <div>
-            <dt>Tools</dt>
-            <dd data-project-tools></dd>
-          </div>
-          <div>
-            <dt>Status / Outcome</dt>
-            <dd data-project-outcome></dd>
-          </div>
-        </dl>
-      </section>
-
-      <div class="case-study-flow" data-project-sections></div>
-
-      <section class="case-next section-reveal">
-        <a data-next-project href="#">
-          <span></span>
-          <strong></strong>
-        </a>
-      </section>
+        <div class="case-summary">
+          <h2>At a glance</h2>
+          <p>
+            I built questionnaires, organised the clinical data structure,
+            configured survey distribution and trained the R&amp;D team. The
+            result was a repeatable workflow for reviewing implant feedback.
+          </p>
+          <dl>
+            <dt>Tools &amp; methods</dt>
+            <dd>
+              REDCap, questionnaire design, calculated fields, survey
+              distribution, team training
+            </dd>
+          </dl>
+        </div>
+      </div>
+      <div class="article-layout wrap">
+        <aside class="article-nav">
+          <nav aria-label="On this page">
+            <p>In this project</p>
+            <a href="#context">The operational problem</a
+            ><a href="#structure"
+              >Start with the operation, then the assessment</a
+            ><a href="#workflow">The feedback workflow</a
+            ><a href="#scores">Making sense of the scores</a
+            ><a href="#outcome">What the work delivered</a
+            ><a href="#reflection"
+              >What this taught me about clinical software</a
+            ><a href="#sources">Project material</a>
+          </nav>
+        </aside>
+        <article class="article-body">
+          <section id="context" class="article-section">
+            <h2>The operational problem</h2>
+            <p>
+              At KOLN 3D, a manufacturer of metallic surgical implants,
+              post-operative feedback had to connect the implant, the operation
+              and the patient&#x27;s recovery. A general feedback question could
+              not capture the different functional concerns of a hip, an elbow
+              or an orbital procedure.
+            </p>
+            <p>
+              The project translated that need into a REDCap workflow for
+              structured patient and surgeon feedback. My work covered
+              questionnaire implementation, anatomy-specific organisation,
+              automated email distribution and training the R&amp;D team to
+              manage the process.
+            </p>
+          </section>
+          <section id="structure" class="article-section">
+            <h2>Start with the operation, then the assessment</h2>
+            <p>
+              The form began with patient-specific implant details, serial
+              number, operation location and date, and follow-up date. A
+              surgical-region selection then organised the relevant clinical
+              assessment. Skull procedures included an additional region choice.
+            </p>
+            <p>
+              The assessment structure combined named orthopaedic instruments
+              with custom post-operative sections. Keeping that distinction
+              visible matters: implementing questions in REDCap does not itself
+              validate a questionnaire, a calculated field or a new scoring
+              interpretation.
+            </p>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Assessment coverage in the project materials"
+            >
+              <table>
+                <caption>
+                  Assessment coverage in the project materials
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Region</th>
+                    <th scope="col">Instrument or assessment</th>
+                    <th scope="col">Status in this workflow</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Foot / ankle</th>
+                    <td>AOFAS ankle–hindfoot score</td>
+                    <td>Named instrument implemented as a digital form</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Hip / pelvis</th>
+                    <td>Harris Hip Score</td>
+                    <td>Named instrument implemented as a digital form</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Knee</th>
+                    <td>Knee Society Score</td>
+                    <td>Named instrument implemented as a digital form</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Shoulder</th>
+                    <td>Rowe Shoulder Score</td>
+                    <td>Named instrument implemented as a digital form</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Elbow</th>
+                    <td>Mayo Elbow Performance Score</td>
+                    <td>Named instrument implemented as a digital form</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Orbit</th>
+                    <td>Orbital post-operative assessment</td>
+                    <td>Custom project assessment</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">TMJ</th>
+                    <td>Temporomandibular-joint assessment</td>
+                    <td>Custom project assessment</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Thoracic / respiratory</th>
+                    <td>Lung-function assessment</td>
+                    <td>Custom project assessment</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              Depending on the region, questions captured pain, stability,
+              motion, walking support, daily activities or procedure-specific
+              symptoms. Calculated fields gave each assessment a consistent
+              place in the record, alongside the underlying responses.
+            </p>
+          </section>
+          <section id="workflow" class="article-section">
+            <h2>The feedback workflow</h2>
+            <p>
+              I recreated the question and response structures in REDCap and
+              configured automated email workflows to support repeatable survey
+              distribution. Organising the records consistently made it easier
+              to follow the same implant through successive feedback points.
+            </p>
+            <p>
+              Training was part of delivery. The R&amp;D team needed to
+              understand how to manage the surveys, monitor responses and
+              interpret the collection workflow after the implementation work
+              ended.
+            </p>
+            <ol class="workflow">
+              <li>
+                <strong>Record</strong
+                ><span
+                  >Associate the implant and operation with the follow-up.</span
+                >
+              </li>
+              <li>
+                <strong>Route</strong
+                ><span>Present the relevant anatomical assessment.</span>
+              </li>
+              <li>
+                <strong>Collect</strong
+                ><span
+                  >Distribute surveys and capture structured responses.</span
+                >
+              </li>
+              <li>
+                <strong>Calculate</strong
+                ><span
+                  >Store the assessment output alongside its source
+                  answers.</span
+                >
+              </li>
+              <li>
+                <strong>Review</strong
+                ><span>Make the feedback available to the R&amp;D team.</span>
+              </li>
+            </ol>
+          </section>
+          <section id="scores" class="article-section">
+            <h2>Making sense of the scores</h2>
+            <p>
+              I also prepared a short interpretation reference to accompany the
+              calculated outputs. This mapped each assessment to its own score
+              bands, rather than assuming that the same numeric value meant the
+              same thing across all instruments.
+            </p>
+            <p>
+              The supplied scoring notes make that need clear: different
+              instruments use different boundaries and category labels. Custom
+              orbital, TMJ and lung-function sections were explicitly marked as
+              self-implemented. They should be understood as project-specific
+              collection tools, with clinical review required before any
+              decision-making use.
+            </p>
+            <p>
+              The portfolio describes the structure and engineering work. It
+              does not provide a clinical calculator or reproduce completed
+              patient records.
+            </p>
+          </section>
+          <section id="outcome" class="article-section">
+            <h2>What the work delivered</h2>
+            <p>
+              The deliverable was a structured, repeatable way to collect
+              post-operative feedback and organise it for review. It brought the
+              survey, scoring fields and operational handover into one workflow.
+            </p>
+            <p>
+              The project materials demonstrate the form structure and
+              interpretation notes. They do not quantify response-rate
+              improvements, time saved or improved patient outcomes, so those
+              are not claimed here.
+            </p>
+            <p>
+              The wider internship also included production-planning automation
+              with Excel VBA and Power Automate, an internal CNC mould guide
+              supporting six-degree-of-freedom drilling setup, and 3D-printed
+              display models for commercial use.
+            </p>
+          </section>
+          <section id="reflection" class="article-section">
+            <h2>What this taught me about clinical software</h2>
+            <p>
+              The hard part was translating a clinical process into something
+              consistent enough to operate repeatedly. That meant asking what
+              each field represented, when a question was relevant and who would
+              use the result.
+            </p>
+            <p>
+              A useful next iteration would make formula verification,
+              instrument-version tracking and missing-response handling
+              explicit, then evaluate the workflow against agreed operational
+              measures. That would allow usability and efficiency claims to be
+              backed by evidence.
+            </p>
+          </section>
+          <section class="article-section resources" id="sources">
+            <h2>Project material</h2>
+            <p>
+              Based on the blank 11-page REDCap form exported in June 2024, the
+              accompanying score-interpretation notes and the original
+              portfolio&#x27;s internship record. The internal form is described
+              here without publishing its original export.
+            </p>
+          </section>
+        </article>
+      </div>
+      <nav class="next-project wrap" aria-label="Project navigation">
+        <span>Next project</span
+        ><a class="text-link" href="fnirs-classification.html"
+          >fNIRS classification during complex walking<svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6" /></svg></a
+        ><a class="back-link" href="../index.html#projects"
+          >All projects<svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6" /></svg
+        ></a>
+      </nav>
     </main>
-
-    <footer class="site-footer project-detail-footer">
-      <p>© 2026 Nate Chu · Biomedical Engineering Portfolio</p>
-      <a href="../index.html#projects">Projects index</a>
+    <footer class="site-footer">
+      <p>© 2026 Nate Chu</p>
+      <p>Biomedical engineering · London / Hong Kong</p>
+      <a class="text-link" href="#top"
+        >Back to top<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 12h14m-6-6 6 6-6 6" /></svg
+      ></a>
     </footer>
-
-    <script src="../project-data.js"></script>
-    <script src="../project-page.js"></script>
   </body>
 </html>

@@ -1,94 +1,476 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Project case study from Nate Chu's biomedical engineering portfolio.">
-    <meta name="theme-color" content="#050807">
-    <title>Project | Nate Chu's Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>fNIRS classification during complex walking | Nate Chu</title>
+    <meta
+      name="description"
+      content="A participant-level machine-learning study of prefrontal responses under different lighting and obstacle conditions, with careful validation of what a small dataset can support."
+    />
+    <meta name="theme-color" content="#f7f8fa" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
-      rel="stylesheet"
-    >
-    <link rel="stylesheet" href="../style.css">
+      rel="canonical"
+      href="https://lycoda.github.io/projects/fnirs-classification.html"
+    />
+    <meta
+      property="og:title"
+      content="fNIRS classification during complex walking | Nate Chu"
+    />
+    <meta
+      property="og:description"
+      content="A participant-level machine-learning study of prefrontal responses under different lighting and obstacle conditions, with careful validation of what a small dataset can support."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://lycoda.github.io/images/hero-original.png"
+    />
+    <link rel="stylesheet" href="../fonts.css" />
+    <link rel="stylesheet" href="../theme.css" />
+    <script src="../main.js" defer></script>
   </head>
-  <body class="project-detail-page" data-project-slug="fnirs-classification">
+  <body class="case-page" id="top">
     <a class="skip-link" href="#main">Skip to content</a>
-
-    <header class="site-header project-detail-header" aria-label="Project navigation">
-      <a class="brand ecg-home" href="../index.html#top" aria-label="Back to home">
-        <span class="ecg-home-icon" aria-hidden="true">
-          <svg viewBox="0 0 120 32" focusable="false">
-            <path d="M2 16H24L31 16L37 7L46 26L55 16H72L79 12L86 20L94 16H118"></path>
-          </svg>
-        </span>
-        <span class="brand-lockup">
-          <span class="brand-text">Nate Chu</span>
-          <span class="brand-sub">Biomedical Engineering</span>
-        </span>
-      </a>
-      <nav class="site-nav" aria-label="Project links">
-        <a href="../index.html#projects"><span aria-hidden="true">03</span>Projects</a>
-        <a href="../index.html#about"><span aria-hidden="true">01</span>About</a>
-        <a href="../index.html#contact"><span aria-hidden="true">05</span>Contact</a>
-      </nav>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="../index.html#top" aria-label="Nate Chu home"
+          ><svg class="brand-mark" viewBox="0 0 40 24" aria-hidden="true">
+            <path d="M1 12h9l4-7 7 15 5-8h13" /></svg
+          ><span
+            >Nate Chu<span class="brand-sub">Biomedical engineering</span></span
+          ></a
+        ><button
+          class="menu-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="site-nav"
+          hidden
+        >
+          Menu
+        </button>
+        <nav class="site-nav" id="site-nav" aria-label="Main navigation">
+          <a href="../index.html#about">About</a
+          ><a href="../index.html#academics">Academics</a
+          ><a href="../index.html#projects">Projects</a
+          ><a href="../index.html#experience">Experience</a
+          ><a href="../index.html#contact">Contact</a>
+        </nav>
+      </div>
     </header>
-
-    <main class="project-detail-main" id="main">
-      <section class="case-hero section-reveal">
-        <a class="case-back-link" href="../index.html#projects">Back to Projects</a>
-        <p class="project-counter" data-project-counter></p>
-        <h1 data-project-title></h1>
-        <p class="project-status" data-project-status></p>
-        <figure class="case-hero-visual">
-          <img data-project-image src="" alt="">
+    <main id="main">
+      <header class="case-header wrap">
+        <a class="back-link" href="../index.html#projects"
+          >All projects<svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6" /></svg
+        ></a>
+        <h1>What can walking tell us about the brain?</h1>
+        <p class="case-intro">
+          A participant-level machine-learning study of prefrontal responses
+          under different lighting and obstacle conditions, with careful
+          validation of what a small dataset can support.
+        </p>
+        <div class="case-meta">
+          <div>
+            <span>My role</span><strong>MSc dissertation researcher</strong>
+          </div>
+          <div>
+            <span>Context</span><strong>University College London</strong>
+          </div>
+          <div>
+            <span>Project stage</span
+            ><strong>Dissertation submitted · 2026</strong>
+          </div>
+        </div>
+      </header>
+      <div class="case-lead wrap">
+        <figure class="case-image">
+          <img
+            src="../images/projects/fnirs.png"
+            alt="Experimental walking route with lighting and obstacle conditions"
+            width="640"
+            height="440"
+          />
         </figure>
-      </section>
-
-      <section class="case-summary section-reveal" aria-label="Project summary">
-        <p class="case-intro" data-project-intro></p>
-        <dl class="case-meta-grid">
-          <div>
-            <dt>Description</dt>
-            <dd data-project-description></dd>
-          </div>
-          <div>
-            <dt>Role</dt>
-            <dd data-project-role></dd>
-          </div>
-          <div>
-            <dt>Focus</dt>
-            <dd data-project-focus></dd>
-          </div>
-          <div>
-            <dt>Tools</dt>
-            <dd data-project-tools></dd>
-          </div>
-          <div>
-            <dt>Status / Outcome</dt>
-            <dd data-project-outcome></dd>
-          </div>
-        </dl>
-      </section>
-
-      <div class="case-study-flow" data-project-sections></div>
-
-      <section class="case-next section-reveal">
-        <a data-next-project href="#">
-          <span></span>
-          <strong></strong>
-        </a>
-      </section>
+        <div class="case-summary">
+          <h2>At a glance</h2>
+          <p>
+            I built and tested a complete analysis pipeline. The best observed
+            model reached 61.9% balanced accuracy, but selection-adjusted
+            testing did not establish performance above chance.
+          </p>
+          <dl>
+            <dt>Tools &amp; methods</dt>
+            <dd>Python, scikit-learn, SciPy, pandas, pytest, SPM outputs</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="article-layout wrap">
+        <aside class="article-nav">
+          <nav aria-label="On this page">
+            <p>In this project</p>
+            <a href="#question">The research question</a
+            ><a href="#data">From SPM files to comparable features</a
+            ><a href="#validation">Validation was part of the design</a
+            ><a href="#results">The result, including its limits</a
+            ><a href="#extensions">Looking beyond a single score</a
+            ><a href="#engineering">Making the analysis reproducible</a
+            ><a href="#sources">Project material</a>
+          </nav>
+        </aside>
+        <article class="article-body">
+          <section id="question" class="article-section">
+            <h2>The research question</h2>
+            <p>
+              Could prefrontal brain responses recorded during walking
+              distinguish autistic and neurotypical adults? The question moved
+              beyond differences between group averages to ask whether those
+              responses could classify a previously unseen participant.
+            </p>
+            <p>
+              I analysed an existing UCL PEARL walking-and-lighting dataset. The
+              original experiment varied blue versus yellow illumination, dim
+              versus bright light, and the presence of obstacles. Functional
+              near-infrared spectroscopy (fNIRS) provided a portable measure of
+              changes in cortical haemoglobin during these tasks.
+            </p>
+            <p>
+              My work began with the inherited, first-level SPM outputs. I did
+              not collect the original recordings, repeat raw-signal
+              preprocessing, or refit the original general linear model. My
+              contribution was the secondary analysis: data validation, feature
+              construction, classification, statistical testing and
+              interpretation.
+            </p>
+          </section>
+          <section id="data" class="article-section">
+            <h2>From SPM files to comparable features</h2>
+            <p>
+              A file being readable did not mean it was usable. I checked the
+              design matrices, regressor names and stored beta estimates for
+              compatible dimensions, finite values and the required task
+              conditions. Four of the 36 participants had a required task column
+              containing only zeros and were excluded before model fitting.
+            </p>
+            <p>
+              The final analytical cohort contained 32 participants: 19
+              neurotypical and 13 autistic. I pooled condition-specific
+              oxygenated-haemoglobin beta estimates from 22 channels into seven
+              predefined prefrontal regions, keeping the inputs compact and
+              anatomically interpretable.
+            </p>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Four feature representations, each evaluated with three linear classifiers"
+            >
+              <table>
+                <caption>
+                  Four feature representations, each evaluated with three linear
+                  classifiers
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Representation</th>
+                    <th scope="col">Features</th>
+                    <th scope="col">Purpose</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Task-context ROI</th>
+                    <td>21</td>
+                    <td>
+                      Broad averages for yellow walking, blue walking and
+                      non-walking events
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Full-contrast ROI</th>
+                    <td>28</td>
+                    <td>Four condition differences across seven regions</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Contrast summary</th>
+                    <td>32</td>
+                    <td>
+                      Global, hemispheric and regional-family summaries of the
+                      four contrasts
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Blue–yellow summary</th>
+                    <td>8</td>
+                    <td>
+                      A focused representation of the lighting-spectrum contrast
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              The four contrasts were blue minus yellow, dim minus bright,
+              obstacle minus no obstacle, and non-walking minus walking. They
+              were constructed without group labels. Expressing differences
+              within each participant also reduced the emphasis on broad
+              participant-level response offsets.
+            </p>
+          </section>
+          <section id="validation" class="article-section">
+            <h2>Validation was part of the design</h2>
+            <p>
+              I compared shrinkage linear discriminant analysis (LDA),
+              L2-regularised logistic regression and a linear support vector
+              machine. With almost as many predictors as training participants,
+              regularised linear models offered a more defensible starting point
+              than a highly flexible classifier.
+            </p>
+            <p>
+              The outer validation loop used four stratified folds repeated 25
+              times. Each of the 100 outer evaluations held out participants
+              entirely. Three-fold inner validation selected hyperparameters
+              using only the outer training set. Standardisation, optional PCA
+              and questionnaire imputation stayed inside the fitted pipelines.
+            </p>
+            <ol class="workflow">
+              <li>
+                <strong>Validate</strong
+                ><span
+                  >Check the SPM design and required conditions before
+                  inclusion.</span
+                >
+              </li>
+              <li>
+                <strong>Represent</strong
+                ><span
+                  >Aggregate channels into regions and construct fixed feature
+                  sets.</span
+                >
+              </li>
+              <li>
+                <strong>Tune</strong
+                ><span
+                  >Fit preprocessing and choose hyperparameters within training
+                  folds.</span
+                >
+              </li>
+              <li>
+                <strong>Evaluate</strong
+                ><span
+                  >Score untouched participants using the same splits for all
+                  models.</span
+                >
+              </li>
+              <li>
+                <strong>Challenge</strong
+                ><span
+                  >Repeat the full comparison with shuffled participant
+                  labels.</span
+                >
+              </li>
+            </ol>
+            <p>
+              Comparing 12 configurations creates another opportunity for
+              optimism: one configuration may look best by chance. I ran 1,000
+              participant-label permutations, repeating the entire nested
+              analysis and retaining the best score across all 12 configurations
+              for each permutation. This produced a selection-aware reference
+              distribution.
+            </p>
+          </section>
+          <section id="results" class="article-section">
+            <h2>The result, including its limits</h2>
+            <p>
+              Contrast-based representations performed better descriptively than
+              broad task-context averages. Full-contrast LDA produced the
+              strongest observed result, but the error pattern was uneven:
+              neurotypical specificity was high and autistic recall was low.
+            </p>
+            <div
+              class="table-scroll"
+              tabindex="0"
+              role="region"
+              aria-label="Full-contrast LDA performance and selection-adjusted inference"
+            >
+              <table>
+                <caption>
+                  Full-contrast LDA performance and selection-adjusted inference
+                </caption>
+                <thead>
+                  <tr>
+                    <th scope="col">Measure</th>
+                    <th scope="col">Result</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Balanced accuracy</th>
+                    <td>0.619</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">ROC-AUC</th>
+                    <td>0.696</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Neurotypical specificity</th>
+                    <td>0.890</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Autistic recall</th>
+                    <td>0.348</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Matthews correlation coefficient</th>
+                    <td>0.286</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Selection-adjusted permutation p-value</th>
+                    <td>0.236</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <figure class="article-figure">
+              <a
+                href="../images/projects/fnirs-results.png"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Open figure at full size"
+                ><img
+                  src="../images/projects/fnirs-results.png"
+                  alt="Dissertation Figure 4 comparing balanced accuracy, ROC-AUC and MCC across twelve model configurations"
+                  loading="lazy"
+              /></a>
+              <figcaption>
+                Original dissertation Figure 4. Contrast features improved
+                descriptive performance, but the selected result remained
+                statistically uncertain.
+              </figcaption>
+            </figure>
+            <p>
+              The configuration-specific p-value for full-contrast LDA was
+              0.0539. After selection across the 12 configurations, it was
+              0.2358: 235 of 1,000 shuffled-label runs achieved a best score at
+              least as high as the observed result. The study therefore did not
+              establish a reliable classifier or a clinically useful diagnostic
+              tool.
+            </p>
+            <p>
+              The repeated evaluations reused the same 32 people. They helped
+              characterise sensitivity to data splits; they did not turn a small
+              cohort into 100 independent validation samples.
+            </p>
+          </section>
+          <section id="extensions" class="article-section">
+            <h2>Looking beyond a single score</h2>
+            <p>
+              I examined participant-level prediction stability to distinguish
+              people who were repeatedly misclassified from people whose
+              predictions changed across splits. Errors were concentrated among
+              a subset of autistic participants, making the overall score an
+              incomplete description of model behaviour.
+            </p>
+            <p>
+              Adding the Sensory Perception Quotient (SPQ) to the full-contrast
+              features produced small, classifier-dependent changes. It mainly
+              changed the balance between recall and specificity rather than
+              adding a consistent predictive benefit.
+            </p>
+            <p>
+              PCA provided a useful counterexample to the assumption that
+              preserving variance preserves useful information. It retained a
+              median of five components and 95.2% of total feature variance, yet
+              balanced accuracy fell from 0.6185 to 0.5881. I projected
+              PCA-space classifier coefficients back into the original
+              standardised feature space and numerically checked their
+              reconstructed decision scores.
+            </p>
+          </section>
+          <section id="engineering" class="article-section">
+            <h2>Making the analysis reproducible</h2>
+            <p>
+              The final dissertation reports 87 passing automated tests across
+              seven modules, with two expected questionnaire-merge warnings.
+              Tests covered SPM validation, synthetic ROI calculations, contrast
+              directions, invalid feature tables, nested-validation outputs,
+              participant summaries, questionnaire matching and permutation
+              statistics.
+            </p>
+            <p>
+              I documented random seeds, software versions, analysis scripts and
+              aggregate outputs. The result is a reproducible research workflow
+              whose assumptions and failure cases can be inspected, even when
+              the scientific answer is inconclusive.
+            </p>
+            <p>
+              The next useful step is stronger evidence: a larger independent
+              cohort, richer metadata and external validation. More model
+              searching on the same small sample would not resolve the
+              underlying uncertainty.
+            </p>
+          </section>
+          <section class="article-section resources" id="sources">
+            <h2>Project material</h2>
+            <ul>
+              <li>
+                <a class="text-link" href="../documents/fnirs-dissertation.pdf"
+                  >Read the full dissertation<svg
+                    class="arrow"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14m-6-6 6 6-6 6" /></svg></a
+                ><span>PDF · 64 pages</span>
+              </li>
+              <li>
+                <a
+                  class="text-link"
+                  href="https://github.com/LyCoda/fnirs-walking-autism-classification"
+                  target="_blank"
+                  rel="noreferrer"
+                  >Explore the analysis code<svg
+                    class="arrow"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14m-6-6 6 6-6 6" /></svg></a
+                ><span>Code, aggregate results and reproducibility notes</span>
+              </li>
+            </ul>
+          </section>
+        </article>
+      </div>
+      <nav class="next-project wrap" aria-label="Project navigation">
+        <span>Next project</span
+        ><a class="text-link" href="bone-healing-monitoring-device.html"
+          >OsteoTrack bone-healing monitoring<svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6" /></svg></a
+        ><a class="back-link" href="../index.html#projects"
+          >All projects<svg
+            class="arrow"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14m-6-6 6 6-6 6" /></svg
+        ></a>
+      </nav>
     </main>
-
-    <footer class="site-footer project-detail-footer">
-      <p>© 2026 Nate Chu · Biomedical Engineering Portfolio</p>
-      <a href="../index.html#projects">Projects index</a>
+    <footer class="site-footer">
+      <p>© 2026 Nate Chu</p>
+      <p>Biomedical engineering · London / Hong Kong</p>
+      <a class="text-link" href="#top"
+        >Back to top<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 12h14m-6-6 6 6-6 6" /></svg
+      ></a>
     </footer>
-
-    <script src="../project-data.js"></script>
-    <script src="../project-page.js"></script>
   </body>
 </html>
