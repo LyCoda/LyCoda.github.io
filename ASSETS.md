@@ -9,6 +9,7 @@
 - `images/projects/heart-rate-monitor-overview.png`: a block diagram drawn for this site from the EE2600 report. `heart-rate-monitor.png`, `-system.png`, `-alarm.png`: Logisim schematics Nate built, extracted unchanged from the report.
 - `images/projects/surgical-workflow*.png`: Nate's model diagrams and results chart, extracted unchanged from the MPHY0043 coursework paper.
 - `images/projects/surgical-data-science.png`: an overview card drawn for this site. MPHY0047 notebook figures are not published.
+- `images/projects/*-thumb.png`: card-sized diagrams drawn for this site from each project's material, so homepage cards stay legible.
 - `images/projects/ce-marking-pathway.png`: a diagram drawn for this site that summarises the MPHY0046 assessment.
 - `images/companies/zortex.png`: Zortex logo, supplied by Nate.
 - Textbook tables and figures included in the original lab report were not reused as site images. The published lab report PDF still contains them uncredited, as submitted (a Horowitz and Hill filter table and response figure on page 13, TI datasheet pinouts on page 3).

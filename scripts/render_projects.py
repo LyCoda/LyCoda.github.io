@@ -22,6 +22,7 @@ NAV = [('about', 'About'), ('academics', 'Academics'), ('projects', 'Work'), ('e
 
 # ---------- checks ----------
 def check():
+    """Fail loudly on content mistakes (run without python -O)."""
     placed = [s['slug'] for t in timeline['threads'] for s in t['steps'] if 'slug' in s] + timeline['standalone']
     for slug in placed:
         assert slug in by_slug, f'timeline.json names an unknown project: {slug}'
@@ -35,7 +36,8 @@ def check():
                 for key in ('href', 'year', 'name', 'label'):
                     assert key in s, f'non-project step in {t["id"]} needs "{key}"'
     for p in data:
-        assert (root / p['image']).exists(), f'missing image for {p["slug"]}: {p["image"]}'
+        for key in ('image', 'thumb'):
+            assert key not in p or (root / p[key]).exists(), f'missing {key} for {p["slug"]}: {p.get(key)}'
 
 
 def image_size(path):
@@ -167,8 +169,11 @@ def case_page(i, p):
 
 # ---------- homepage work sections ----------
 def card_img(p):
-    w, h = image_size(p['image'])
-    return f'<img class="fit-{p.get("cardFit", "contain")}" src="{p["image"]}" alt="" loading="lazy" width="{w}" height="{h}">'
+    """Card thumbnail: a card-scale image when one exists, otherwise the cover image."""
+    src = p.get('thumb', p['image'])
+    fit = p.get('thumbFit', 'cover') if 'thumb' in p else p.get('cardFit', 'contain')
+    w, h = image_size(src)
+    return f'<img class="fit-{fit}" src="{src}" alt="" loading="lazy" width="{w}" height="{h}">'
 
 
 def featured():

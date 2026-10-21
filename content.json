@@ -299,7 +299,8 @@
         "href": "../documents/heart-rate-monitor-report.pdf",
         "detail": "PDF · 12 pages · Student IDs and classmates' names removed"
       }
-    ]
+    ],
+    "thumb": "images/projects/heart-rate-monitor-thumb.png"
   },
   {
     "slug": "redcap-feedback-workflow",
@@ -448,7 +449,8 @@
     "stage": "Industry",
     "label": "KOLN 3D · Internship",
     "thread": "translation",
-    "cardFit": "logo"
+    "cardFit": "logo",
+    "thumb": "images/projects/redcap-thumb.png"
   },
   {
     "slug": "emg-controlled-robotic-arm",
@@ -733,7 +735,8 @@
         "detail": "PDF · 7 pages · Student ID removed"
       }
     ],
-    "featured": 2
+    "featured": 2,
+    "thumb": "images/projects/surgical-workflow-thumb.png"
   },
   {
     "slug": "bone-healing-monitoring-device",
@@ -894,7 +897,8 @@
     "year": "2026",
     "stage": "MSc",
     "label": "UCL · Group concept",
-    "thread": "translation"
+    "thread": "translation",
+    "cardFit": "cover"
   },
   {
     "slug": "ce-marking-lung-ultrasound-robot",
@@ -1016,7 +1020,8 @@
       }
     ],
     "resources": [],
-    "sourceNote": "The answers follow the module's question template, so the submission is summarised here rather than published. The device is described in Tan et al. (2023), a research paper on a fully automatic dual-probe lung-ultrasound scanning robot."
+    "sourceNote": "The answers follow the module's question template, so the submission is summarised here rather than published. The device is described in Tan et al. (2023), a research paper on a fully automatic dual-probe lung-ultrasound scanning robot.",
+    "thumb": "images/projects/ce-marking-thumb.png"
   },
   {
     "slug": "surgical-data-science",
@@ -1138,7 +1143,8 @@
     ],
     "resources": [],
     "sourceNote": "UCL asks students not to publish MPHY0047 assessment material, so the briefs, notebooks, answers and figures are summarised here rather than published.",
-    "cardFit": "cover"
+    "cardFit": "cover",
+    "thumb": "images/projects/surgical-data-science-thumb.png"
   },
   {
     "slug": "fnirs-classification",
@@ -1322,6 +1328,8 @@
     "stage": "MSc",
     "label": "UCL · MSc dissertation",
     "thread": "biosignals",
-    "featured": 1
+    "featured": 1,
+    "thumb": "images/projects/fnirs-results.png",
+    "thumbFit": "contain"
   }
 ]
