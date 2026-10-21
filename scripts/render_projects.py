@@ -79,7 +79,7 @@ def head(title, desc, prefix='', path='', image='images/hero-original.png'):
 
 def header():
     nav = ''.join(f'<a href="../index.html#{id}">{text}</a>' for id, text in NAV)
-    nav += f'<a class="nav-cv" href="../{CV}" target="_blank" rel="noreferrer">CV<span class="visually-hidden"> (PDF, opens in a new tab)</span></a>'
+    nav += f'<a class="nav-cv" href="../{CV}">CV<span class="visually-hidden"> (PDF)</span></a>'
     return ('<a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="header-inner">'
             '<a class="brand" href="../index.html#top" aria-label="Nate Chu home"><svg class="brand-mark" viewBox="0 0 40 24" aria-hidden="true"><path d="M1 12h9l4-7 7 15 5-8h13"/></svg>'
             '<span>Nate Chu<span class="brand-sub">Biomedical engineering</span></span></a>'
