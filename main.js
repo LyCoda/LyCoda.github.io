@@ -59,8 +59,10 @@ if (shell && reveal) {
   });
   let userPaused = false;
   let inView = true;
+  // Start the portrait video only after the page has loaded, so it never delays first paint.
+  let ready = false;
   const updateVideo = () => {
-    const play = !reduced.matches && !userPaused && inView && !document.hidden;
+    const play = ready && !reduced.matches && !userPaused && inView && !document.hidden;
     motion.hidden = reduced.matches;
     motion.textContent = userPaused ? "Play animation" : "Pause animation";
     if (play)
@@ -85,6 +87,12 @@ if (shell && reveal) {
       updateVideo();
     }).observe(shell);
   updateVideo();
+  const start = () => setTimeout(() => {
+    ready = true;
+    updateVideo();
+  }, 1200);
+  if (document.readyState === "complete") start();
+  else addEventListener("load", start, { once: true });
 }
 const toc = document.querySelector(".article-nav");
 if (toc && "IntersectionObserver" in window) {
@@ -121,3 +129,69 @@ if (revealTargets.length && "IntersectionObserver" in window) {
   );
   revealTargets.forEach((el) => revealer.observe(el));
 }
+
+// Archive cards: a slight tilt and glare that follow the pointer.
+const tiltOK =
+  window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.querySelectorAll(".vc").forEach((card) => {
+  if (!tiltOK) return;
+  card.addEventListener("pointermove", (e) => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width;
+    const y = (e.clientY - r.top) / r.height;
+    card.style.setProperty("--rx", ((x - 0.5) * 6).toFixed(2) + "deg");
+    card.style.setProperty("--ry", ((0.5 - y) * 6).toFixed(2) + "deg");
+    card.style.setProperty("--mx", (x * 100).toFixed(1) + "%");
+    card.style.setProperty("--my", (y * 100).toFixed(1) + "%");
+  });
+  card.addEventListener("pointerleave", () => {
+    card.style.setProperty("--rx", "0deg");
+    card.style.setProperty("--ry", "0deg");
+  });
+});
+
+// Archive filter chips.
+const vaultGrid = document.querySelector(".vault-grid");
+document.querySelectorAll(".vault-filter button").forEach((btn, _, all) => {
+  btn.addEventListener("click", () => {
+    const f = btn.dataset.filter;
+    all.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+    vaultGrid.classList.toggle("is-filtered", f !== "all");
+    vaultGrid.querySelectorAll(".vc").forEach((card) => {
+      card.classList.toggle("is-hidden", f !== "all" && card.dataset.thread !== f);
+    });
+  });
+});
+
+// Guess-first project cards: pick an answer, see the result, then read how I found out.
+const scoreEl = document.querySelector(".vault-score");
+let guessed = 0;
+let right = 0;
+document.querySelectorAll(".vc").forEach((card) => {
+  const opts = card.querySelectorAll(".vc-opt");
+  const verdict = card.querySelector(".vc-verdict");
+  opts.forEach((opt) => {
+    opt.addEventListener("click", () => {
+      if (card.classList.contains("is-answered")) return;
+      const ok = opt.dataset.correct === "true";
+      opts.forEach((o) => {
+        o.disabled = true;
+        if (o.dataset.correct === "true") o.classList.add("is-right");
+      });
+      if (!ok) opt.classList.add("is-wrong");
+      opt.setAttribute("aria-pressed", "true");
+      verdict.textContent = ok ? "Right." : "Not quite.";
+      card.classList.add("is-answered");
+      guessed += 1;
+      if (ok) right += 1;
+      if (scoreEl) {
+        const [g, r] = scoreEl.querySelectorAll("b");
+        g.textContent = guessed;
+        r.textContent = right;
+        scoreEl.hidden = false;
+      }
+      card.querySelector(".vc-btn").focus({ preventScroll: true });
+    });
+  });
+});

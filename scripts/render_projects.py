@@ -17,7 +17,8 @@ by_slug = {p['slug']: p for p in data}
 E = html.escape
 MONTHS = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split()
 arrow = '<svg class="arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>'
-NAV = [('about', 'About'), ('academics', 'Academics'), ('projects', 'Work'), ('experience', 'Experience'), ('contact', 'Contact')]
+NAV = [('about', 'About'), ('experience', 'Experience'), ('education', 'Education'), ('projects', 'Projects'), ('contact', 'Contact')]
+CV = 'Long-Yin-Chu-CV.pdf'
 
 
 # ---------- checks ----------
@@ -36,7 +37,7 @@ def check():
                 for key in ('href', 'year', 'name', 'label'):
                     assert key in s, f'non-project step in {t["id"]} needs "{key}"'
     for p in data:
-        for key in ('image', 'thumb'):
+        for key in ('image',):
             assert key not in p or (root / p[key]).exists(), f'missing {key} for {p["slug"]}: {p.get(key)}'
 
 
@@ -78,6 +79,7 @@ def head(title, desc, prefix='', path='', image='images/hero-original.png'):
 
 def header():
     nav = ''.join(f'<a href="../index.html#{id}">{text}</a>' for id, text in NAV)
+    nav += f'<a class="nav-cv" href="../{CV}" target="_blank" rel="noreferrer">CV<span class="visually-hidden"> (PDF, opens in a new tab)</span></a>'
     return ('<a class="skip-link" href="#main">Skip to content</a><header class="site-header"><div class="header-inner">'
             '<a class="brand" href="../index.html#top" aria-label="Nate Chu home"><svg class="brand-mark" viewBox="0 0 40 24" aria-hidden="true"><path d="M1 12h9l4-7 7 15 5-8h13"/></svg>'
             '<span>Nate Chu<span class="brand-sub">Biomedical engineering</span></span></a>'
@@ -168,27 +170,8 @@ def case_page(i, p):
 
 
 # ---------- homepage work sections ----------
-def card_img(p):
-    """Card thumbnail: a card-scale image when one exists, otherwise the cover image."""
-    src = p.get('thumb', p['image'])
-    fit = p.get('thumbFit', 'cover') if 'thumb' in p else p.get('cardFit', 'contain')
-    w, h = image_size(src)
-    return f'<img class="fit-{fit}" src="{src}" alt="" loading="lazy" width="{w}" height="{h}">'
-
-
-def featured():
-    return sorted([p for p in data if p.get('featured')], key=lambda p: p['featured'])
-
-
-def recent():
-    rows = []
-    for p in featured():
-        tid = f'recent-{p["slug"]}'
-        rows.append(f'<article class="recent-item reveal"><a class="recent-link" href="projects/{p["slug"]}.html" aria-labelledby="{tid}">'
-                    f'<div class="recent-media">{card_img(p)}</div><div class="recent-copy"><p class="eyebrow">{E(p["label"])} · {E(month(p))}</p>'
-                    f'<h3 id="{tid}">{E(p["title"])}</h3><p>{E(p["summary"])}</p><span class="text-link">Read the case study{arrow}</span></div></a></article>')
-    return ('<section class="work section" id="projects"><div class="wrap"><div class="section-heading"><h2>Selected work</h2>'
-            '<p>Three projects to start with.</p></div><div class="recent-list">\n' + '\n'.join(rows) + '\n</div></div></section>')
+THREAD_NAMES = {'biosignals': 'Biosignals', 'translation': 'Medtech translation', 'surgical-ai': 'Surgical AI'}
+UNITS = {'tall': 6, 'reg': 4}  # grid rows each card spans on wider screens
 
 
 def evolution():
@@ -201,48 +184,114 @@ def evolution():
             steps.append(f'<li class="thread-step reveal"><span class="thread-node" aria-hidden="true"></span><p class="thread-year">{E(when)}</p>'
                          f'<p class="eyebrow">{E(label)}</p><h4><a href="{href}">{E(name)}</a></h4>'
                          f'<dl><dt>Built</dt><dd>{E(st["built"])}</dd><dt>Evidence</dt><dd>{E(st["evidence"])}</dd></dl></li>')
-        threads.append(f'<div class="thread" id="thread-{t["id"]}"><div class="thread-head"><h3>{E(t["title"])}</h3><p>{E(t["subtitle"])}</p></div>'
+        threads.append(f'<div class="thread" id="thread-{t["id"]}"><div class="thread-head"><h4 class="thread-title">{E(t["title"])}</h4><p>{E(t["subtitle"])}</p></div>'
                        f'<ol class="thread-track" style="--steps:{len(t["steps"])}">\n' + '\n'.join(steps) + '\n</ol></div>')
-    solo = []
-    for s in timeline['standalone']:
-        p = by_slug[s]
-        tid = f'solo-{p["slug"]}'
-        solo.append(f'<li class="reveal"><a href="projects/{p["slug"]}.html" aria-labelledby="{tid}"><p class="eyebrow">{E(p["label"])} · {E(month(p))}</p>'
-                    f'<h4 id="{tid}">{E(p["name"])}</h4><p>{E(p["summary"])}</p><span class="text-link">Learn more{arrow}</span></a></li>')
+    solo = ' and '.join(f'<a href="projects/{s}.html">{E(by_slug[s]["name"])}</a>' for s in timeline['standalone'])
     trace = ('<svg class="evolution-trace" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true">'
              '<path d="M0 40H360l18-22 22 52 24-74 22 66 16-22H690l14-14 18 34 20-50 20 44 12-14H1200"/></svg>')
-    return (f'<section class="evolution section" id="evolution">{trace}<div class="wrap"><div class="section-heading"><h2>How my work has evolved</h2>'
+    return (f'<div class="evolution" id="evolution">{trace}<div class="sub-heading"><h3>How my work has evolved</h3>'
             f'<p>{E(timeline["intro"])}</p></div>\n' + '\n'.join(threads) +
-            '\n<div class="standalone"><div class="thread-head"><h3>Standalone projects</h3><p>Focused pieces that sit outside the two threads</p></div>'
-            '<ul>\n' + '\n'.join(solo) + '\n</ul></div></div></section>')
+            f'\n<p class="standalone-note">Standing on their own: {solo}. Both are in the archive below.</p></div>')
+
+
+def masonry(cards, cols):
+    """Place cards newest-first into the shortest column; stretch each column's last card so the grid ends level."""
+    heights, place, last = [1] * cols, {}, {}
+    for p in cards:
+        c = heights.index(min(heights))
+        span = UNITS[p['card']['size']]
+        place[p['slug']] = [c + 1, heights[c], span]
+        heights[c] += span
+        last[c] = p['slug']
+    top = max(heights)
+    for c, slug in last.items():
+        place[slug][2] += top - heights[c]
+    return place
+
+
+def art(p):
+    c = p['card']
+    kind = c['art']
+    if kind in ('photo', 'product', 'logo', 'circuit'):
+        w, h = image_size(c['src'])
+        pos = f' style="object-position:{c["pos"]}"' if 'pos' in c else ''
+        img = f'<img class="vc-img vc-{kind}" src="{c["src"]}" alt="" loading="lazy" width="{w}" height="{h}"{pos}>'
+        if 'steps' in c:
+            img += '<ol class="vc-steps" aria-hidden="true">' + ''.join(f'<li style="--i:{i}">{E(t)}</li>' for i, t in enumerate(c['steps'])) + '</ol>'
+        return img
+    if kind == 'fnirs':
+        # Illustrative oxy/deoxy-haemoglobin style curves, not study data.
+        waves = ''.join(f'<path class="w{i}" d="M0 {150 + i * 26}' + ''.join(f' Q{x + 25} {150 + i * 26 - (38 - i * 6) * (1 if (x // 50) % 2 else -1)} {x + 50} {150 + i * 26}' for x in range(0, 600, 50)) + '"/>' for i in range(5))
+        return f'<svg class="vc-svg vc-waves" viewBox="0 0 600 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true">{waves}</svg>'
+    if kind == 'ce':
+        items = ''.join(f'<li{" class=\"is-answer\"" if k == "IIa" else ""}>{k}</li>' for k in ('I', 'IIa', 'IIb', 'III'))
+        return f'<ol class="vc-classes" aria-hidden="true">{items}</ol>'
+    if kind == 'workflow':
+        # Seven phases, as in Cholec80; widths are illustrative.
+        widths = [8, 22, 10, 26, 9, 15, 10]
+        bars = ''.join(f'<span style="--w:{w};--i:{i}"></span>' for i, w in enumerate(widths))
+        return (f'<div class="vc-flow" aria-hidden="true"><div class="vc-flow-frame"><i></i><i></i><i></i></div>'
+                f'<div class="vc-flow-bar">{bars}<b class="vc-playhead"></b></div><p>Phase 1 … 7 · time remaining ?</p></div>')
+    if kind == 'sds':
+        items = [('01', 'Ultrasound', 'image quality'), ('02', 'Skill + CT', 'classification'), ('03', 'ECG beats', 'clustering')]
+        cells = ''.join(f'<li style="--i:{i}"><span>{n}</span><strong>{a}</strong><em>{b}</em></li>' for i, (n, a, b) in enumerate(items))
+        return f'<ol class="vc-sds" aria-hidden="true">{cells}</ol>'
+    raise ValueError(f'unknown card art: {kind}')
+
+
+def quiz(p, tid):
+    """Guess-first panel: a question, answer chips, then the answer and a link to the case study."""
+    q = p['card']['quiz']
+    opts = ''.join(f'<button type="button" class="vc-opt" data-correct="{str(i == q["answer"]).lower()}">{E(o)}</button>'
+                   for i, o in enumerate(q['options']))
+    return (f'<div class="vc-quiz"><p class="vc-q">{E(q["question"])}</p>'
+            f'<div class="vc-opts" role="group" aria-label="Your guess">{opts}</div>'
+            f'<div class="vc-reveal" aria-live="polite"><p><span class="vc-verdict"></span>{E(q["reveal"])}</p></div>'
+            f'<a class="vc-btn" href="projects/{p["slug"]}.html" aria-describedby="{tid}">See how I found out</a></div>')
 
 
 def archive():
-    shown = {p['slug'] for p in featured()}
-    rest = [p for p in data if p['slug'] not in shown]
-    groups = []
-    for y in sorted({p['year'] for p in rest}, reverse=True):
-        cards = []
-        for p in sorted([p for p in rest if p['year'] == y], key=lambda p: p['date'], reverse=True):
-            tid = f'archive-{p["slug"]}'
-            cards.append(f'<article class="archive-card reveal"><a href="projects/{p["slug"]}.html" aria-labelledby="{tid}"><div class="archive-media">{card_img(p)}</div>'
-                         f'<p class="eyebrow">{E(p["label"])} · {E(month(p))}</p><h4 id="{tid}">{E(p["name"])}</h4><p>{E(p["summary"])}</p>'
-                         f'<span class="text-link">Learn more{arrow}</span></a></article>')
-        groups.append(f'<div class="archive-year"><h3>{y}</h3><div class="archive-grid">\n' + '\n'.join(cards) + '\n</div></div>')
-    return ('<section class="archive section" id="archive"><div class="wrap"><div class="section-heading"><h2 class="spaced">Archive</h2>'
-            '<p>Everything else, newest first.</p></div>\n' + '\n'.join(groups) + '\n</div></section>')
+    cards = sorted(data, key=lambda p: p['date'], reverse=True)
+    p3, p2 = masonry(cards, 3), masonry(cards, 2)
+    out = []
+    for p in cards:
+        c = p['card']
+        tid = f'vc-{p["slug"]}'
+        c3, r3, s3 = p3[p['slug']]
+        c2, r2, s2 = p2[p['slug']]
+        out.append(f'<article class="vc vc-{c["theme"]} vc-{c["size"]} vc-art-{c["art"]} reveal" data-thread="{c["thread"]}" '
+                   f'style="--c3:{c3};--r3:{r3};--s3:{s3};--c2:{c2};--r2:{r2};--s2:{s2}">'
+                   f'<div class="vc-art">{art(p)}</div><span class="vc-glare" aria-hidden="true"></span>'
+                   f'<div class="vc-top"><p class="vc-eyebrow">{E(c["eyebrow"])}</p>'
+                   f'<h3 id="{tid}"><a class="vc-link" href="projects/{p["slug"]}.html">{E(c["title"])}</a></h3></div>'
+                   f'{quiz(p, tid)}</article>')
+    chips = '<button type="button" aria-pressed="true" data-filter="all">All</button>' + ''.join(
+        f'<button type="button" aria-pressed="false" data-filter="{k}">{v}</button>' for k, v in THREAD_NAMES.items())
+    return (f'<div class="vault" id="archive"><div class="vault-head"><div><h3 class="spaced">Archive</h3>'
+            f'<p class="vault-intro">Every project starts with a question. Guess the answer, then see how I found out.'
+            f' <span class="vault-score" hidden>You have guessed <b>0</b> of {len(cards)}, <b>0</b> right.</span></p></div>'
+            f'<div class="vault-filter" role="group" aria-label="Filter projects">{chips}</div></div>'
+            f'<div class="vault-grid">\n' + '\n'.join(out) + '\n</div></div>')
+
+
+def projects_section():
+    return ('<section class="work section" id="projects"><div class="wrap"><div class="section-heading"><h2>Projects</h2>'
+            '<p>From Year 2 labs to an MSc dissertation.</p></div>\n' + evolution() + '\n' + archive() + '\n</div></section>')
 
 
 def main():
     check()
+    for p in data:
+        assert 'card' in p and p['card']['size'] in UNITS and p['card']['thread'] in THREAD_NAMES, f'bad card for {p["slug"]}'
+        assert 'src' not in p['card'] or (root / p['card']['src']).exists(), f'missing card image for {p["slug"]}'
     for i, p in enumerate(data):
         (root / 'projects' / f'{p["slug"]}.html').write_text(case_page(i, p), encoding='utf-8')
     idx = root / 'index.html'
     page = idx.read_text(encoding='utf-8')
     a, b = '<!-- work:start -->', '<!-- work:end -->'
     i0, i1 = page.index(a) + len(a), page.index(b)
-    idx.write_text(page[:i0] + '\n' + recent() + '\n' + evolution() + '\n' + archive() + '\n' + page[i1:], encoding='utf-8')
-    print(f'Rendered {len(data)} case studies and the homepage work sections.')
+    idx.write_text(page[:i0] + '\n' + projects_section() + '\n' + page[i1:], encoding='utf-8')
+    print(f'Rendered {len(data)} case studies and the homepage projects section.')
 
 
 if __name__ == '__main__':

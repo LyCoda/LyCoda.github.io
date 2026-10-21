@@ -130,7 +130,27 @@
         "href": "../documents/ecg-amplifier-lab-report.pdf",
         "detail": "PDF · 21 pages · Student ID removed"
       }
-    ]
+    ],
+    "card": {
+      "eyebrow": "2024 · Year 2 lab",
+      "title": "ECG Amplifier",
+      "theme": "dark",
+      "size": "reg",
+      "art": "photo",
+      "src": "images/cards/ecg-amplifier.webp",
+      "pos": "50% 45%",
+      "thread": "biosignals",
+      "quiz": {
+        "question": "How much better did the instrumentation amplifier reject common-mode noise?",
+        "options": [
+          "About 2×",
+          "About 5×",
+          "About 20×"
+        ],
+        "answer": 2,
+        "reveal": "About 20×. Common-mode rejection rose from 32.6 dB to 59.0 dB."
+      }
+    }
   },
   {
     "slug": "heart-rate-monitor",
@@ -300,7 +320,25 @@
         "detail": "PDF · 12 pages · Student IDs and classmates' names removed"
       }
     ],
-    "thumb": "images/projects/heart-rate-monitor-thumb.png"
+    "card": {
+      "eyebrow": "2024 · Digital design",
+      "title": "Gate-Level Heart Monitor",
+      "theme": "dark",
+      "size": "tall",
+      "art": "circuit",
+      "src": "images/cards/heart-rate-monitor.webp",
+      "thread": "biosignals",
+      "quiz": {
+        "question": "An ECG and a pulse oximeter disagree. What should the alarm do?",
+        "options": [
+          "Go red at once",
+          "Trust the ECG",
+          "Escalate if it repeats"
+        ],
+        "answer": 2,
+        "reveal": "Escalate. The circuit counts repeated disagreements and steps from green to amber to red."
+      }
+    }
   },
   {
     "slug": "redcap-feedback-workflow",
@@ -450,7 +488,31 @@
     "label": "KOLN 3D · Internship",
     "thread": "translation",
     "cardFit": "logo",
-    "thumb": "images/projects/redcap-thumb.png"
+    "card": {
+      "eyebrow": "KOLN 3D · Internship",
+      "title": "Implant Follow-up",
+      "theme": "light",
+      "size": "tall",
+      "art": "logo",
+      "src": "images/cards/redcap-feedback-workflow.webp",
+      "thread": "translation",
+      "steps": [
+        "Implant",
+        "Region",
+        "Assessment",
+        "Score bands",
+        "Follow-up"
+      ],
+      "quiz": {
+        "question": "Does the same score mean the same thing on a hip and a knee assessment?",
+        "options": [
+          "Yes",
+          "No"
+        ],
+        "answer": 1,
+        "reveal": "No. Each instrument has its own score bands, so I mapped every assessment separately."
+      }
+    }
   },
   {
     "slug": "emg-controlled-robotic-arm",
@@ -624,7 +686,25 @@
     "label": "City St George’s · BEng dissertation",
     "thread": "biosignals",
     "cardFit": "cover",
-    "featured": 3
+    "card": {
+      "eyebrow": "2025 · BEng dissertation",
+      "title": "Muscle to Motion",
+      "theme": "light",
+      "size": "tall",
+      "art": "product",
+      "src": "images/cards/emg-controlled-robotic-arm.webp",
+      "thread": "biosignals",
+      "quiz": {
+        "question": "What did the parts for this hand cost?",
+        "options": [
+          "About £90",
+          "About £400",
+          "About £1,500"
+        ],
+        "answer": 0,
+        "reveal": "About £91 in parts, with around 6 N of combined fingertip force in simple scale tests."
+      }
+    }
   },
   {
     "slug": "surgical-workflow-prediction",
@@ -735,8 +815,24 @@
         "detail": "PDF · 7 pages · Student ID removed"
       }
     ],
-    "featured": 2,
-    "thumb": "images/projects/surgical-workflow-thumb.png"
+    "card": {
+      "eyebrow": "2026 · UCL MSc",
+      "title": "Surgical Workflow AI",
+      "theme": "dark",
+      "size": "tall",
+      "art": "workflow",
+      "thread": "surgical-ai",
+      "quiz": {
+        "question": "Does knowing the surgical timeline help find the tools?",
+        "options": [
+          "A lot",
+          "A little",
+          "Not at all"
+        ],
+        "answer": 1,
+        "reveal": "A little. Tool-detection mAP rose from 0.910 to 0.918, but with p = 0.11 the gain was not significant."
+      }
+    }
   },
   {
     "slug": "bone-healing-monitoring-device",
@@ -898,7 +994,27 @@
     "stage": "MSc",
     "label": "UCL · Group concept",
     "thread": "translation",
-    "cardFit": "cover"
+    "cardFit": "cover",
+    "card": {
+      "eyebrow": "2026 · Group venture",
+      "title": "OsteoTrack",
+      "theme": "light",
+      "size": "tall",
+      "art": "photo",
+      "src": "images/cards/bone-healing-monitoring-device.webp",
+      "pos": "40% 50%",
+      "thread": "translation",
+      "quiz": {
+        "question": "Who decides whether a fracture monitor gets adopted?",
+        "options": [
+          "The patient",
+          "Clinicians and procurement",
+          "The inventors"
+        ],
+        "answer": 1,
+        "reveal": "Clinicians, fracture-clinic leads and procurement teams. Patients benefit, but those groups decide, so we pitched to them."
+      }
+    }
   },
   {
     "slug": "ce-marking-lung-ultrasound-robot",
@@ -1021,7 +1137,25 @@
     ],
     "resources": [],
     "sourceNote": "The answers follow the module's question template, so the submission is summarised here rather than published. The device is described in Tan et al. (2023), a research paper on a fully automatic dual-probe lung-ultrasound scanning robot.",
-    "thumb": "images/projects/ce-marking-thumb.png"
+    "card": {
+      "eyebrow": "2026 · EU MDR",
+      "title": "Route to a CE Mark",
+      "theme": "dark",
+      "size": "reg",
+      "art": "ce",
+      "thread": "translation",
+      "quiz": {
+        "question": "What risk class would you give this robot?",
+        "options": [
+          "Class I",
+          "Class IIa",
+          "Class IIb",
+          "Class III"
+        ],
+        "answer": 1,
+        "reveal": "Class IIa, under Annex VIII Rule 10, because it is an active device used for diagnosis."
+      }
+    }
   },
   {
     "slug": "surgical-data-science",
@@ -1144,7 +1278,24 @@
     "resources": [],
     "sourceNote": "UCL asks students not to publish MPHY0047 assessment material, so the briefs, notebooks, answers and figures are summarised here rather than published.",
     "cardFit": "cover",
-    "thumb": "images/projects/surgical-data-science-thumb.png"
+    "card": {
+      "eyebrow": "2026 · UCL MSc",
+      "title": "Surgical Data Science",
+      "theme": "light",
+      "size": "reg",
+      "art": "sds",
+      "thread": "surgical-ai",
+      "quiz": {
+        "question": "What best separated expert surgeons from novices?",
+        "options": [
+          "Instrument speed",
+          "Completion time",
+          "Path length"
+        ],
+        "answer": 1,
+        "reveal": "Completion time. Experts averaged 86.5 s on the suturing task; novices averaged 141.2 s."
+      }
+    }
   },
   {
     "slug": "fnirs-classification",
@@ -1328,8 +1479,23 @@
     "stage": "MSc",
     "label": "UCL · MSc dissertation",
     "thread": "biosignals",
-    "featured": 1,
-    "thumb": "images/projects/fnirs-results.png",
-    "thumbFit": "contain"
+    "card": {
+      "eyebrow": "2026 · MSc dissertation",
+      "title": "Walking & the Brain",
+      "theme": "dark",
+      "size": "tall",
+      "art": "fnirs",
+      "thread": "biosignals",
+      "quiz": {
+        "question": "Could prefrontal signals tell the two groups apart?",
+        "options": [
+          "Yes, clearly",
+          "Somewhat",
+          "Not proven"
+        ],
+        "answer": 2,
+        "reveal": "Not proven. The best model reached 61.9% balanced accuracy, but selection-adjusted testing did not show it beat chance."
+      }
+    }
   }
 ]
