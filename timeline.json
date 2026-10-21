@@ -1,30 +1,30 @@
 {
-  "intro": "Two threads run through my work. Each step builds on the one before, both in what I built and in how I tested and reported it. Projects that stand on their own are listed separately.",
+  "intro": "Two threads run through my work. Each step draws on the ones before, both in what I built and in how I tested and reported it. Projects that stand on their own are listed separately.",
   "threads": [
     {
       "id": "biosignals",
       "title": "Biosignals",
-      "subtitle": "From a breadboard amplifier to validated brain-signal analysis",
+      "subtitle": "From a breadboard amplifier to statistically tested brain-signal analysis",
       "steps": [
         {
           "slug": "ecg-amplifier",
           "built": "Built an ECG front end on a breadboard, one stage at a time.",
-          "reported": "Compared each stage with its design value."
+          "evidence": "Compared each stage with its design value."
         },
         {
           "slug": "heart-rate-monitor",
           "built": "Designed gate-level logic that cross-checks ECG and pulse-oximeter heart rate.",
-          "reported": "Tested each block against expected outputs."
+          "evidence": "Tested each block against expected outputs."
         },
         {
           "slug": "emg-controlled-robotic-arm",
           "built": "Turned a muscle signal into motion: analogue EMG, firmware and a 3D-printed hand.",
-          "reported": "Separated prototype observations from verified performance."
+          "evidence": "Reported prototype measurements as indicative, not verified."
         },
         {
           "slug": "fnirs-classification",
           "built": "Built and tested a participant-level machine-learning pipeline for prefrontal fNIRS.",
-          "reported": "Designed validation in from the start and reported results with their statistical limits."
+          "evidence": "Designed validation in from the start and reported results with their statistical limits."
         }
       ]
     },
@@ -36,28 +36,23 @@
         {
           "slug": "redcap-feedback-workflow",
           "built": "Automated post-operative follow-up for patient-specific implants.",
-          "reported": "Worked from clinical teams' real follow-up needs."
+          "evidence": "Mapped each assessment to its own score bands, keeping named instruments separate from custom sections."
         },
         {
           "slug": "bone-healing-monitoring-device",
           "built": "Built the adoption and fundraising case for a fracture-healing monitor.",
-          "reported": "Kept the concept separate from evidence that does not exist yet."
+          "evidence": "Kept the concept separate from evidence that does not exist yet."
         },
         {
           "slug": "ce-marking-lung-ultrasound-robot",
           "built": "Mapped a research robot's route to a CE mark under the EU MDR.",
-          "reported": "Ruled each classification rule in or out with a reason."
-        },
-        {
-          "href": "#experience",
-          "year": "2026",
-          "name": "Zortex · Product & Commercial",
-          "label": "Start-up · Hong Kong",
-          "built": "Shipped a waitlist product and ran outreach to test product-market fit.",
-          "reported": "Turned technical architecture into a commercial pitch."
+          "evidence": "Tested each classification rule against the device, with a reason."
         }
       ]
     }
   ],
-  "standalone": ["surgical-workflow-prediction", "surgical-data-science"]
+  "standalone": [
+    "surgical-workflow-prediction",
+    "surgical-data-science"
+  ]
 }

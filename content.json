@@ -11,9 +11,9 @@
     "name": "ECG biopotential amplifier",
     "category": "Biomedical instrumentation",
     "status": "Year 2 lab project · 2024",
-    "role": "Designed, built and tested the circuit",
+    "role": "Chose component values, built and tested the circuit",
     "institution": "City, University of London · EE2703 Biomedical Instrumentation",
-    "tools": "TL084 and INA121 amplifiers, breadboard prototyping, Keysight oscilloscope, signal generator, multimeter",
+    "tools": "TL084 and INA121 amplifiers, breadboard prototyping, Agilent InfiniiVision oscilloscope, signal generator, multimeter",
     "image": "images/projects/ecg-amplifier.jpg",
     "alt": "Oscilloscope showing the amplified cardiac test waveform from the finished ECG amplifier",
     "summary": "A breadboard ECG amplifier, built up from a single op-amp to an instrumentation amplifier and band-pass filter, with every stage measured against its design value.",
@@ -53,7 +53,7 @@
         "id": "measured",
         "title": "Design values against measurements",
         "paragraphs": [
-          "Every stage was compared with the value it was designed for. The gaps were small for single-chip stages and larger where matched resistor pairs mattered."
+          "Every stage was compared with the value it was designed for. Gains came in 4–7% below design at every stage. The clearest difference was in common-mode rejection, where the INA121 did about 26 dB better than the discrete differential amplifier."
         ],
         "table": {
           "caption": "Measured performance of each stage (voltage ratios unless stated)",
@@ -86,20 +86,20 @@
           ]
         },
         "after": [
-          "The instrumentation amplifier performed best largely because it needed fewer external parts. One gain resistor replaced several resistor pairs whose tolerances otherwise stack up and unbalance the inputs, which is exactly what limited the discrete differential amplifier's common-mode rejection."
+          "The instrumentation amplifier performed best largely because it needed fewer external parts. One gain resistor replaced several resistor pairs whose tolerances otherwise stack up and unbalance the inputs, which is the likeliest reason for the discrete differential amplifier's weaker common-mode rejection."
         ]
       },
       {
         "id": "filter",
         "title": "Shaping the ECG band",
         "paragraphs": [
-          "The low-pass stage used 100 nF capacitors and 80 kΩ resistors with a gain of 1.57. It passed 1 Hz with a gain of 1.25, fell to 0.73 at 20 Hz against the 0.707 expected at the cut-off, and dropped to 0.17 at 1 kHz.",
+          "The low-pass stage used 100 nF capacitors and 80 kΩ resistors, with a stated gain of 1.57. It passed 1 Hz with a gain of 1.25, fell to 0.73 at 20 Hz and dropped to 0.17 at 1 kHz. The report compared the 20 Hz reading with 0.707, but for a stage with a pass-band gain above 1 the −3 dB level is higher, so this stage's cut-off was probably below 20 Hz.",
           "The high-pass stage used 680 nF capacitors and 581.5 kΩ resistors, chosen from the parts available. It attenuated 0.3 Hz as intended, but its gain above the cut-off recovered only to 0.87, lower than designed. Combined, the band-pass response peaked at about 8.9 dB between 5 and 10 Hz."
         ],
         "figure": {
           "src": "images/projects/ecg-amplifier-response.png",
           "alt": "Line chart of measured gain in decibels against frequency from 0.1 Hz to 100 Hz, peaking near 9 dB between 5 and 10 Hz",
-          "caption": "Measured frequency response of the complete band-pass stage, from the lab report."
+          "caption": "Measured frequency response of the complete band-pass stage, from the lab report. Frequencies are plotted at even spacing, not on a log scale."
         }
       },
       {
@@ -107,7 +107,7 @@
         "title": "Where the noise came from",
         "paragraphs": [
           "The report traced most of the remaining error to mismatched resistor values, component tolerance and the lab environment: mains-powered equipment, nearby devices and loose breadboard wiring. Battery power or isolation, a notch filter at the mains frequency and secure connections were the suggested remedies.",
-          "It also asked what would change to record muscle activity instead. EMG occupies a much wider band than ECG, so the filter cut-offs, interference filtering and electrodes would all need to change. A year later that question became the starting point of my EMG-controlled robotic arm."
+          "It also asked what would change to record muscle activity instead. EMG occupies a much wider band than ECG, so the filter cut-offs, interference filtering and electrodes would all need to change. A year later I worked with EMG directly, in my robotic-arm dissertation."
         ],
         "figure": {
           "src": "images/projects/ecg-amplifier-breadboard.jpg",
@@ -119,7 +119,7 @@
         "id": "reflection",
         "title": "Reading it back two years later",
         "paragraphs": [
-          "The circuit work holds up; the report shows how much my writing has changed since. It walks through the lab procedure step by step, takes a single reading at each setting and explains differences in words rather than with a tolerance or uncertainty estimate. Some voltage ratios are labelled as decibels.",
+          "The circuit work holds up; the report shows how much my writing has changed since. It walks through the lab procedure step by step, takes a single reading at each setting and applies a component tolerance only once, to the filter cut-offs, rather than predicting a spread for each stage. Some voltage ratios are labelled as decibels, and the low-pass cut-off is judged against the wrong reference level.",
           "Today I would repeat each measurement, predict the expected spread from component tolerances before testing, and separate method from findings. My later reports, such as the fNIRS dissertation and the surgical-workflow study, follow that structure."
         ]
       }
@@ -146,17 +146,17 @@
     "role": "Designed and built the full system for a four-person team",
     "institution": "City, University of London · EE2600 Digital Design · Group B5",
     "tools": "Logisim, D and JK flip-flops, gate-level adders, comparators, multiplexers and registers",
-    "image": "images/projects/heart-rate-monitor.png",
-    "alt": "Logisim schematic of the gate-level 8-bit adder-subtractor",
-    "summary": "A gate-level digital system that reads heart-rate values from an ECG and a pulse oximeter, measures how far they disagree and escalates an alarm when the gap keeps exceeding a threshold.",
-    "takeaway": "I designed and built the whole circuit for our group, from the input shift registers to the alarm logic, and tested each block against expected outputs. Every block was assembled from flip-flops and logic gates rather than ready-made library parts.",
+    "image": "images/projects/heart-rate-monitor-overview.png",
+    "alt": "Block diagram: ECG and pulse-oximeter inputs feed a redundancy monitor, then a threshold comparator, then green, amber and red alarm lights",
+    "summary": "A gate-level digital system that reads heart-rate values from an ECG and a pulse oximeter, measures how far they disagree and escalates an alarm from green to amber to red as threshold exceedances accumulate.",
+    "takeaway": "I designed and built the whole circuit for our group, from the input shift registers to the alarm logic, and tested each block against expected outputs. The adder-subtractor, comparators, counters and registers were built from logic gates and flip-flops rather than Logisim's ready-made arithmetic components.",
     "sections": [
       {
         "id": "problem",
         "title": "Two sensors, one question",
         "paragraphs": [
           "An ECG measures the heart's electrical activity directly. A pulse oximeter estimates heart rate indirectly, from changes in light absorption as blood pulses through tissue. When both are attached to a patient, they should agree. A persistent disagreement suggests one of them is failing.",
-          "The brief was a digital system that compares the two readings and raises an alert only when the difference stays beyond a tolerance, rather than on a single noisy reading. It was designed and tested in Logisim simulation with chosen test inputs, not connected to physical sensors."
+          "The system compares the two readings and counts how often the difference exceeds a tolerance, escalating the alert step by step rather than jumping straight to red on a single reading. It was designed and tested in Logisim simulation with chosen test inputs, not connected to physical sensors."
         ]
       },
       {
@@ -172,7 +172,7 @@
           ],
           [
             "Count",
-            "A three-flip-flop JK counter waits for all eight bits before enabling the comparison."
+            "A three-flip-flop JK counter waits for all eight bits before enabling the subtractor."
           ],
           [
             "Subtract",
@@ -194,7 +194,7 @@
         "figure": {
           "src": "images/projects/heart-rate-monitor-system.png",
           "alt": "Full Logisim circuit connecting shift registers, subtractor, comparator, register and LED alarm",
-          "caption": "The complete circuit, from the group report."
+          "caption": "The complete Logisim circuit, from the group report. The red wires show Logisim's error state on unset inputs."
         }
       },
       {
@@ -240,7 +240,7 @@
         },
         "figure": {
           "src": "images/projects/heart-rate-monitor-alarm.png",
-          "alt": "Logisim schematic of the JK flip-flop alarm counter driving green, amber and red outputs",
+          "alt": "Logisim schematic of the JK flip-flop alarm counter driving green, yellow and red outputs",
           "caption": "Alarm generation: a JK counter selects which LEDs are lit."
         }
       },
@@ -289,7 +289,7 @@
         "title": "What I would add now",
         "paragraphs": [
           "The tests show that each block works, but not where it might fail. I would now add boundary cases such as readings exactly at the threshold, timing diagrams showing when the enable signal fires, and a clear link from each requirement to the test that checks it.",
-          "I would also state the tolerance in beats per minute and explain where it came from. That clinical framing, which turns a logic exercise into a safety check, is what I later worked on directly in the regulatory and validation projects."
+          "I would also state the tolerance in beats per minute and explain where it came from. That clinical framing, which turns a logic exercise into a safety check, is what I later worked on directly in the CE-marking assessment and the fNIRS dissertation."
         ]
       }
     ],
@@ -297,7 +297,7 @@
       {
         "label": "Read the team report",
         "href": "../documents/heart-rate-monitor-report.pdf",
-        "detail": "PDF · 12 pages · Student IDs removed"
+        "detail": "PDF · 12 pages · Student IDs and classmates' names removed"
       }
     ]
   },
@@ -621,7 +621,8 @@
     "stage": "BEng final year",
     "label": "City St George’s · BEng dissertation",
     "thread": "biosignals",
-    "cardFit": "cover"
+    "cardFit": "cover",
+    "featured": 3
   },
   {
     "slug": "surgical-workflow-prediction",
@@ -639,14 +640,14 @@
     "image": "images/projects/surgical-workflow.png",
     "alt": "Diagram of the CNN-LSTM model predicting remaining phase time and future phase timings from video frames",
     "summary": "A two-part study on laparoscopic surgery video: predicting how long each surgical phase has left, then testing whether those predictions help a model detect which tools are in use.",
-    "takeaway": "A 60-second history predicted phase timing better than 120 seconds (mean error 216 s against 263 s). Adding the predicted timing raised tool-detection mAP from 0.910 to 0.918, but a paired bootstrap across the 10 test videos showed the gain was not statistically significant (p = 0.11).",
+    "takeaway": "A 60-second history predicted the end of the current phase at least as well as 120 seconds (mean absolute error 216 s against 263 s, one training run each). Adding the predicted timing raised tool-detection mAP from 0.910 to 0.918, but a paired bootstrap across the 10 test videos showed the gain was not statistically significant (p = 0.11).",
     "sections": [
       {
         "id": "question",
         "title": "The question",
         "paragraphs": [
-          "Most gallbladder removals are performed laparoscopically, so every operation produces hours of video. Models that understand where a procedure is in its workflow could support operating-theatre coordination and act as a second pair of eyes during surgery.",
-          "I asked two connected questions on the Cholec80 dataset of 80 annotated procedures. First, does a longer video history improve predictions of when the current phase will end? Second, can those timing predictions act as context that makes a tool detector more reliable?"
+          "Most gallbladder removals are performed laparoscopically, so every operation leaves a full video record. Models that understand where a procedure is in its workflow could support operating-theatre coordination and act as a second pair of eyes during surgery.",
+          "The coursework set two connected tasks on the Cholec80 dataset of 80 annotated procedures. First, does a longer video history improve predictions of when the current phase will end? Second, can those timing predictions act as context that makes a tool detector more reliable?"
         ]
       },
       {
@@ -666,7 +667,7 @@
         "id": "results",
         "title": "Results",
         "paragraphs": [
-          "All figures are from the held-out test videos."
+          "All numbers in the table are from the 10 held-out test videos."
         ],
         "table": {
           "caption": "Test-set results for both tasks",
@@ -699,13 +700,13 @@
           ]
         },
         "after": [
-          "The longer window did not help. Frames from two minutes earlier often say little about the current phase, and a shorter window is also cheaper to run in real time.",
-          "Timing helped most for tools tied to particular phases: bipolar forceps AP rose from 0.849 to 0.907. Tools used throughout an operation changed little or fell slightly, so timing behaves as a weak prior rather than a rule."
+          "The longer window did not help. Frames from two minutes earlier probably say little about the current phase, and a shorter window is also cheaper to run in real time.",
+          "Timing helped most for bipolar forceps (AP 0.849 to 0.907), with smaller gains for scissors, irrigator and specimen bag. The grasper and hook, used across many phases, changed little, but the clipper fell from 0.994 to 0.966, so the benefit was not uniform even among phase-specific tools. Timing behaves as a weak prior rather than a rule."
         ],
         "figure": {
           "src": "images/projects/surgical-workflow-map.png",
           "alt": "Bar chart of mAP for baseline and time-aware models on validation and test splits",
-          "caption": "mAP for the baseline and time-aware models. The axis starts at 0.895, which makes the gap look larger than it is."
+          "caption": "mAP for the baseline and time-aware models on validation and test videos. The axis is truncated near 0.89, which makes the gap look larger than it is."
         }
       },
       {
@@ -721,7 +722,7 @@
         "title": "Limits and next steps",
         "paragraphs": [
           "The test set's tool-detection mAP is numerically higher than the roughly 81% reported for EndoNet, but the data splits and training setups differ, so this is not a like-for-like comparison.",
-          "Surgeons work at different paces, so a model trained on absolute seconds will under- or over-estimate for slow and fast cases. The next steps would be to predict relative progress through each phase, output uncertainty so downstream models can treat timing as a soft hint, and report results separately for fast, typical and slow procedures."
+          "Surgeons work at different paces, so a model trained on absolute seconds will under- or over-estimate for slow and fast cases. The next steps would be to predict relative progress through each phase, output uncertainty so downstream models can treat timing as a soft hint, and report results separately for fast, typical and slow procedures. The timing features fed into the tool detector during training were also predicted on videos the timing model had already seen."
         ]
       }
     ],
@@ -731,7 +732,8 @@
         "href": "../documents/surgical-workflow-report.pdf",
         "detail": "PDF · 7 pages · Student ID removed"
       }
-    ]
+    ],
+    "featured": 2
   },
   {
     "slug": "bone-healing-monitoring-device",
@@ -909,7 +911,7 @@
     "role": "Individual coursework",
     "institution": "UCL · MPHY0046 Medical Robotics and Devices",
     "tools": "EU MDR 2017/745, Annex VIII classification rules, EN ISO 13485, ISO 14971, IEC 62304, IEC 62366-1, IEC 60601 series",
-    "image": "images/projects/ce-marking-pathway.svg",
+    "image": "images/projects/ce-marking-pathway.png",
     "alt": "Diagram of the regulatory route from intended purpose through classification and quality system to notified-body assessment",
     "summary": "A regulatory assessment written as the researcher commercialising a published lung-ultrasound scanning robot in the EU: qualification, risk class, quality system, documentation and standards.",
     "takeaway": "I argued the robot should be a Class IIa active diagnostic device under Annex VIII Rule 10, with a deliberately narrow intended purpose: clinician-supervised image acquisition, not automated diagnosis. I then mapped the quality system, technical file and standards a notified body would expect to see.",
@@ -919,7 +921,7 @@
         "title": "The device",
         "paragraphs": [
           "The system, published by Tan et al. (2023), is a research-stage robot that scans both sides of the chest with two ultrasound probes. It combines a gantry-style dual-arm platform, structured-light reconstruction of the chest surface, automatic probe-path planning, closed-loop force control and a clinician interface.",
-          "The paper reports scans in under four minutes per person, with image quality comparable to manual scanning. Those are the authors' results; my work was to set out what it would take to sell the device in the EU."
+          "The paper reports scans in under four minutes per person, with image quality comparable to manual scanning. Those are the authors' results; my work was to set out what it would take to place the device on the EU market."
         ]
       },
       {
@@ -934,7 +936,7 @@
         "id": "classification",
         "title": "Choosing the classification rule",
         "paragraphs": [
-          "Classification came from ruling rules in and out, not from picking the most familiar one."
+          "Classification came from testing each candidate rule against the device, not from picking the most familiar one."
         ],
         "table": {
           "caption": "EU MDR Annex VIII rules considered",
@@ -946,8 +948,8 @@
           "rows": [
             [
               "Rules 1–4",
-              "No",
-              "They cover non-active, non-invasive devices; this system is active"
+              "Not decisive",
+              "Rule 1 is the default for non-invasive devices, but the more specific Rule 10 for active diagnostic devices takes precedence"
             ],
             [
               "Rules 5–8",
@@ -1014,7 +1016,7 @@
       }
     ],
     "resources": [],
-    "sourceNote": "The answers follow the module's question template, so the submission is summarised here rather than published. The device is described in Tan et al. (2023)."
+    "sourceNote": "The answers follow the module's question template, so the submission is summarised here rather than published. The device is described in Tan et al. (2023), a research paper on a fully automatic dual-probe lung-ultrasound scanning robot."
   },
   {
     "slug": "surgical-data-science",
@@ -1030,22 +1032,17 @@
     "institution": "UCL · MPHY0047 Surgical Data Science",
     "tools": "Python, NumPy, SciPy, scikit-learn, scikit-image, OpenCV, Jupyter",
     "image": "images/projects/surgical-data-science.png",
-    "alt": "Confusion matrix for GMM-EM clustering of normal, supraventricular and ventricular ECG beats",
+    "alt": "Overview of the three assignments: ultrasound image quality, surgical skill and CT classification, and ECG beat clustering",
     "summary": "Three assignments on clinical data: scoring ultrasound image quality against experts, classifying surgical skill and COVID-19 CT scans, and clustering ECG beats without labels.",
-    "takeaway": "Across all three I chose methods to fit the data: normality checks before choosing between Welch and Mann–Whitney tests, cross-validated classifiers judged on the error that matters clinically, and weighted metrics for unbalanced clusters. Several results were negative, and I reported them as such.",
+    "takeaway": "Across all three I chose methods to fit the data: normality checks before choosing between Welch and Mann–Whitney tests, cross-validated classifiers judged on the error that matters clinically, and label-free clustering scored against the true classes only afterwards. Several results were negative, and I reported them as such.",
     "sections": [
       {
         "id": "ultrasound",
         "title": "Part 1 · Do image metrics agree with expert scores?",
         "paragraphs": [
           "The dataset held transoesophageal echo images from 20 participants, 7 experts and 13 novices, across 10 views. Each image had two manual quality scores and a gold-standard reference. The two manual scores correlated positively in every view, most strongly in View 1.",
-          "I compared each image with its reference using structural similarity, mutual information and cosine similarity. Mutual information and cosine similarity separated experts from novices in 2 of 10 views; structural similarity did so in 1. Ridge-regularised regression from these metrics to the manual scores reached R² ≈ 0.56 at best. Image misalignment, measured by ECC registration, showed no significant expert–novice difference in any view."
+          "I compared each image with its reference using structural similarity, mutual information and cosine similarity. Mutual information and cosine similarity differed significantly between experts and novices (p < 0.05, uncorrected across 30 tests) in 2 of 10 views; structural similarity did so in 1. A degree-7 polynomial ridge regression from these metrics to the manual scores reached R² ≈ 0.56 at best. Image misalignment, measured by ECC registration, showed no significant expert–novice difference in any view."
         ],
-        "figure": {
-          "src": "images/projects/surgical-data-science-ultrasound.png",
-          "alt": "Line chart comparing true and estimated criteria-percentage scores for View 1",
-          "caption": "View 1: true against estimated quality scores from the linear regression."
-        },
         "after": [
           "With about 20 images per view, those regression fits are in-sample and optimistic. I would now hold out data before reporting them."
         ]
@@ -1082,8 +1079,8 @@
           ]
         },
         "after": [
-          "I recommended the random forest: in surgical training, certifying a novice too early is the more dangerous error.",
-          "On 746 CT images, linear and quadratic discriminant analysis reached 0.71 and 0.58 accuracy, with QDA over-predicting COVID-19. Texture features with an RBF support vector machine reached 0.81, and class weighting on an unbalanced subset reached 0.84. Published deep-learning models score higher, but they use far richer training, so the comparison is not like-for-like."
+          "I recommended the random forest: in surgical training, certifying a novice too early is the more dangerous error. The folds held out one trial per surgeon, so these scores do not test performance on unseen surgeons.",
+          "On 746 CT images, linear and quadratic discriminant analysis reached 0.71 and 0.58 accuracy, with QDA over-predicting COVID-19. HoG features with an RBF support vector machine reached 0.81. On an unbalanced subset (349 COVID-19, 197 non-COVID), the SVM reached 0.83 unweighted and 0.84 with class weighting, so most of the change came from the altered class mix. Published deep-learning models score higher, but they use far richer training, so the comparison is not like-for-like."
         ]
       },
       {
@@ -1128,13 +1125,8 @@
           ]
         },
         "after": [
-          "The weaker linkage methods collapsed almost every beat into one normal cluster. Supraventricular beats were the hardest class in every method, with at best 433 of 600 grouped correctly, because they overlap with normal beats in feature space. The Gaussian mixture did best because it lets clusters take different shapes and spreads."
-        ],
-        "figure": {
-          "src": "images/projects/surgical-data-science-skill.png",
-          "alt": "Random forest confusion matrix for novice and expert suturing trials",
-          "caption": "Random forest results for novice and expert trials (Part 2)."
-        }
+          "The weaker linkage methods collapsed almost every beat into one normal cluster. Supraventricular beats were the hardest class for every method that worked, with at best 455 of 600 grouped correctly (Ward linkage on PCA features), because they overlap with normal beats in feature space. The Gaussian mixture did best overall, probably because it lets clusters take different shapes and spreads."
+        ]
       },
       {
         "id": "reflection",
@@ -1145,7 +1137,8 @@
       }
     ],
     "resources": [],
-    "sourceNote": "UCL asks students not to publish MPHY0047 assessment material, so the briefs, notebooks and answers are summarised here rather than published."
+    "sourceNote": "UCL asks students not to publish MPHY0047 assessment material, so the briefs, notebooks, answers and figures are summarised here rather than published.",
+    "cardFit": "cover"
   },
   {
     "slug": "fnirs-classification",
