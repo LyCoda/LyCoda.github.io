@@ -194,7 +194,7 @@
         "figure": {
           "src": "images/projects/heart-rate-monitor-system.png",
           "alt": "Full Logisim circuit connecting shift registers, subtractor, comparator, register and LED alarm",
-          "caption": "The complete Logisim circuit, from the group report. The red wires show Logisim's error state on unset inputs."
+          "caption": "The complete Logisim circuit, from the group report. Red wires show Logisim's error state in the captured screenshot."
         }
       },
       {

@@ -10,9 +10,8 @@
 - `images/projects/surgical-workflow*.png`: Nate's model diagrams and results chart, extracted unchanged from the MPHY0043 coursework paper.
 - `images/projects/surgical-data-science.png`: an overview card drawn for this site. MPHY0047 notebook figures are not published.
 - `images/projects/ce-marking-pathway.png`: a diagram drawn for this site that summarises the MPHY0046 assessment.
-- `images/projects/bone-healing.png`: cropped in October 2026 to remove a generator watermark from the corner; otherwise unchanged.
 - `images/companies/zortex.png`: Zortex logo, supplied by Nate.
-- Textbook tables and figures included in the original lab report were not reused as site images. The published lab report PDF still contains them as cited reference figures (Horowitz and Hill filter tables, TI datasheet pinouts), as submitted.
+- Textbook tables and figures included in the original lab report were not reused as site images. The published lab report PDF still contains them uncredited, as submitted (a Horowitz and Hill filter table and response figure on page 13, TI datasheet pinouts on page 3).
 - Fonts: Instrument Sans and Public Sans from the Google Fonts distribution, self-hosted with their SIL Open Font License files.
 
 No new AI-generated illustrations or stock photos were added. All new writing is based on the project materials and existing portfolio.
