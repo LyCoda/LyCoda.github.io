@@ -275,8 +275,8 @@ def archive():
 
 
 def projects_section():
-    return ('<section class="work section" id="projects"><div class="wrap"><div class="section-heading"><h2>Projects</h2>'
-            '<p>From Year 2 labs to an MSc dissertation.</p></div>\n' + evolution() + '\n' + archive() + '\n</div></section>')
+    return ('<section class="work chapter" id="projects" aria-labelledby="projects-title"><div class="wrap">'
+            '<h2 class="chapter-title" id="projects-title">Nine projects, from a Year 2 breadboard to an MSc dissertation.</h2>\n' + evolution() + '\n' + archive() + '\n</div></section>')
 
 
 def main():

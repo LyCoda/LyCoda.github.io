@@ -114,7 +114,7 @@ if (toc && "IntersectionObserver" in window) {
     .forEach((section) => observer.observe(section));
 }
 // Scroll reveal for the work sections. Content stays visible without JavaScript.
-const revealTargets = document.querySelectorAll(".reveal, .evolution");
+const revealTargets = document.querySelectorAll(".reveal, .evolution, .trace-figure");
 if (revealTargets.length && "IntersectionObserver" in window) {
   document.documentElement.classList.add("js");
   const revealer = new IntersectionObserver(
