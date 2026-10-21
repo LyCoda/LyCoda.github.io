@@ -1322,3 +1322,541 @@ tbody tr:last-child td {
   margin-top: 12px;
   margin-bottom: 0;
 }
+
+/* ---------- Work: recent, evolution threads, archive ---------- */
+.site-nav {
+  gap: 24px;
+}
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fit-contain {
+  object-fit: contain;
+  padding: 22px;
+}
+.fit-cover {
+  object-fit: cover;
+}
+.fit-logo {
+  object-fit: contain;
+  padding: 10%;
+}
+.experience-employer img.logo-dark {
+  width: 44px;
+  border-radius: 8px;
+}
+
+/* Recent work */
+.work {
+  background: var(--paper);
+}
+.recent-item + .recent-item {
+  border-top: 1px solid var(--line);
+}
+.work .section-heading {
+  margin-bottom: 0;
+}
+.recent-item:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.recent-link {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+  padding: 44px 0;
+}
+.recent-index {
+  align-self: start;
+  font-family: var(--display);
+  font-size: 15px;
+  color: var(--blue);
+  padding-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.recent-copy h3 {
+  font-size: clamp(30px, 3.4vw, 46px);
+  letter-spacing: -0.035em;
+  margin: 14px 0 18px;
+  transition: color 0.25s var(--ease);
+}
+.recent-copy > p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 15px;
+  margin-bottom: 22px;
+}
+.recent-copy .text-link {
+  font-size: 14px;
+  color: var(--blue);
+}
+.recent-media {
+  background: var(--white);
+  border-radius: 4px;
+  aspect-ratio: 1.5;
+  overflow: hidden;
+  box-shadow: 0 1px 0 var(--line), 0 24px 48px -32px rgba(32, 44, 54, 0.35);
+}
+.recent-media img,
+.archive-media img {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s var(--ease);
+}
+.recent-link:hover h3,
+.archive-card a:hover h4,
+.standalone a:hover h4 {
+  color: var(--blue);
+}
+.recent-link:hover .recent-media img,
+.archive-card a:hover .archive-media img {
+  transform: scale(1.035);
+}
+.recent-link:hover .arrow,
+.archive-card a:hover .arrow,
+.standalone a:hover .arrow {
+  transform: translateX(3px);
+}
+
+/* Evolution */
+.evolution {
+  --e-bg: #0e1822;
+  --e-ink: #eaf0f6;
+  --e-muted: #9db0c2;
+  --e-line: #253747;
+  --e-accent: #78aefc;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(1200px 500px at 85% -10%, #19324d 0%, transparent 60%),
+    var(--e-bg);
+  color: var(--e-ink);
+}
+.evolution {
+  padding-top: 150px;
+}
+.evolution-trace {
+  position: absolute;
+  inset: 40px 0 auto;
+  width: 100%;
+  height: 80px;
+  fill: none;
+  stroke: var(--e-accent);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  opacity: 0.35;
+  stroke-dasharray: 2600;
+  stroke-dashoffset: 0;
+}
+.js .evolution-trace {
+  stroke-dashoffset: 2600;
+  transition: stroke-dashoffset 2.6s var(--ease);
+}
+.js .evolution.is-visible .evolution-trace {
+  stroke-dashoffset: 0;
+}
+.evolution .section-heading {
+  position: relative;
+  border-color: var(--e-line);
+  align-items: end;
+}
+.evolution .section-heading h2 {
+  font-size: clamp(36px, 4.4vw, 60px);
+  letter-spacing: -0.04em;
+  flex-shrink: 0;
+}
+.evolution .section-heading p {
+  color: var(--e-muted);
+  max-width: 48ch;
+}
+.evolution .eyebrow {
+  color: var(--e-muted);
+}
+.evolution a:focus-visible {
+  outline-color: var(--e-accent);
+}
+.thread {
+  margin-top: 64px;
+}
+.thread-head {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+.thread-head h3 {
+  font-size: 28px;
+}
+.thread-head p {
+  color: var(--e-muted);
+  font-size: 14px;
+}
+.thread-track {
+  list-style: none;
+  position: relative;
+  overflow: hidden;
+  padding: 6px 6px 0;
+  margin-inline: -6px;
+  display: grid;
+  grid-template-columns: repeat(var(--steps), minmax(0, 1fr));
+  gap: 32px;
+}
+.thread-track::before,
+.thread-track::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 12px;
+  height: 1px;
+  background: var(--e-line);
+}
+.thread-track::after {
+  background: linear-gradient(90deg, transparent, var(--e-accent), transparent);
+  width: 22%;
+  height: 2px;
+  top: 11px;
+  animation: pulse-run 5s linear infinite;
+}
+@keyframes pulse-run {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(460%);
+  }
+}
+.thread-step {
+  position: relative;
+  padding-top: 34px;
+}
+.thread-node {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--e-bg);
+  border: 2px solid var(--e-accent);
+  box-shadow: 0 0 0 5px rgba(120, 174, 252, 0.12);
+}
+.thread-step:last-child .thread-node {
+  background: var(--e-accent);
+}
+.thread-year {
+  font-family: var(--display);
+  font-size: 40px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  margin-bottom: 14px;
+  font-variant-numeric: tabular-nums;
+}
+.thread-step h4 {
+  font-size: 19px;
+  margin: 8px 0 16px;
+}
+.thread-step h4 a {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.3s var(--ease), color 0.2s;
+}
+.thread-step h4 a:hover {
+  color: var(--e-accent);
+  background-size: 100% 1px;
+}
+.thread-step dl {
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.thread-step dt {
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--e-accent);
+  margin-top: 12px;
+}
+.thread-step dd {
+  color: var(--e-muted);
+  margin-top: 3px;
+}
+.standalone {
+  margin-top: 72px;
+  padding-top: 40px;
+  border-top: 1px solid var(--e-line);
+}
+.standalone ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.standalone a {
+  display: block;
+  height: 100%;
+  padding: 28px;
+  border: 1px solid var(--e-line);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: border-color 0.25s, background 0.25s;
+}
+.standalone a:hover {
+  border-color: #3b5670;
+  background: rgba(120, 174, 252, 0.05);
+}
+.standalone h4 {
+  margin: 10px 0 12px;
+  transition: color 0.2s;
+}
+.standalone a > p:not(.eyebrow) {
+  color: var(--e-muted);
+  font-size: 14px;
+  margin-bottom: 18px;
+}
+.standalone a:hover h4 {
+  color: var(--e-accent);
+}
+.standalone .text-link {
+  color: var(--e-accent);
+  font-size: 13px;
+}
+
+/* Archive */
+.archive {
+  background: var(--wash);
+}
+.spaced {
+  text-transform: uppercase;
+  letter-spacing: 0.42em;
+  font-size: clamp(22px, 2.4vw, 30px);
+}
+.archive-year {
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 40px;
+  padding: 44px 0;
+  border-top: 1px solid var(--line);
+}
+.section-heading + .archive-year {
+  border-top: 0;
+  padding-top: 0;
+}
+.archive-year h3 {
+  position: sticky;
+  top: 112px;
+  align-self: start;
+  font-size: clamp(48px, 5.5vw, 76px);
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 44px 36px;
+}
+.archive-card a {
+  display: block;
+}
+.archive-media {
+  background: var(--white);
+  aspect-ratio: 1.55;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.archive-card h4 {
+  font-size: 23px;
+  margin: 8px 0 10px;
+  transition: color 0.2s;
+}
+.archive-card a > p:not(.eyebrow) {
+  color: var(--muted);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.archive-card .text-link {
+  font-size: 13px;
+  color: var(--blue);
+}
+
+/* Scroll reveal (only when JavaScript runs) */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.js .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Case pages */
+.case-kicker {
+  margin-top: 28px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--blue);
+}
+.case-kicker + h1 {
+  margin-top: 12px;
+}
+.thread-nav {
+  padding: 36px 0;
+  border-top: 1px solid var(--line);
+}
+.thread-nav > p {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.thread-nav > p span {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.thread-nav > p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.thread-nav ol {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+.thread-nav a {
+  display: block;
+  height: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.4;
+  transition: border-color 0.2s, color 0.2s;
+}
+.thread-nav a span {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.thread-nav a:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.thread-nav li[aria-current] a {
+  border-color: var(--ink);
+  background: var(--white);
+}
+
+@media (max-width: 1000px) {
+  .recent-link {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 24px 20px;
+  }
+  .recent-media {
+    grid-column: 2;
+  }
+  .thread-track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 44px;
+  }
+  .thread-track::after {
+    display: none;
+  }
+  .thread-track::before {
+    display: none;
+  }
+  .archive-year {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .archive-year h3 {
+    position: static;
+  }
+}
+@media (max-width: 720px) {
+  .recent-link {
+    grid-template-columns: 1fr;
+    padding: 32px 0;
+  }
+  .recent-media {
+    grid-column: auto;
+  }
+  .recent-index {
+    display: none;
+  }
+  .evolution .section-heading {
+    align-items: start;
+  }
+  .thread-track {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding-left: 30px;
+  }
+  .thread-track::before {
+    display: block;
+    left: 8px;
+    right: auto;
+    top: 6px;
+    bottom: 0;
+    width: 1px;
+    height: auto;
+  }
+  .thread-step {
+    padding-top: 0;
+  }
+  .thread-node {
+    left: -28px;
+    top: 4px;
+  }
+  .thread-year {
+    font-size: 32px;
+  }
+  .standalone ul,
+  .archive-grid {
+    grid-template-columns: 1fr;
+  }
+  .standalone a {
+    padding: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .thread-track::after {
+    animation: none;
+    display: none;
+  }
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .js .evolution-trace {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+  .recent-media img,
+  .archive-media img {
+    transition: none;
+  }
+}
+@media print {
+  .evolution {
+    background: none;
+    color: var(--ink);
+  }
+  .evolution-trace,
+  .thread-track::after {
+    display: none;
+  }
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

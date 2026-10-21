@@ -1,430 +1,303 @@
 [
   {
-    "slug": "fnirs-classification",
-    "title": "What can walking tell us about the brain?",
-    "name": "fNIRS classification during complex walking",
-    "category": "Biosignals & machine learning",
-    "status": "Dissertation submitted · 2026",
-    "role": "MSc dissertation researcher",
-    "institution": "University College London",
-    "tools": "Python, scikit-learn, SciPy, pandas, pytest, SPM outputs",
-    "image": "images/projects/fnirs.png",
-    "alt": "Experimental walking route with lighting and obstacle conditions",
-    "summary": "A participant-level machine-learning study of prefrontal responses under different lighting and obstacle conditions, with careful validation of what a small dataset can support.",
-    "takeaway": "I built and tested a complete analysis pipeline. The best observed model reached 61.9% balanced accuracy, but selection-adjusted testing did not establish performance above chance.",
+    "slug": "ecg-amplifier",
+    "date": "2024-01",
+    "year": "2024",
+    "stage": "BEng Year 2",
+    "label": "City · Year 2 lab",
+    "thread": "biosignals",
+    "cardFit": "cover",
+    "title": "Building an ECG amplifier one stage at a time",
+    "name": "ECG biopotential amplifier",
+    "category": "Biomedical instrumentation",
+    "status": "Year 2 lab project · 2024",
+    "role": "Designed, built and tested the circuit",
+    "institution": "City, University of London · EE2703 Biomedical Instrumentation",
+    "tools": "TL084 and INA121 amplifiers, breadboard prototyping, Keysight oscilloscope, signal generator, multimeter",
+    "image": "images/projects/ecg-amplifier.jpg",
+    "alt": "Oscilloscope showing the amplified cardiac test waveform from the finished ECG amplifier",
+    "summary": "A breadboard ECG amplifier, built up from a single op-amp to an instrumentation amplifier and band-pass filter, with every stage measured against its design value.",
+    "takeaway": "I built the ECG signal chain one block at a time and measured each one. Moving from a discrete differential amplifier to an INA121 instrumentation amplifier raised common-mode rejection from 32.6 dB to 59.0 dB, and the finished filter passed roughly 0.62–21 Hz against a 0.4–20 Hz design.",
     "sections": [
       {
-        "id": "question",
-        "title": "The research question",
+        "id": "problem",
+        "title": "Why an ECG needs its own amplifier",
         "paragraphs": [
-          "Could prefrontal brain responses recorded during walking distinguish autistic and neurotypical adults? The question moved beyond differences between group averages to ask whether those responses could classify a previously unseen participant.",
-          "I analysed an existing UCL PEARL walking-and-lighting dataset. The original experiment varied blue versus yellow illumination, dim versus bright light, and the presence of obstacles. Functional near-infrared spectroscopy (fNIRS) provided a portable measure of changes in cortical haemoglobin during these tasks.",
-          "My work began with the inherited, first-level SPM outputs. I did not collect the original recordings, repeat raw-signal preprocessing, or refit the original general linear model. My contribution was the secondary analysis: data validation, feature construction, classification, statistical testing and interpretation."
+          "The heart's electrical signal reaches the skin at only a few millivolts, and it shares the electrodes with mains interference, movement and breathing artefacts. A useful ECG front end has to amplify the small difference between two electrodes, reject what both electrodes see in common, and keep only the frequency band where the cardiac signal lives.",
+          "The lab series built that chain in order. Each stage was wired on a breadboard, powered from a split ±15 V supply, driven from a signal generator and judged on an oscilloscope, so the effect of every block could be seen before the next one was added."
+        ],
+        "steps": [
+          [
+            "Amplify",
+            "Inverting TL084 stage designed for a gain of 10."
+          ],
+          [
+            "Reject",
+            "Differential amplifier designed for a gain of 18."
+          ],
+          [
+            "Refine",
+            "INA121 instrumentation amplifier set to a gain of 99 with one 510 Ω resistor."
+          ],
+          [
+            "Filter",
+            "Second-order Butterworth high-pass (0.4 Hz) and low-pass (20 Hz) stages."
+          ],
+          [
+            "Test",
+            "A simulated cardiac waveform passed through the complete chain."
+          ]
         ]
       },
       {
-        "id": "data",
-        "title": "From SPM files to comparable features",
+        "id": "measured",
+        "title": "Design values against measurements",
         "paragraphs": [
-          "A file being readable did not mean it was usable. I checked the design matrices, regressor names and stored beta estimates for compatible dimensions, finite values and the required task conditions. Four of the 36 participants had a required task column containing only zeros and were excluded before model fitting.",
-          "The final analytical cohort contained 32 participants: 19 neurotypical and 13 autistic. I pooled condition-specific oxygenated-haemoglobin beta estimates from 22 channels into seven predefined prefrontal regions, keeping the inputs compact and anatomically interpretable."
+          "Every stage was compared with the value it was designed for. The gaps were small for single-chip stages and larger where matched resistor pairs mattered."
         ],
         "table": {
-          "caption": "Four feature representations, each evaluated with three linear classifiers",
-          "headers": ["Representation", "Features", "Purpose"],
+          "caption": "Measured performance of each stage (voltage ratios unless stated)",
+          "headers": [
+            "Stage",
+            "Design value",
+            "Measured"
+          ],
           "rows": [
             [
-              "Task-context ROI",
-              "21",
-              "Broad averages for yellow walking, blue walking and non-walking events"
+              "Inverting amplifier",
+              "Gain 10",
+              "9.62 at 1 kHz"
             ],
             [
-              "Full-contrast ROI",
-              "28",
-              "Four condition differences across seven regions"
+              "Differential amplifier",
+              "Gain 18, common-mode gain 0",
+              "Gain 16.86 at 50 Hz, common-mode gain 0.396, CMRR 32.6 dB"
             ],
             [
-              "Contrast summary",
-              "32",
-              "Global, hemispheric and regional-family summaries of the four contrasts"
+              "Instrumentation amplifier",
+              "Gain 99",
+              "Gain 92.5 at 50 Hz, common-mode gain 0.104, CMRR 59.0 dB"
             ],
             [
-              "Blue–yellow summary",
-              "8",
-              "A focused representation of the lighting-spectrum contrast"
+              "Band-pass filter",
+              "0.4–20 Hz",
+              "About 0.62–21 Hz at the −3 dB points (interpolated)"
             ]
           ]
         },
         "after": [
-          "The four contrasts were blue minus yellow, dim minus bright, obstacle minus no obstacle, and non-walking minus walking. They were constructed without group labels. Expressing differences within each participant also reduced the emphasis on broad participant-level response offsets."
+          "The instrumentation amplifier performed best largely because it needed fewer external parts. One gain resistor replaced several resistor pairs whose tolerances otherwise stack up and unbalance the inputs, which is exactly what limited the discrete differential amplifier's common-mode rejection."
         ]
       },
       {
-        "id": "validation",
-        "title": "Validation was part of the design",
+        "id": "filter",
+        "title": "Shaping the ECG band",
         "paragraphs": [
-          "I compared shrinkage linear discriminant analysis (LDA), L2-regularised logistic regression and a linear support vector machine. With almost as many predictors as training participants, regularised linear models offered a more defensible starting point than a highly flexible classifier.",
-          "The outer validation loop used four stratified folds repeated 25 times. Each of the 100 outer evaluations held out participants entirely. Three-fold inner validation selected hyperparameters using only the outer training set. Standardisation, optional PCA and questionnaire imputation stayed inside the fitted pipelines."
+          "The low-pass stage used 100 nF capacitors and 80 kΩ resistors with a gain of 1.57. It passed 1 Hz with a gain of 1.25, fell to 0.73 at 20 Hz against the 0.707 expected at the cut-off, and dropped to 0.17 at 1 kHz.",
+          "The high-pass stage used 680 nF capacitors and 581.5 kΩ resistors, chosen from the parts available. It attenuated 0.3 Hz as intended, but its gain above the cut-off recovered only to 0.87, lower than designed. Combined, the band-pass response peaked at about 8.9 dB between 5 and 10 Hz."
         ],
-        "steps": [
-          [
-            "Validate",
-            "Check the SPM design and required conditions before inclusion."
-          ],
-          [
-            "Represent",
-            "Aggregate channels into regions and construct fixed feature sets."
-          ],
-          [
-            "Tune",
-            "Fit preprocessing and choose hyperparameters within training folds."
-          ],
-          [
-            "Evaluate",
-            "Score untouched participants using the same splits for all models."
-          ],
-          [
-            "Challenge",
-            "Repeat the full comparison with shuffled participant labels."
-          ]
-        ],
-        "after": [
-          "Comparing 12 configurations creates another opportunity for optimism: one configuration may look best by chance. I ran 1,000 participant-label permutations, repeating the entire nested analysis and retaining the best score across all 12 configurations for each permutation. This produced a selection-aware reference distribution."
-        ]
-      },
-      {
-        "id": "results",
-        "title": "The result, including its limits",
-        "paragraphs": [
-          "Contrast-based representations performed better descriptively than broad task-context averages. Full-contrast LDA produced the strongest observed result, but the error pattern was uneven: neurotypical specificity was high and autistic recall was low."
-        ],
-        "table": {
-          "caption": "Full-contrast LDA performance and selection-adjusted inference",
-          "headers": ["Measure", "Result"],
-          "rows": [
-            ["Balanced accuracy", "0.619"],
-            ["ROC-AUC", "0.696"],
-            ["Neurotypical specificity", "0.890"],
-            ["Autistic recall", "0.348"],
-            ["Matthews correlation coefficient", "0.286"],
-            ["Selection-adjusted permutation p-value", "0.236"]
-          ]
-        },
         "figure": {
-          "src": "images/projects/fnirs-results.png",
-          "alt": "Dissertation Figure 4 comparing balanced accuracy, ROC-AUC and MCC across twelve model configurations",
-          "caption": "Original dissertation Figure 4. Contrast features improved descriptive performance, but the selected result remained statistically uncertain."
-        },
-        "after": [
-          "The configuration-specific p-value for full-contrast LDA was 0.0539. After selection across the 12 configurations, it was 0.2358: 235 of 1,000 shuffled-label runs achieved a best score at least as high as the observed result. The study therefore did not establish a reliable classifier or a clinically useful diagnostic tool.",
-          "The repeated evaluations reused the same 32 people. They helped characterise sensitivity to data splits; they did not turn a small cohort into 100 independent validation samples."
-        ]
+          "src": "images/projects/ecg-amplifier-response.png",
+          "alt": "Line chart of measured gain in decibels against frequency from 0.1 Hz to 100 Hz, peaking near 9 dB between 5 and 10 Hz",
+          "caption": "Measured frequency response of the complete band-pass stage, from the lab report."
+        }
       },
       {
-        "id": "extensions",
-        "title": "Looking beyond a single score",
+        "id": "noise",
+        "title": "Where the noise came from",
         "paragraphs": [
-          "I examined participant-level prediction stability to distinguish people who were repeatedly misclassified from people whose predictions changed across splits. Errors were concentrated among a subset of autistic participants, making the overall score an incomplete description of model behaviour.",
-          "Adding the Sensory Perception Quotient (SPQ) to the full-contrast features produced small, classifier-dependent changes. It mainly changed the balance between recall and specificity rather than adding a consistent predictive benefit.",
-          "PCA provided a useful counterexample to the assumption that preserving variance preserves useful information. It retained a median of five components and 95.2% of total feature variance, yet balanced accuracy fell from 0.6185 to 0.5881. I projected PCA-space classifier coefficients back into the original standardised feature space and numerically checked their reconstructed decision scores."
-        ]
+          "The report traced most of the remaining error to mismatched resistor values, component tolerance and the lab environment: mains-powered equipment, nearby devices and loose breadboard wiring. Battery power or isolation, a notch filter at the mains frequency and secure connections were the suggested remedies.",
+          "It also asked what would change to record muscle activity instead. EMG occupies a much wider band than ECG, so the filter cut-offs, interference filtering and electrodes would all need to change. A year later that question became the starting point of my EMG-controlled robotic arm."
+        ],
+        "figure": {
+          "src": "images/projects/ecg-amplifier-breadboard.jpg",
+          "alt": "Breadboard with the amplifier and filter circuit connected to the lab power and signal terminals",
+          "caption": "The breadboard build connected to the lab power and signal terminals."
+        }
       },
       {
-        "id": "engineering",
-        "title": "Making the analysis reproducible",
+        "id": "reflection",
+        "title": "Reading it back two years later",
         "paragraphs": [
-          "The final dissertation reports 87 passing automated tests across seven modules, with two expected questionnaire-merge warnings. Tests covered SPM validation, synthetic ROI calculations, contrast directions, invalid feature tables, nested-validation outputs, participant summaries, questionnaire matching and permutation statistics.",
-          "I documented random seeds, software versions, analysis scripts and aggregate outputs. The result is a reproducible research workflow whose assumptions and failure cases can be inspected, even when the scientific answer is inconclusive.",
-          "The next useful step is stronger evidence: a larger independent cohort, richer metadata and external validation. More model searching on the same small sample would not resolve the underlying uncertainty."
+          "The circuit work holds up; the report shows how much my writing has changed since. It walks through the lab procedure step by step, takes a single reading at each setting and explains differences in words rather than with a tolerance or uncertainty estimate. Some voltage ratios are labelled as decibels.",
+          "Today I would repeat each measurement, predict the expected spread from component tolerances before testing, and separate method from findings. My later reports, such as the fNIRS dissertation and the surgical-workflow study, follow that structure."
         ]
       }
     ],
     "resources": [
       {
-        "label": "Read the full dissertation",
-        "href": "../documents/fnirs-dissertation.pdf",
-        "detail": "PDF · 64 pages"
-      },
-      {
-        "label": "Explore the analysis code",
-        "href": "https://github.com/LyCoda/fnirs-walking-autism-classification",
-        "detail": "Code, aggregate results and reproducibility notes"
+        "label": "Read the lab report",
+        "href": "../documents/ecg-amplifier-lab-report.pdf",
+        "detail": "PDF · 21 pages · Student ID removed"
       }
     ]
   },
   {
-    "slug": "bone-healing-monitoring-device",
-    "title": "OsteoTrack: a path from device concept to clinical use",
-    "name": "OsteoTrack bone-healing monitoring",
-    "category": "Medical devices & translation",
-    "status": "Group concept project · 2026",
-    "role": "Communications & Fundraising Officer",
-    "institution": "UCL · Group D",
-    "tools": "Clinical literature, competitor research, IP research, commercial planning, launch-page design",
-    "image": "images/projects/bone-healing.png",
-    "alt": "OsteoTrack non-invasive bone-healing monitoring concept",
-    "summary": "A non-invasive fracture-monitoring proposal, connecting vibration sensing with a realistic plan for evidence, adoption and funding.",
-    "takeaway": "My contribution connected the device's technical premise to its identity, clinical positioning and funding pathway. OsteoTrack remained an academic concept, with validation and deployment proposed as future stages.",
+    "slug": "heart-rate-monitor",
+    "date": "2024-04",
+    "year": "2024",
+    "stage": "BEng Year 2",
+    "label": "City · Year 2 team project",
+    "thread": "biosignals",
+    "title": "Checking two heart-rate sensors against each other",
+    "name": "Heart-rate sensor redundancy monitor",
+    "category": "Digital logic design",
+    "status": "Year 2 team project · 2024",
+    "role": "Designed and built the full system for a four-person team",
+    "institution": "City, University of London · EE2600 Digital Design · Group B5",
+    "tools": "Logisim, D and JK flip-flops, gate-level adders, comparators, multiplexers and registers",
+    "image": "images/projects/heart-rate-monitor.png",
+    "alt": "Logisim schematic of the gate-level 8-bit adder-subtractor",
+    "summary": "A gate-level digital system that reads heart-rate values from an ECG and a pulse oximeter, measures how far they disagree and escalates an alarm when the gap keeps exceeding a threshold.",
+    "takeaway": "I designed and built the whole circuit for our group, from the input shift registers to the alarm logic, and tested each block against expected outputs. Every block was assembled from flip-flops and logic gates rather than ready-made library parts.",
     "sections": [
       {
-        "id": "context",
-        "title": "The follow-up problem",
+        "id": "problem",
+        "title": "Two sensors, one question",
         "paragraphs": [
-          "Our group explored how a non-invasive device might support follow-up after a fracture. The clinical motivation was to observe healing over time and identify patients who might need further assessment, without treating every follow-up as an isolated measurement.",
-          "We compared bone-assessment approaches including DEXA, CT, MRI, ultrasound, implant-based sensing and vibration-based monitoring. The concept we developed used an external vibration source and accelerometers to track changes in the limb's mechanical response.",
-          "The intended setting was a community or clinical point of care. A clinician would review longitudinal measurements and decide whether a patient needed fracture-clinic review or imaging. This was a proposal for decision support, with clinical effectiveness still to be established."
+          "An ECG measures the heart's electrical activity directly. A pulse oximeter estimates heart rate indirectly, from changes in light absorption as blood pulses through tissue. When both are attached to a patient, they should agree. A persistent disagreement suggests one of them is failing.",
+          "The brief was a digital system that compares the two readings and raises an alert only when the difference stays beyond a tolerance, rather than on a single noisy reading. It was designed and tested in Logisim simulation with chosen test inputs, not connected to physical sensors."
         ]
       },
       {
-        "id": "concept",
-        "title": "How the proposed device worked",
+        "id": "architecture",
+        "title": "How the system is organised",
         "paragraphs": [
-          "The team's mechanical concept combined an inflatable cuff, a vibration motor with a contact disc, and two accelerometers on adjustable mounting strips. The adjustable geometry was intended to accommodate different patients and maintain consistent contact.",
-          "A controlled frequency sweep would produce a measured response spectrum. Repeated visits would build a patient-specific trajectory. The proposed software would compare this trajectory with labelled clinical data to support assessment of non-union risk."
+          "The design follows the signal from serial input to alarm. A central redundancy monitor sits in the middle and does the comparison."
+        ],
+        "steps": [
+          [
+            "Receive",
+            "Each sensor's 8-bit value shifts in serially through eight D flip-flops on a shared clock."
+          ],
+          [
+            "Count",
+            "A three-flip-flop JK counter waits for all eight bits before enabling the comparison."
+          ],
+          [
+            "Subtract",
+            "A gate-level two's-complement adder-subtractor computes the difference between the readings."
+          ],
+          [
+            "Compare",
+            "An 8-bit comparator checks the difference against the error threshold."
+          ],
+          [
+            "Store",
+            "A parallel register captures the difference whenever it reaches the threshold."
+          ],
+          [
+            "Alert",
+            "A counter steps the LEDs from green to amber to red as exceedances repeat."
+          ]
         ],
         "figure": {
-          "src": "images/projects/osteotrack-assembly.png",
-          "alt": "Two annotated CAD views of the proposed cuff assembly, with and without the motor housing",
-          "caption": "Group D concept drawings: adjustable accelerometer positions, cuff attachment and the motor/contact-disc assembly. This is a proposed design, not a clinically validated device."
-        },
-        "steps": [
-          ["Position", "Fit the cuff and align the sensing points."],
-          [
-            "Measure",
-            "Apply a controlled vibration sweep and record the response."
-          ],
-          ["Compare", "Track the spectrum against earlier visits."],
-          ["Review", "Present the trend to a clinician for assessment."]
-        ],
-        "after": [
-          "The group report explored cross-spectrum features and a supervised model trained on future clinical-trial data. Patient-labelled training data, repeatability testing and clinical validation were dependencies, rather than completed capabilities."
-        ]
+          "src": "images/projects/heart-rate-monitor-system.png",
+          "alt": "Full Logisim circuit connecting shift registers, subtractor, comparator, register and LED alarm",
+          "caption": "The complete circuit, from the group report."
+        }
       },
       {
-        "id": "contribution",
-        "title": "My contribution",
+        "id": "decisions",
+        "title": "Design choices",
         "paragraphs": [
-          "As Communications and Fundraising Officer, I initially expected to concentrate on presentation and funding sources. The work quickly became more technical: explaining a medical-device venture credibly required understanding its mechanism, evidence and place in the clinical workflow."
-        ],
-        "subsections": [
-          {
-            "title": "Identity and digital presence",
-            "text": "I worked with the Chief Designer and Market Researcher on the OsteoTrack logo, brand identity and launch page. The aim was to present an orthopaedic monitoring platform in a professional, recognisable way, consistent with its early stage of development."
-          },
-          {
-            "title": "Clinical and commercial positioning",
-            "text": "I helped distinguish the person benefiting from the device from the organisation buying it. Patients were the intended beneficiaries, while clinicians, fracture-clinic leads and procurement teams would influence adoption. That distinction shaped the communication strategy."
-          },
-          {
-            "title": "Intellectual property and funding",
-            "text": "I researched relevant intellectual property, early-stage startup planning and fundraising routes. A preliminary patent review raised questions for a future freedom-to-operate assessment; it did not establish freedom to operate or secure patent protection."
-          }
-        ]
-      },
-      {
-        "id": "strategy",
-        "title": "A staged route to adoption",
-        "paragraphs": [
-          "I helped frame the venture around milestones that could reduce technical and commercial uncertainty. Early communication would support prototype refinement and pilot engagement, then grow with the quality of the clinical evidence.",
-          "The group considered private orthopaedic clinics as an initial route for feedback, with NHS adoption as a longer-term objective. Conference presentations, professional engagement and clinical white papers were proposed channels for reaching the people who would evaluate the device."
+          "Most decisions traded generality for fewer control signals and blocks that could be verified one at a time."
         ],
         "table": {
-          "caption": "The proposed funding sequence",
-          "headers": ["Stage", "Evidence to establish", "Funding direction"],
+          "caption": "Key design decisions and the reasoning behind them",
+          "headers": [
+            "Block",
+            "Choice",
+            "Reason"
+          ],
           "rows": [
             [
-              "Feasibility",
-              "Prototype refinement, IP review and initial repeatability",
-              "University and early translational support"
+              "Shift registers",
+              "D flip-flops",
+              "One data input and only a reset to manage; a natural fit for serial-to-parallel conversion"
             ],
             [
-              "Proof of concept",
-              "Technical evidence and credible clinical partners",
-              "Non-dilutive health-innovation grants"
+              "Counter",
+              "JK flip-flops in toggle mode",
+              "Three flip-flops give the eight states needed, with few extra gates"
             ],
             [
-              "Pilot readiness",
-              "Quality processes and a clinical validation plan",
-              "Larger translational programmes"
+              "Subtractor",
+              "Two's complement with XOR gates as controlled inverters",
+              "Reuses full-adder hardware for subtraction"
             ],
             [
-              "Commercial development",
-              "Stronger evidence of utility and adoption",
-              "Seed investment or debt where appropriate"
+              "Negative results",
+              "Comparator and multiplexer swap the inputs",
+              "The larger reading is always the one subtracted from, so the difference is never negative"
+            ],
+            [
+              "Comparator",
+              "2-bit stages built into 4-bit and 8-bit comparators",
+              "Most-significant bits take priority, and each level can be checked separately"
+            ]
+          ]
+        },
+        "figure": {
+          "src": "images/projects/heart-rate-monitor-alarm.png",
+          "alt": "Logisim schematic of the JK flip-flop alarm counter driving green, amber and red outputs",
+          "caption": "Alarm generation: a JK counter selects which LEDs are lit."
+        }
+      },
+      {
+        "id": "testing",
+        "title": "Testing each block",
+        "paragraphs": [
+          "Each block was probed in simulation against expected outputs before the system was assembled."
+        ],
+        "table": {
+          "caption": "Block-level tests reported in the group report",
+          "headers": [
+            "Block",
+            "Test",
+            "Result"
+          ],
+          "rows": [
+            [
+              "Shift register",
+              "Eight clock cycles of serial input",
+              "Output shifted one bit per cycle exactly as expected"
+            ],
+            [
+              "Subtractor",
+              "11111111 − 00000000, and the reverse order",
+              "Both gave 11111111, so no negative values"
+            ],
+            [
+              "Comparator",
+              "Greater, less and equal cases",
+              "All three identified correctly"
+            ],
+            [
+              "Alarm",
+              "Four successive threshold exceedances",
+              "Green, then amber, then red, staying red"
             ]
           ]
         },
         "after": [
-          "The report explored a per-patient pricing model and longer-term financial projections. These were planning assumptions, not sales, funding secured or demonstrated NHS savings. I treated grants and accelerators as routes to investigate against the venture's stage, rather than promises of available capital."
-        ]
-      },
-      {
-        "id": "tradeoffs",
-        "title": "A technical idea still has to fit the brief",
-        "paragraphs": [
-          "I questioned how readily vibration-based evidence from modelled bones would translate into measurements in patients. During competitor research, I explored whether a resonance approach used for implants could inform long-bone assessment, potentially alongside fixation plates.",
-          "The group decided that an implant-linked direction would move away from our non-invasive objective and complicate the development pathway. The research still helped us understand the competitive landscape and sharpen the boundaries of the concept.",
-          "The team also considered electrical safety, data handling, software governance and clinical investigation requirements. Those topics informed the development plan; they were not claims that the concept had received regulatory approval."
+          "All the tests passed, but they were functional checks with a handful of chosen inputs rather than exhaustive verification."
         ]
       },
       {
         "id": "reflection",
-        "title": "What I took from the project",
+        "title": "What I would add now",
         "paragraphs": [
-          "Around fifteen weekly meetings, with clear goals for the next week, helped a multidisciplinary team maintain progress. My own role depended on translating between the technical work and the questions an adopter or funder would ask.",
-          "The strongest outcome for me was learning to tie communication to evidence. A professional identity can make an idea understandable, but a convincing medtech proposition also needs a plausible path through validation, procurement and use.",
-          "If repeating the project, I would start that work earlier, link technical milestones to communication outputs, and test the proposal with clinicians and procurement stakeholders sooner. I would also keep a regular reflective log to capture how the strategy changed."
+          "The tests show that each block works, but not where it might fail. I would now add boundary cases such as readings exactly at the threshold, timing diagrams showing when the enable signal fires, and a clear link from each requirement to the test that checks it.",
+          "I would also state the tolerance in beats per minute and explain where it came from. That clinical framing, which turns a logic exercise into a safety check, is what I later worked on directly in the regulatory and validation projects."
         ]
       }
     ],
     "resources": [
       {
-        "label": "Read the group concept report",
-        "href": "../documents/osteotrack-report.pdf",
-        "detail": "PDF · 44 pages · Revision 0.0, draft"
-      },
-      {
-        "label": "Read my project reflection",
-        "href": "../documents/osteotrack-reflection.pdf",
-        "detail": "PDF · 3 pages"
-      },
-      {
-        "label": "View the original launch-page concept",
-        "href": "https://osteo-track-flow.base44.app",
-        "detail": "Early digital demonstration"
-      }
-    ]
-  },
-  {
-    "slug": "emg-controlled-robotic-arm",
-    "title": "Turning muscle activity into a working grasp",
-    "name": "Low-cost EMG-controlled robotic arm",
-    "category": "Robotics & embedded systems",
-    "status": "Undergraduate prototype · 2025",
-    "role": "BEng dissertation researcher",
-    "institution": "City St George's, University of London",
-    "tools": "Arduino Nano, C++, analogue EMG electronics, SolidWorks, Fusion 360, FDM 3D printing",
-    "image": "images/projects/emg-arm.jpg",
-    "alt": "CAD visualisation of the robotic hand and forearm design",
-    "summary": "An Arduino-controlled, tendon-driven hand and wrist, bringing surface EMG sensing, analogue electronics and 3D-printed mechanics into one prototype.",
-    "takeaway": "I developed a low-cost hand-and-wrist prototype around a sub-£100 parts budget. The work centred on integrating a noisy biological input with a simple, maintainable mechanical system.",
-    "sections": [
-      {
-        "id": "brief",
-        "title": "The design brief",
-        "paragraphs": [
-          "My undergraduate dissertation investigated a low-cost EMG-controlled prosthetic-arm concept using desktop 3D printing and Arduino-compatible electronics. The target was basic grasping within a parts budget below £100, excluding in-house printing labour.",
-          "The final scope was a hand and wrist, without an articulated elbow. It was an engineering proof of concept, rather than a patient-ready prosthesis. I worked across sensing, electronics, firmware, CAD, assembly and initial evaluation under the supervision of Dr James May."
-        ]
-      },
-      {
-        "id": "signal",
-        "title": "From a muscle signal to a command",
-        "paragraphs": [
-          "Surface electrodes captured muscle activity. Because the small, rapidly changing signal could not directly drive a motor, the analogue front end amplified it, rectified it and filtered it into an envelope related to contraction intensity. A DC offset made that signal compatible with the Arduino's input range.",
-          "The design used an AD8226 instrumentation amplifier and TL084 stages for rectification and filtering. The important system-level choice was to condition the biological signal before applying a deliberately simple control rule."
-        ],
-        "steps": [
-          ["Sense", "Surface electrodes detect muscle activity."],
-          [
-            "Condition",
-            "Amplification, rectification and filtering produce an envelope."
-          ],
-          [
-            "Interpret",
-            "Arduino estimates activity relative to a changing baseline."
-          ],
-          ["Actuate", "Servo pulleys pull the tendons to close the hand."]
-        ],
-        "after": [
-          "The firmware used a running root-mean-square estimate and an adaptive baseline. Separate thresholds for closing and opening introduced hysteresis, reducing repeated switching near a single threshold. A short post-command interval gave the servos time to respond.",
-          "This was binary open/close control, not independent finger classification or proportional grip control. That limit kept the algorithm understandable and the hardware cost manageable."
-        ]
-      },
-      {
-        "id": "mechanics",
-        "title": "Mechanical iteration",
-        "paragraphs": [
-          "The hand used PLA finger segments and a tendon-and-pulley transmission driven by three hobby servos. Fishing line provided a low-cost tendon material, while the forearm housed the motors, electronics and wiring."
-        ],
-        "table": {
-          "caption": "Design changes made to simplify assembly and improve consistency",
-          "headers": ["Part", "Problem", "Design response"],
-          "rows": [
-            [
-              "Fingers",
-              "Segments could skew under tendon tension",
-              "Reinforced hinge geometry, pins and centred tendon channels"
-            ],
-            [
-              "Palm",
-              "Wall flex and friction around tendon exits",
-              "Thicker local geometry and an accessible palm lid"
-            ],
-            [
-              "Wrist",
-              "A geared concept introduced backlash and print-tolerance demands",
-              "A simpler ball-and-socket direction with tendon anchors"
-            ],
-            [
-              "Forearm",
-              "Fragile segmented clips and trapped wiring",
-              "A shell with removable access panels and internal mounting features"
-            ]
-          ]
-        },
-        "after": [
-          "Repair access mattered as much as initial assembly. The palm lid exposed tendon adjustment points; removable forearm panels made the servos and electronics accessible. Standardising finger geometry also reduced the number of unique replacement parts.",
-          "The trade-off was coupled movement. Sharing actuators and tendon routes lowered cost and complexity, while limiting fine dexterity and making slack and friction central performance constraints."
-        ]
-      },
-      {
-        "id": "integration",
-        "title": "Keeping sensing and actuation stable",
-        "paragraphs": [
-          "Servo current demand and analogue signal quality had to be considered together. The architecture separated the EMG supply from the servo power rails, with a common grounding arrangement and attention to routing noisy power wiring away from the sensing path.",
-          "The integration work involved electrode placement, baseline calibration, mechanical tendon tension and power stability. A threshold that worked well in one setup could become unreliable when contact shifted or the mechanical load changed.",
-          "Those interactions were the main lesson of the build: a clean control diagram does not remove the need to test the complete physical system."
-        ]
-      },
-      {
-        "id": "evaluation",
-        "title": "Initial evaluation",
-        "paragraphs": [
-          "The presentation summary reports approximately £91 in parts and around 6 N of combined fingertip force from simple scale measurements. These are prototype-level observations, not independent product benchmarks."
-        ],
-        "table": {
-          "caption": "Reported fingertip measurements from the presentation summary",
-          "headers": ["Digit", "Flexion", "Fingertip force"],
-          "rows": [
-            ["Index", "61.2°", "1.42 N"],
-            ["Middle", "59.8°", "1.50 N"],
-            ["Ring", "48.5°", "0.98 N"],
-            ["Little finger", "44.3°", "0.97 N"],
-            ["Thumb", "46.5°", "1.32 N"]
-          ]
-        },
-        "after": [
-          "A short timing test reported five values between 264 and 288 ms, averaging approximately 275 ms. The summary describes the measurement endpoints inconsistently, so this should be read as an indicative control-timing observation rather than a verified muscle-to-motion latency.",
-          "The control test was also too small for a dependable accuracy claim. Its stated percentage does not reconcile with the listed event counts. A larger, consistently labelled trial is needed before reporting control accuracy as a performance result.",
-          "These limitations do not erase the integration work; they define the next evaluation task. Mechanical force, complete movement time, missed commands and unintended commands need separate, repeatable protocols."
-        ]
-      },
-      {
-        "id": "next",
-        "title": "What I would improve next",
-        "paragraphs": [
-          "My first priorities would be reducing tendon friction and slack, improving repeatability of electrode placement, and checking the power system under realistic loads. Durability and maintenance would need longer tests than the initial demonstration.",
-          "A better controller could use a shorter, carefully evaluated processing window and an additional EMG channel. Proportional grip or multiple gesture classes would then need to justify their added sensing, calibration and computational demands.",
-          "Before any clinical use, the design would require formal safety work, appropriate user studies, comfort and socket-fit evaluation, and robust long-term testing. The project established a platform for investigating those questions, not their answers."
-        ]
-      }
-    ],
-    "resources": [
-      {
-        "label": "Read the dissertation presentation summary",
-        "href": "../documents/robotic-arm-summary.pdf",
-        "detail": "PDF · 24 pages · Includes original reported measurements"
+        "label": "Read the team report",
+        "href": "../documents/heart-rate-monitor-report.pdf",
+        "detail": "PDF · 12 pages · Student IDs removed"
       }
     ]
   },
@@ -515,14 +388,26 @@
         "id": "workflow",
         "title": "The feedback workflow",
         "steps": [
-          ["Record", "Associate the implant and operation with the follow-up."],
-          ["Route", "Present the relevant anatomical assessment."],
-          ["Collect", "Distribute surveys and capture structured responses."],
+          [
+            "Record",
+            "Associate the implant and operation with the follow-up."
+          ],
+          [
+            "Route",
+            "Present the relevant anatomical assessment."
+          ],
+          [
+            "Collect",
+            "Distribute surveys and capture structured responses."
+          ],
           [
             "Calculate",
             "Store the assessment output alongside its source answers."
           ],
-          ["Review", "Make the feedback available to the R&D team."]
+          [
+            "Review",
+            "Make the feedback available to the R&D team."
+          ]
         ],
         "paragraphs": [
           "I recreated the question and response structures in REDCap and configured automated email workflows to support repeatable survey distribution. Organising the records consistently made it easier to follow the same implant through successive feedback points.",
@@ -557,6 +442,893 @@
       }
     ],
     "resources": [],
-    "sourceNote": "Based on the blank 11-page REDCap form exported in June 2024, the accompanying score-interpretation notes and the original portfolio's internship record. The internal form is described here without publishing its original export."
+    "sourceNote": "Based on the blank 11-page REDCap form exported in June 2024, the accompanying score-interpretation notes and the original portfolio's internship record. The internal form is described here without publishing its original export.",
+    "date": "2024-08",
+    "year": "2024",
+    "stage": "Industry",
+    "label": "KOLN 3D · Internship",
+    "thread": "translation",
+    "cardFit": "logo"
+  },
+  {
+    "slug": "emg-controlled-robotic-arm",
+    "title": "Turning muscle activity into a working grasp",
+    "name": "Low-cost EMG-controlled robotic arm",
+    "category": "Robotics & embedded systems",
+    "status": "Undergraduate prototype · 2025",
+    "role": "BEng dissertation researcher",
+    "institution": "City St George's, University of London",
+    "tools": "Arduino Nano, C++, analogue EMG electronics, SolidWorks, Fusion 360, FDM 3D printing",
+    "image": "images/projects/emg-arm.jpg",
+    "alt": "CAD visualisation of the robotic hand and forearm design",
+    "summary": "An Arduino-controlled, tendon-driven hand and wrist, bringing surface EMG sensing, analogue electronics and 3D-printed mechanics into one prototype.",
+    "takeaway": "I developed a low-cost hand-and-wrist prototype around a sub-£100 parts budget. The work centred on integrating a noisy biological input with a simple, maintainable mechanical system.",
+    "sections": [
+      {
+        "id": "brief",
+        "title": "The design brief",
+        "paragraphs": [
+          "My undergraduate dissertation investigated a low-cost EMG-controlled prosthetic-arm concept using desktop 3D printing and Arduino-compatible electronics. The target was basic grasping within a parts budget below £100, excluding in-house printing labour.",
+          "The final scope was a hand and wrist, without an articulated elbow. It was an engineering proof of concept, rather than a patient-ready prosthesis. I worked across sensing, electronics, firmware, CAD, assembly and initial evaluation under the supervision of Dr James May."
+        ]
+      },
+      {
+        "id": "signal",
+        "title": "From a muscle signal to a command",
+        "paragraphs": [
+          "Surface electrodes captured muscle activity. Because the small, rapidly changing signal could not directly drive a motor, the analogue front end amplified it, rectified it and filtered it into an envelope related to contraction intensity. A DC offset made that signal compatible with the Arduino's input range.",
+          "The design used an AD8226 instrumentation amplifier and TL084 stages for rectification and filtering. The important system-level choice was to condition the biological signal before applying a deliberately simple control rule."
+        ],
+        "steps": [
+          [
+            "Sense",
+            "Surface electrodes detect muscle activity."
+          ],
+          [
+            "Condition",
+            "Amplification, rectification and filtering produce an envelope."
+          ],
+          [
+            "Interpret",
+            "Arduino estimates activity relative to a changing baseline."
+          ],
+          [
+            "Actuate",
+            "Servo pulleys pull the tendons to close the hand."
+          ]
+        ],
+        "after": [
+          "The firmware used a running root-mean-square estimate and an adaptive baseline. Separate thresholds for closing and opening introduced hysteresis, reducing repeated switching near a single threshold. A short post-command interval gave the servos time to respond.",
+          "This was binary open/close control, not independent finger classification or proportional grip control. That limit kept the algorithm understandable and the hardware cost manageable."
+        ]
+      },
+      {
+        "id": "mechanics",
+        "title": "Mechanical iteration",
+        "paragraphs": [
+          "The hand used PLA finger segments and a tendon-and-pulley transmission driven by three hobby servos. Fishing line provided a low-cost tendon material, while the forearm housed the motors, electronics and wiring."
+        ],
+        "table": {
+          "caption": "Design changes made to simplify assembly and improve consistency",
+          "headers": [
+            "Part",
+            "Problem",
+            "Design response"
+          ],
+          "rows": [
+            [
+              "Fingers",
+              "Segments could skew under tendon tension",
+              "Reinforced hinge geometry, pins and centred tendon channels"
+            ],
+            [
+              "Palm",
+              "Wall flex and friction around tendon exits",
+              "Thicker local geometry and an accessible palm lid"
+            ],
+            [
+              "Wrist",
+              "A geared concept introduced backlash and print-tolerance demands",
+              "A simpler ball-and-socket direction with tendon anchors"
+            ],
+            [
+              "Forearm",
+              "Fragile segmented clips and trapped wiring",
+              "A shell with removable access panels and internal mounting features"
+            ]
+          ]
+        },
+        "after": [
+          "Repair access mattered as much as initial assembly. The palm lid exposed tendon adjustment points; removable forearm panels made the servos and electronics accessible. Standardising finger geometry also reduced the number of unique replacement parts.",
+          "The trade-off was coupled movement. Sharing actuators and tendon routes lowered cost and complexity, while limiting fine dexterity and making slack and friction central performance constraints."
+        ]
+      },
+      {
+        "id": "integration",
+        "title": "Keeping sensing and actuation stable",
+        "paragraphs": [
+          "Servo current demand and analogue signal quality had to be considered together. The architecture separated the EMG supply from the servo power rails, with a common grounding arrangement and attention to routing noisy power wiring away from the sensing path.",
+          "The integration work involved electrode placement, baseline calibration, mechanical tendon tension and power stability. A threshold that worked well in one setup could become unreliable when contact shifted or the mechanical load changed.",
+          "Those interactions were the main lesson of the build: a clean control diagram does not remove the need to test the complete physical system."
+        ]
+      },
+      {
+        "id": "evaluation",
+        "title": "Initial evaluation",
+        "paragraphs": [
+          "The presentation summary reports approximately £91 in parts and around 6 N of combined fingertip force from simple scale measurements. These are prototype-level observations, not independent product benchmarks."
+        ],
+        "table": {
+          "caption": "Reported fingertip measurements from the presentation summary",
+          "headers": [
+            "Digit",
+            "Flexion",
+            "Fingertip force"
+          ],
+          "rows": [
+            [
+              "Index",
+              "61.2°",
+              "1.42 N"
+            ],
+            [
+              "Middle",
+              "59.8°",
+              "1.50 N"
+            ],
+            [
+              "Ring",
+              "48.5°",
+              "0.98 N"
+            ],
+            [
+              "Little finger",
+              "44.3°",
+              "0.97 N"
+            ],
+            [
+              "Thumb",
+              "46.5°",
+              "1.32 N"
+            ]
+          ]
+        },
+        "after": [
+          "A short timing test reported five values between 264 and 288 ms, averaging approximately 275 ms. The summary describes the measurement endpoints inconsistently, so this should be read as an indicative control-timing observation rather than a verified muscle-to-motion latency.",
+          "The control test was also too small for a dependable accuracy claim. Its stated percentage does not reconcile with the listed event counts. A larger, consistently labelled trial is needed before reporting control accuracy as a performance result.",
+          "These limitations do not erase the integration work; they define the next evaluation task. Mechanical force, complete movement time, missed commands and unintended commands need separate, repeatable protocols."
+        ]
+      },
+      {
+        "id": "next",
+        "title": "What I would improve next",
+        "paragraphs": [
+          "My first priorities would be reducing tendon friction and slack, improving repeatability of electrode placement, and checking the power system under realistic loads. Durability and maintenance would need longer tests than the initial demonstration.",
+          "A better controller could use a shorter, carefully evaluated processing window and an additional EMG channel. Proportional grip or multiple gesture classes would then need to justify their added sensing, calibration and computational demands.",
+          "Before any clinical use, the design would require formal safety work, appropriate user studies, comfort and socket-fit evaluation, and robust long-term testing. The project established a platform for investigating those questions, not their answers."
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "label": "Read the dissertation presentation summary",
+        "href": "../documents/robotic-arm-summary.pdf",
+        "detail": "PDF · 24 pages · Includes original reported measurements"
+      }
+    ],
+    "date": "2025-05",
+    "year": "2025",
+    "stage": "BEng final year",
+    "label": "City St George’s · BEng dissertation",
+    "thread": "biosignals",
+    "cardFit": "cover"
+  },
+  {
+    "slug": "surgical-workflow-prediction",
+    "date": "2026-01",
+    "year": "2026",
+    "stage": "MSc",
+    "label": "UCL · MSc coursework",
+    "title": "Does knowing the surgical timeline help a model find the tools?",
+    "name": "Surgical workflow timing with CNN-LSTM",
+    "category": "Surgical AI & computer vision",
+    "status": "MSc coursework · 2026",
+    "role": "Individual coursework",
+    "institution": "UCL · MPHY0043 AI for Surgery and Intervention",
+    "tools": "Python, ResNet-18 (ImageNet-pretrained), LSTM, AdamW, Cholec80, video-level paired bootstrap",
+    "image": "images/projects/surgical-workflow.png",
+    "alt": "Diagram of the CNN-LSTM model predicting remaining phase time and future phase timings from video frames",
+    "summary": "A two-part study on laparoscopic surgery video: predicting how long each surgical phase has left, then testing whether those predictions help a model detect which tools are in use.",
+    "takeaway": "A 60-second history predicted phase timing better than 120 seconds (mean error 216 s against 263 s). Adding the predicted timing raised tool-detection mAP from 0.910 to 0.918, but a paired bootstrap across the 10 test videos showed the gain was not statistically significant (p = 0.11).",
+    "sections": [
+      {
+        "id": "question",
+        "title": "The question",
+        "paragraphs": [
+          "Most gallbladder removals are performed laparoscopically, so every operation produces hours of video. Models that understand where a procedure is in its workflow could support operating-theatre coordination and act as a second pair of eyes during surgery.",
+          "I asked two connected questions on the Cholec80 dataset of 80 annotated procedures. First, does a longer video history improve predictions of when the current phase will end? Second, can those timing predictions act as context that makes a tool detector more reliable?"
+        ]
+      },
+      {
+        "id": "method",
+        "title": "One backbone, two tasks",
+        "paragraphs": [
+          "Video was downsampled from 25 to 1 frame per second. An ImageNet-pretrained ResNet-18 extracted features from each frame, and a one-directional LSTM modelled their sequence, so predictions used only past and present frames, as a live system would. A small head predicted 14 values: the start and end of each of seven phases.",
+          "Times were log-transformed to compress long durations. A masked, weighted loss gave the end of the current phase four times the weight of future phases, reflecting its clinical relevance. The backbone was frozen for the first epochs and then fine-tuned at a lower learning rate."
+        ],
+        "figure": {
+          "src": "images/projects/surgical-workflow-models.png",
+          "alt": "Side-by-side diagrams of a visual-only tool classifier and a time-aware classifier that concatenates predicted timing features",
+          "caption": "Task B compared a visual-only tool detector with one that also receives the predicted timings. Everything else was kept identical."
+        }
+      },
+      {
+        "id": "results",
+        "title": "Results",
+        "paragraphs": [
+          "All figures are from the held-out test videos."
+        ],
+        "table": {
+          "caption": "Test-set results for both tasks",
+          "headers": [
+            "Model",
+            "Metric",
+            "Result"
+          ],
+          "rows": [
+            [
+              "Timing, 60-frame window",
+              "Mean absolute error · within ±60 s",
+              "216 s · 29.2%"
+            ],
+            [
+              "Timing, 120-frame window",
+              "Mean absolute error · within ±60 s",
+              "263 s · 27.7%"
+            ],
+            [
+              "Tool detection, visual only",
+              "mAP · Micro-F1",
+              "0.910 · 0.885"
+            ],
+            [
+              "Tool detection, time-aware",
+              "mAP · Micro-F1",
+              "0.918 · 0.892"
+            ]
+          ]
+        },
+        "after": [
+          "The longer window did not help. Frames from two minutes earlier often say little about the current phase, and a shorter window is also cheaper to run in real time.",
+          "Timing helped most for tools tied to particular phases: bipolar forceps AP rose from 0.849 to 0.907. Tools used throughout an operation changed little or fell slightly, so timing behaves as a weak prior rather than a rule."
+        ],
+        "figure": {
+          "src": "images/projects/surgical-workflow-map.png",
+          "alt": "Bar chart of mAP for baseline and time-aware models on validation and test splits",
+          "caption": "mAP for the baseline and time-aware models. The axis starts at 0.895, which makes the gap look larger than it is."
+        }
+      },
+      {
+        "id": "significance",
+        "title": "Is the improvement real?",
+        "paragraphs": [
+          "Frames from the same video are correlated, so I tested the difference with a paired bootstrap that resampled whole videos 2,000 times. The mAP gain averaged +0.009 with a 95% interval of −0.001 to +0.018 (p = 0.11), so it was not significant. Micro-F1 at a fixed 0.5 threshold decreased significantly in the bootstrap.",
+          "The headline table and the bootstrap point in different directions for Micro-F1, and the report does not reconcile them. The safest reading is that timing slightly improved how frames were ranked but did not reliably improve thresholded decisions. Each configuration was also trained only once."
+        ]
+      },
+      {
+        "id": "limits",
+        "title": "Limits and next steps",
+        "paragraphs": [
+          "The test set's tool-detection mAP is numerically higher than the roughly 81% reported for EndoNet, but the data splits and training setups differ, so this is not a like-for-like comparison.",
+          "Surgeons work at different paces, so a model trained on absolute seconds will under- or over-estimate for slow and fast cases. The next steps would be to predict relative progress through each phase, output uncertainty so downstream models can treat timing as a soft hint, and report results separately for fast, typical and slow procedures."
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "label": "Read the coursework paper",
+        "href": "../documents/surgical-workflow-report.pdf",
+        "detail": "PDF · 7 pages · Student ID removed"
+      }
+    ]
+  },
+  {
+    "slug": "bone-healing-monitoring-device",
+    "title": "OsteoTrack: a path from device concept to clinical use",
+    "name": "OsteoTrack bone-healing monitoring",
+    "category": "Medical devices & translation",
+    "status": "Group concept project · 2026",
+    "role": "Communications & Fundraising Officer",
+    "institution": "UCL · Group D",
+    "tools": "Clinical literature, competitor research, IP research, commercial planning, launch-page design",
+    "image": "images/projects/bone-healing.png",
+    "alt": "OsteoTrack non-invasive bone-healing monitoring concept",
+    "summary": "A non-invasive fracture-monitoring proposal, connecting vibration sensing with a realistic plan for evidence, adoption and funding.",
+    "takeaway": "My contribution connected the device's technical premise to its identity, clinical positioning and funding pathway. OsteoTrack remained an academic concept, with validation and deployment proposed as future stages.",
+    "sections": [
+      {
+        "id": "context",
+        "title": "The follow-up problem",
+        "paragraphs": [
+          "Our group explored how a non-invasive device might support follow-up after a fracture. The clinical motivation was to observe healing over time and identify patients who might need further assessment, without treating every follow-up as an isolated measurement.",
+          "We compared bone-assessment approaches including DEXA, CT, MRI, ultrasound, implant-based sensing and vibration-based monitoring. The concept we developed used an external vibration source and accelerometers to track changes in the limb's mechanical response.",
+          "The intended setting was a community or clinical point of care. A clinician would review longitudinal measurements and decide whether a patient needed fracture-clinic review or imaging. This was a proposal for decision support, with clinical effectiveness still to be established."
+        ]
+      },
+      {
+        "id": "concept",
+        "title": "How the proposed device worked",
+        "paragraphs": [
+          "The team's mechanical concept combined an inflatable cuff, a vibration motor with a contact disc, and two accelerometers on adjustable mounting strips. The adjustable geometry was intended to accommodate different patients and maintain consistent contact.",
+          "A controlled frequency sweep would produce a measured response spectrum. Repeated visits would build a patient-specific trajectory. The proposed software would compare this trajectory with labelled clinical data to support assessment of non-union risk."
+        ],
+        "figure": {
+          "src": "images/projects/osteotrack-assembly.png",
+          "alt": "Two annotated CAD views of the proposed cuff assembly, with and without the motor housing",
+          "caption": "Group D concept drawings: adjustable accelerometer positions, cuff attachment and the motor/contact-disc assembly. This is a proposed design, not a clinically validated device."
+        },
+        "steps": [
+          [
+            "Position",
+            "Fit the cuff and align the sensing points."
+          ],
+          [
+            "Measure",
+            "Apply a controlled vibration sweep and record the response."
+          ],
+          [
+            "Compare",
+            "Track the spectrum against earlier visits."
+          ],
+          [
+            "Review",
+            "Present the trend to a clinician for assessment."
+          ]
+        ],
+        "after": [
+          "The group report explored cross-spectrum features and a supervised model trained on future clinical-trial data. Patient-labelled training data, repeatability testing and clinical validation were dependencies, rather than completed capabilities."
+        ]
+      },
+      {
+        "id": "contribution",
+        "title": "My contribution",
+        "paragraphs": [
+          "As Communications and Fundraising Officer, I initially expected to concentrate on presentation and funding sources. The work quickly became more technical: explaining a medical-device venture credibly required understanding its mechanism, evidence and place in the clinical workflow."
+        ],
+        "subsections": [
+          {
+            "title": "Identity and digital presence",
+            "text": "I worked with the Chief Designer and Market Researcher on the OsteoTrack logo, brand identity and launch page. The aim was to present an orthopaedic monitoring platform in a professional, recognisable way, consistent with its early stage of development."
+          },
+          {
+            "title": "Clinical and commercial positioning",
+            "text": "I helped distinguish the person benefiting from the device from the organisation buying it. Patients were the intended beneficiaries, while clinicians, fracture-clinic leads and procurement teams would influence adoption. That distinction shaped the communication strategy."
+          },
+          {
+            "title": "Intellectual property and funding",
+            "text": "I researched relevant intellectual property, early-stage startup planning and fundraising routes. A preliminary patent review raised questions for a future freedom-to-operate assessment; it did not establish freedom to operate or secure patent protection."
+          }
+        ]
+      },
+      {
+        "id": "strategy",
+        "title": "A staged route to adoption",
+        "paragraphs": [
+          "I helped frame the venture around milestones that could reduce technical and commercial uncertainty. Early communication would support prototype refinement and pilot engagement, then grow with the quality of the clinical evidence.",
+          "The group considered private orthopaedic clinics as an initial route for feedback, with NHS adoption as a longer-term objective. Conference presentations, professional engagement and clinical white papers were proposed channels for reaching the people who would evaluate the device."
+        ],
+        "table": {
+          "caption": "The proposed funding sequence",
+          "headers": [
+            "Stage",
+            "Evidence to establish",
+            "Funding direction"
+          ],
+          "rows": [
+            [
+              "Feasibility",
+              "Prototype refinement, IP review and initial repeatability",
+              "University and early translational support"
+            ],
+            [
+              "Proof of concept",
+              "Technical evidence and credible clinical partners",
+              "Non-dilutive health-innovation grants"
+            ],
+            [
+              "Pilot readiness",
+              "Quality processes and a clinical validation plan",
+              "Larger translational programmes"
+            ],
+            [
+              "Commercial development",
+              "Stronger evidence of utility and adoption",
+              "Seed investment or debt where appropriate"
+            ]
+          ]
+        },
+        "after": [
+          "The report explored a per-patient pricing model and longer-term financial projections. These were planning assumptions, not sales, funding secured or demonstrated NHS savings. I treated grants and accelerators as routes to investigate against the venture's stage, rather than promises of available capital."
+        ]
+      },
+      {
+        "id": "tradeoffs",
+        "title": "A technical idea still has to fit the brief",
+        "paragraphs": [
+          "I questioned how readily vibration-based evidence from modelled bones would translate into measurements in patients. During competitor research, I explored whether a resonance approach used for implants could inform long-bone assessment, potentially alongside fixation plates.",
+          "The group decided that an implant-linked direction would move away from our non-invasive objective and complicate the development pathway. The research still helped us understand the competitive landscape and sharpen the boundaries of the concept.",
+          "The team also considered electrical safety, data handling, software governance and clinical investigation requirements. Those topics informed the development plan; they were not claims that the concept had received regulatory approval."
+        ]
+      },
+      {
+        "id": "reflection",
+        "title": "What I took from the project",
+        "paragraphs": [
+          "Around fifteen weekly meetings, with clear goals for the next week, helped a multidisciplinary team maintain progress. My own role depended on translating between the technical work and the questions an adopter or funder would ask.",
+          "The strongest outcome for me was learning to tie communication to evidence. A professional identity can make an idea understandable, but a convincing medtech proposition also needs a plausible path through validation, procurement and use.",
+          "If repeating the project, I would start that work earlier, link technical milestones to communication outputs, and test the proposal with clinicians and procurement stakeholders sooner. I would also keep a regular reflective log to capture how the strategy changed."
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "label": "Read the group concept report",
+        "href": "../documents/osteotrack-report.pdf",
+        "detail": "PDF · 44 pages · Revision 0.0, draft"
+      },
+      {
+        "label": "Read my project reflection",
+        "href": "../documents/osteotrack-reflection.pdf",
+        "detail": "PDF · 3 pages"
+      },
+      {
+        "label": "View the original launch-page concept",
+        "href": "https://osteo-track-flow.base44.app",
+        "detail": "Early digital demonstration"
+      }
+    ],
+    "date": "2026-04",
+    "year": "2026",
+    "stage": "MSc",
+    "label": "UCL · Group concept",
+    "thread": "translation"
+  },
+  {
+    "slug": "ce-marking-lung-ultrasound-robot",
+    "date": "2026-05",
+    "year": "2026",
+    "stage": "MSc",
+    "label": "UCL · MSc coursework",
+    "thread": "translation",
+    "cardFit": "cover",
+    "title": "Taking a research robot towards a CE mark",
+    "name": "EU MDR pathway for a lung-ultrasound robot",
+    "category": "Regulatory affairs",
+    "status": "MSc coursework · 2026",
+    "role": "Individual coursework",
+    "institution": "UCL · MPHY0046 Medical Robotics and Devices",
+    "tools": "EU MDR 2017/745, Annex VIII classification rules, EN ISO 13485, ISO 14971, IEC 62304, IEC 62366-1, IEC 60601 series",
+    "image": "images/projects/ce-marking-pathway.svg",
+    "alt": "Diagram of the regulatory route from intended purpose through classification and quality system to notified-body assessment",
+    "summary": "A regulatory assessment written as the researcher commercialising a published lung-ultrasound scanning robot in the EU: qualification, risk class, quality system, documentation and standards.",
+    "takeaway": "I argued the robot should be a Class IIa active diagnostic device under Annex VIII Rule 10, with a deliberately narrow intended purpose: clinician-supervised image acquisition, not automated diagnosis. I then mapped the quality system, technical file and standards a notified body would expect to see.",
+    "sections": [
+      {
+        "id": "device",
+        "title": "The device",
+        "paragraphs": [
+          "The system, published by Tan et al. (2023), is a research-stage robot that scans both sides of the chest with two ultrasound probes. It combines a gantry-style dual-arm platform, structured-light reconstruction of the chest surface, automatic probe-path planning, closed-loop force control and a clinician interface.",
+          "The paper reports scans in under four minutes per person, with image quality comparable to manual scanning. Those are the authors' results; my work was to set out what it would take to sell the device in the EU."
+        ]
+      },
+      {
+        "id": "purpose",
+        "title": "Defining the claim before the device",
+        "paragraphs": [
+          "Under the MDR, the manufacturer's intended purpose decides whether a product is a medical device and how strictly it is regulated. I defined it conservatively: an active, non-invasive, clinician-supervised imaging device that acquires lung ultrasound images to support bedside assessment of respiratory disease.",
+          "It is still a medical device, because acquiring images is part of the diagnostic chain even when a clinician interprets them, and its action is mechanical and acoustic rather than pharmacological. Claiming automated diagnosis would have pulled in a heavier evidence burden the research does not support."
+        ]
+      },
+      {
+        "id": "classification",
+        "title": "Choosing the classification rule",
+        "paragraphs": [
+          "Classification came from ruling rules in and out, not from picking the most familiar one."
+        ],
+        "table": {
+          "caption": "EU MDR Annex VIII rules considered",
+          "headers": [
+            "Rule",
+            "Applies?",
+            "Reason"
+          ],
+          "rows": [
+            [
+              "Rules 1–4",
+              "No",
+              "They cover non-active, non-invasive devices; this system is active"
+            ],
+            [
+              "Rules 5–8",
+              "No",
+              "They cover invasive devices; the probes touch intact skin only"
+            ],
+            [
+              "Rule 9",
+              "No",
+              "It covers active therapeutic devices; nothing is treated"
+            ],
+            [
+              "Rule 10",
+              "Yes, Class IIa",
+              "An active device intended for diagnosis and monitoring"
+            ],
+            [
+              "Rule 11",
+              "No",
+              "The software drives the hardware rather than standing alone, so it takes the device's class"
+            ]
+          ]
+        }
+      },
+      {
+        "id": "evidence",
+        "title": "Quality system and technical file",
+        "paragraphs": [
+          "A Class IIa device under Annex IX needs a quality management system; EN ISO 13485:2016 is the accepted framework. For a system that combines robotics, imaging, software and patient contact, it also keeps every subsystem under the same design controls, change control and supplier checks."
+        ],
+        "steps": [
+          [
+            "Concept",
+            "Intended purpose, users, patient population and system boundary."
+          ],
+          [
+            "Design",
+            "Architecture, drawings, schematics and a risk file covering probe force, positioning errors, electrical safety, EMC, software faults and poor images."
+          ],
+          [
+            "Verification",
+            "Software tests, bench tests of motion and force control, electrical safety, EMC, usability and image-quality validation."
+          ],
+          [
+            "Clinical",
+            "Clinical evaluation and, if needed, an investigation with protocol and adverse-event procedures."
+          ],
+          [
+            "Market",
+            "Supplier control, traceability, complaints, corrective actions, vigilance and the post-market surveillance plan."
+          ]
+        ],
+        "after": [
+          "The supporting standards were ISO 14971 for risk management, IEC 62304 for the software lifecycle, IEC 62366-1 for usability and IEC 60601-1, 60601-1-2 and 60601-2-37 for electrical safety, EMC and ultrasound equipment. Inside the company, the person responsible for regulatory compliance keeps the file current; outside it, a notified body audits it and issues the certificate behind the CE mark."
+        ]
+      },
+      {
+        "id": "reflection",
+        "title": "Why this matters for an engineer",
+        "paragraphs": [
+          "A working prototype and a device that can legally be sold are different things. This assessment made that concrete: most of the work lies in evidence, traceability and controlled change, not in the robot itself.",
+          "It connects my clinical follow-up work at KOLN 3D and the adoption plan in OsteoTrack. The classification here is my reasoned coursework argument, not a regulatory determination."
+        ]
+      }
+    ],
+    "resources": [],
+    "sourceNote": "The answers follow the module's question template, so the submission is summarised here rather than published. The device is described in Tan et al. (2023)."
+  },
+  {
+    "slug": "surgical-data-science",
+    "date": "2026-05",
+    "year": "2026",
+    "stage": "MSc",
+    "label": "UCL · MSc coursework",
+    "title": "Three clinical datasets, three kinds of evidence",
+    "name": "Surgical data science coursework",
+    "category": "Statistics & machine learning",
+    "status": "MSc coursework · 2026",
+    "role": "Individual coursework · three assignments",
+    "institution": "UCL · MPHY0047 Surgical Data Science",
+    "tools": "Python, NumPy, SciPy, scikit-learn, scikit-image, OpenCV, Jupyter",
+    "image": "images/projects/surgical-data-science.png",
+    "alt": "Confusion matrix for GMM-EM clustering of normal, supraventricular and ventricular ECG beats",
+    "summary": "Three assignments on clinical data: scoring ultrasound image quality against experts, classifying surgical skill and COVID-19 CT scans, and clustering ECG beats without labels.",
+    "takeaway": "Across all three I chose methods to fit the data: normality checks before choosing between Welch and Mann–Whitney tests, cross-validated classifiers judged on the error that matters clinically, and weighted metrics for unbalanced clusters. Several results were negative, and I reported them as such.",
+    "sections": [
+      {
+        "id": "ultrasound",
+        "title": "Part 1 · Do image metrics agree with expert scores?",
+        "paragraphs": [
+          "The dataset held transoesophageal echo images from 20 participants, 7 experts and 13 novices, across 10 views. Each image had two manual quality scores and a gold-standard reference. The two manual scores correlated positively in every view, most strongly in View 1.",
+          "I compared each image with its reference using structural similarity, mutual information and cosine similarity. Mutual information and cosine similarity separated experts from novices in 2 of 10 views; structural similarity did so in 1. Ridge-regularised regression from these metrics to the manual scores reached R² ≈ 0.56 at best. Image misalignment, measured by ECC registration, showed no significant expert–novice difference in any view."
+        ],
+        "figure": {
+          "src": "images/projects/surgical-data-science-ultrasound.png",
+          "alt": "Line chart comparing true and estimated criteria-percentage scores for View 1",
+          "caption": "View 1: true against estimated quality scores from the linear regression."
+        },
+        "after": [
+          "With about 20 images per view, those regression fits are in-sample and optimistic. I would now hold out data before reporting them."
+        ]
+      },
+      {
+        "id": "classification",
+        "title": "Part 2 · Classifying surgical skill and COVID-19 CT",
+        "paragraphs": [
+          "Using JIGSAWS robotic suturing data from four expert and four novice surgeons, I extracted 22 motion parameters. Completion time separated the groups most clearly: experts averaged 86.5 ± 14.5 s and novices 141.2 ± 52.9 s. Five features (time, path length and velocity for both instruments) fed three classifiers."
+        ],
+        "table": {
+          "caption": "Cross-validated skill classification",
+          "headers": [
+            "Model",
+            "Accuracy · F1",
+            "What stood out"
+          ],
+          "rows": [
+            [
+              "Bagged decision tree",
+              "0.800 · 0.809",
+              "Baseline"
+            ],
+            [
+              "Random forest",
+              "0.825 · 0.834",
+              "Fewest novices labelled as experts (4 of 20)"
+            ],
+            [
+              "K-nearest neighbours",
+              "0.825 · 0.855",
+              "Missed only 1 expert trial, but labelled 6 novices as experts"
+            ]
+          ]
+        },
+        "after": [
+          "I recommended the random forest: in surgical training, certifying a novice too early is the more dangerous error.",
+          "On 746 CT images, linear and quadratic discriminant analysis reached 0.71 and 0.58 accuracy, with QDA over-predicting COVID-19. Texture features with an RBF support vector machine reached 0.81, and class weighting on an unbalanced subset reached 0.84. Published deep-learning models score higher, but they use far richer training, so the comparison is not like-for-like."
+        ]
+      },
+      {
+        "id": "clustering",
+        "title": "Part 3 · Clustering ECG beats without labels",
+        "paragraphs": [
+          "1,800 heartbeats from three classes (normal, supraventricular ectopic and ventricular ectopic) were described by 83 features. PCA kept over 90% of the variance in far fewer dimensions. The clustering methods never saw the labels; the labels were used only to score them afterwards."
+        ],
+        "table": {
+          "caption": "Unsupervised clustering performance (weighted metrics)",
+          "headers": [
+            "Method",
+            "Features",
+            "Accuracy · F1"
+          ],
+          "rows": [
+            [
+              "Gaussian mixture (EM)",
+              "All 83",
+              "0.895 · 0.891"
+            ],
+            [
+              "Agglomerative, Ward linkage",
+              "PCA",
+              "0.877 · 0.875"
+            ],
+            [
+              "K-means",
+              "PCA",
+              "0.864 · 0.858"
+            ],
+            [
+              "Agglomerative, Ward linkage",
+              "All 83",
+              "0.778 · 0.762"
+            ],
+            [
+              "Complete, average or single linkage",
+              "Either",
+              "0.33–0.37 · 0.17–0.23"
+            ]
+          ]
+        },
+        "after": [
+          "The weaker linkage methods collapsed almost every beat into one normal cluster. Supraventricular beats were the hardest class in every method, with at best 433 of 600 grouped correctly, because they overlap with normal beats in feature space. The Gaussian mixture did best because it lets clusters take different shapes and spreads."
+        ],
+        "figure": {
+          "src": "images/projects/surgical-data-science-skill.png",
+          "alt": "Random forest confusion matrix for novice and expert suturing trials",
+          "caption": "Random forest results for novice and expert trials (Part 2)."
+        }
+      },
+      {
+        "id": "reflection",
+        "title": "What the three have in common",
+        "paragraphs": [
+          "Each assignment came down to the same habits: check the assumptions before choosing a test, pick the metric that reflects the clinical cost of an error, and say plainly when a method fails. Those habits are also the main difference between this work and my second-year lab reports."
+        ]
+      }
+    ],
+    "resources": [],
+    "sourceNote": "UCL asks students not to publish MPHY0047 assessment material, so the briefs, notebooks and answers are summarised here rather than published."
+  },
+  {
+    "slug": "fnirs-classification",
+    "title": "What can walking tell us about the brain?",
+    "name": "fNIRS classification during complex walking",
+    "category": "Biosignals & machine learning",
+    "status": "Dissertation submitted · 2026",
+    "role": "MSc dissertation researcher",
+    "institution": "University College London",
+    "tools": "Python, scikit-learn, SciPy, pandas, pytest, SPM outputs",
+    "image": "images/projects/fnirs.png",
+    "alt": "Experimental walking route with lighting and obstacle conditions",
+    "summary": "A participant-level machine-learning study of prefrontal responses under different lighting and obstacle conditions, with careful validation of what a small dataset can support.",
+    "takeaway": "I built and tested a complete analysis pipeline. The best observed model reached 61.9% balanced accuracy, but selection-adjusted testing did not establish performance above chance.",
+    "sections": [
+      {
+        "id": "question",
+        "title": "The research question",
+        "paragraphs": [
+          "Could prefrontal brain responses recorded during walking distinguish autistic and neurotypical adults? The question moved beyond differences between group averages to ask whether those responses could classify a previously unseen participant.",
+          "I analysed an existing UCL PEARL walking-and-lighting dataset. The original experiment varied blue versus yellow illumination, dim versus bright light, and the presence of obstacles. Functional near-infrared spectroscopy (fNIRS) provided a portable measure of changes in cortical haemoglobin during these tasks.",
+          "My work began with the inherited, first-level SPM outputs. I did not collect the original recordings, repeat raw-signal preprocessing, or refit the original general linear model. My contribution was the secondary analysis: data validation, feature construction, classification, statistical testing and interpretation."
+        ]
+      },
+      {
+        "id": "data",
+        "title": "From SPM files to comparable features",
+        "paragraphs": [
+          "A file being readable did not mean it was usable. I checked the design matrices, regressor names and stored beta estimates for compatible dimensions, finite values and the required task conditions. Four of the 36 participants had a required task column containing only zeros and were excluded before model fitting.",
+          "The final analytical cohort contained 32 participants: 19 neurotypical and 13 autistic. I pooled condition-specific oxygenated-haemoglobin beta estimates from 22 channels into seven predefined prefrontal regions, keeping the inputs compact and anatomically interpretable."
+        ],
+        "table": {
+          "caption": "Four feature representations, each evaluated with three linear classifiers",
+          "headers": [
+            "Representation",
+            "Features",
+            "Purpose"
+          ],
+          "rows": [
+            [
+              "Task-context ROI",
+              "21",
+              "Broad averages for yellow walking, blue walking and non-walking events"
+            ],
+            [
+              "Full-contrast ROI",
+              "28",
+              "Four condition differences across seven regions"
+            ],
+            [
+              "Contrast summary",
+              "32",
+              "Global, hemispheric and regional-family summaries of the four contrasts"
+            ],
+            [
+              "Blue–yellow summary",
+              "8",
+              "A focused representation of the lighting-spectrum contrast"
+            ]
+          ]
+        },
+        "after": [
+          "The four contrasts were blue minus yellow, dim minus bright, obstacle minus no obstacle, and non-walking minus walking. They were constructed without group labels. Expressing differences within each participant also reduced the emphasis on broad participant-level response offsets."
+        ]
+      },
+      {
+        "id": "validation",
+        "title": "Validation was part of the design",
+        "paragraphs": [
+          "I compared shrinkage linear discriminant analysis (LDA), L2-regularised logistic regression and a linear support vector machine. With almost as many predictors as training participants, regularised linear models offered a more defensible starting point than a highly flexible classifier.",
+          "The outer validation loop used four stratified folds repeated 25 times. Each of the 100 outer evaluations held out participants entirely. Three-fold inner validation selected hyperparameters using only the outer training set. Standardisation, optional PCA and questionnaire imputation stayed inside the fitted pipelines."
+        ],
+        "steps": [
+          [
+            "Validate",
+            "Check the SPM design and required conditions before inclusion."
+          ],
+          [
+            "Represent",
+            "Aggregate channels into regions and construct fixed feature sets."
+          ],
+          [
+            "Tune",
+            "Fit preprocessing and choose hyperparameters within training folds."
+          ],
+          [
+            "Evaluate",
+            "Score untouched participants using the same splits for all models."
+          ],
+          [
+            "Challenge",
+            "Repeat the full comparison with shuffled participant labels."
+          ]
+        ],
+        "after": [
+          "Comparing 12 configurations creates another opportunity for optimism: one configuration may look best by chance. I ran 1,000 participant-label permutations, repeating the entire nested analysis and retaining the best score across all 12 configurations for each permutation. This produced a selection-aware reference distribution."
+        ]
+      },
+      {
+        "id": "results",
+        "title": "The result, including its limits",
+        "paragraphs": [
+          "Contrast-based representations performed better descriptively than broad task-context averages. Full-contrast LDA produced the strongest observed result, but the error pattern was uneven: neurotypical specificity was high and autistic recall was low."
+        ],
+        "table": {
+          "caption": "Full-contrast LDA performance and selection-adjusted inference",
+          "headers": [
+            "Measure",
+            "Result"
+          ],
+          "rows": [
+            [
+              "Balanced accuracy",
+              "0.619"
+            ],
+            [
+              "ROC-AUC",
+              "0.696"
+            ],
+            [
+              "Neurotypical specificity",
+              "0.890"
+            ],
+            [
+              "Autistic recall",
+              "0.348"
+            ],
+            [
+              "Matthews correlation coefficient",
+              "0.286"
+            ],
+            [
+              "Selection-adjusted permutation p-value",
+              "0.236"
+            ]
+          ]
+        },
+        "figure": {
+          "src": "images/projects/fnirs-results.png",
+          "alt": "Dissertation Figure 4 comparing balanced accuracy, ROC-AUC and MCC across twelve model configurations",
+          "caption": "Original dissertation Figure 4. Contrast features improved descriptive performance, but the selected result remained statistically uncertain."
+        },
+        "after": [
+          "The configuration-specific p-value for full-contrast LDA was 0.0539. After selection across the 12 configurations, it was 0.2358: 235 of 1,000 shuffled-label runs achieved a best score at least as high as the observed result. The study therefore did not establish a reliable classifier or a clinically useful diagnostic tool.",
+          "The repeated evaluations reused the same 32 people. They helped characterise sensitivity to data splits; they did not turn a small cohort into 100 independent validation samples."
+        ]
+      },
+      {
+        "id": "extensions",
+        "title": "Looking beyond a single score",
+        "paragraphs": [
+          "I examined participant-level prediction stability to distinguish people who were repeatedly misclassified from people whose predictions changed across splits. Errors were concentrated among a subset of autistic participants, making the overall score an incomplete description of model behaviour.",
+          "Adding the Sensory Perception Quotient (SPQ) to the full-contrast features produced small, classifier-dependent changes. It mainly changed the balance between recall and specificity rather than adding a consistent predictive benefit.",
+          "PCA provided a useful counterexample to the assumption that preserving variance preserves useful information. It retained a median of five components and 95.2% of total feature variance, yet balanced accuracy fell from 0.6185 to 0.5881. I projected PCA-space classifier coefficients back into the original standardised feature space and numerically checked their reconstructed decision scores."
+        ]
+      },
+      {
+        "id": "engineering",
+        "title": "Making the analysis reproducible",
+        "paragraphs": [
+          "The final dissertation reports 87 passing automated tests across seven modules, with two expected questionnaire-merge warnings. Tests covered SPM validation, synthetic ROI calculations, contrast directions, invalid feature tables, nested-validation outputs, participant summaries, questionnaire matching and permutation statistics.",
+          "I documented random seeds, software versions, analysis scripts and aggregate outputs. The result is a reproducible research workflow whose assumptions and failure cases can be inspected, even when the scientific answer is inconclusive.",
+          "The next useful step is stronger evidence: a larger independent cohort, richer metadata and external validation. More model searching on the same small sample would not resolve the underlying uncertainty."
+        ]
+      }
+    ],
+    "resources": [
+      {
+        "label": "Read the full dissertation",
+        "href": "../documents/fnirs-dissertation.pdf",
+        "detail": "PDF · 64 pages"
+      },
+      {
+        "label": "Explore the analysis code",
+        "href": "https://github.com/LyCoda/fnirs-walking-autism-classification",
+        "detail": "Code, aggregate results and reproducibility notes"
+      }
+    ],
+    "date": "2026-09",
+    "year": "2026",
+    "stage": "MSc",
+    "label": "UCL · MSc dissertation",
+    "thread": "biosignals",
+    "featured": 1
   }
 ]

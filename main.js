@@ -105,3 +105,19 @@ if (toc && "IntersectionObserver" in window) {
     .querySelectorAll(".article-section")
     .forEach((section) => observer.observe(section));
 }
+// Scroll reveal for the work sections. Content stays visible without JavaScript.
+const revealTargets = document.querySelectorAll(".reveal, .evolution");
+if (revealTargets.length && "IntersectionObserver" in window) {
+  document.documentElement.classList.add("js");
+  const revealer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        revealer.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -8% 0px", threshold: 0.08 },
+  );
+  revealTargets.forEach((el) => revealer.observe(el));
+}

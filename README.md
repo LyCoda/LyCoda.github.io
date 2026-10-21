@@ -5,7 +5,7 @@ A light, responsive biomedical-engineering portfolio for medtech and robotics em
 ## Editing
 
 - `index.html`: biography, academic record, selected-project summaries, experience and contact details.
-- `content.json`: the detailed content and source links for all four project case studies.
+- `content.json`: the detailed content and source links for all project case studies, plus `timeline.json` for the "How my work has evolved" threads.
 - `scripts/render_projects.py`: regenerate the project HTML after editing `content.json` with `python scripts/render_projects.py`. Uses only the Python standard library. Commit the generated HTML; GitHub Pages needs no build step.
 - `theme.css`: shared design tokens, page styles, responsive layouts, print and reduced-motion styles.
 - `main.js`: progressive enhancement for the mobile menu, portrait reveal, animation control and section navigation.
