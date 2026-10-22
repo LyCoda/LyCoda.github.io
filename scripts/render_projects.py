@@ -121,6 +121,21 @@ def thread_of(slug):
     return None, None
 
 
+def thumb(q):
+    """Card art for a link to another case study: the still, plus its turntable loop for hover."""
+    c = q['card']
+    if 'src' not in c:
+        return ''
+    w, h = image_size(c['src'])
+    pos = c.get('pos', '50% 40%')
+    out = (f'<span class="tab-art" aria-hidden="true"><img src="../{c["src"]}" alt="" loading="lazy" width="{w}" height="{h}" '
+           f'style="object-position:{pos}">')
+    if 'loop' in c:
+        out += (f'<video class="vc-loop" data-src="../{c["loop"]}" muted loop playsinline preload="none" '
+                f'tabindex="-1" style="object-position:{pos}"></video>')
+    return out + '</span>'
+
+
 def thread_nav(p):
     t, i = thread_of(p['slug'])
     if not t:
@@ -131,7 +146,8 @@ def thread_nav(p):
         name, when = (q['name'], month(q)) if q else (st['name'], st['year'])
         href = f'{q["slug"]}.html' if q else '../index.html' + st['href']
         cur = ' aria-current="page"' if j == i else ''
-        items += f'<li><a href="{href}"{cur}><span>{E(when)}</span>{E(name)}</a></li>'
+        art = thumb(q) if q else ''
+        items += f'<li><a class="has-art" href="{href}"{cur}>{art}<span class="tab-text"><span>{E(when)}</span>{E(name)}</span></a></li>'
     return (f'<nav class="thread-nav wrap" aria-label="{E(t["title"])} thread"><p><span>Part of the thread · step {i + 1} of {len(t["steps"])}</span>'
             f'<strong>{E(t["title"])}</strong> · {E(t["subtitle"])}</p><ol>{items}</ol></nav>')
 
@@ -160,9 +176,9 @@ def case_page(i, p):
         material = paragraphs([p['sourceNote']])
     pager = ''
     if prev_p:
-        pager += f'<a class="pager-link" href="{prev_p["slug"]}.html"><span>Earlier · {E(month(prev_p))}</span>{E(prev_p["name"])}</a>'
+        pager += f'<a class="pager-link has-art" href="{prev_p["slug"]}.html">{thumb(prev_p)}<span class="tab-text"><span>Earlier · {E(month(prev_p))}</span>{E(prev_p["name"])}</span></a>'
     if next_p:
-        pager += f'<a class="pager-link pager-next" href="{next_p["slug"]}.html"><span>Later · {E(month(next_p))}</span>{E(next_p["name"])}</a>'
+        pager += f'<a class="pager-link pager-next has-art" href="{next_p["slug"]}.html">{thumb(next_p)}<span class="tab-text"><span>Later · {E(month(next_p))}</span>{E(next_p["name"])}</span></a>'
     return '\n'.join([
         head(p['name'], p['summary'], '../', f'projects/{p["slug"]}.html', p['image']),
         '<body class="case-page" id="top">', header(),

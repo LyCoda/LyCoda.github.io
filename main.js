@@ -305,7 +305,7 @@ if (loops.length && finePointer.matches && !reduced.matches) {
       : null;
   loops.forEach((v) => {
     if (io) io.observe(v);
-    const card = v.closest(".vc");
+    const card = v.closest(".vc, .has-art");
     card.addEventListener("pointerenter", () => {
       load(v);
       v.currentTime = 0;
