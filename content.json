@@ -134,11 +134,10 @@
     "card": {
       "eyebrow": "2024 · Year 2 lab",
       "title": "ECG Amplifier",
-      "theme": "dark",
+      "theme": "light",
       "size": "reg",
-      "art": "photo",
+      "art": "render",
       "src": "images/cards/ecg-amplifier.webp",
-      "pos": "50% 45%",
       "thread": "biosignals",
       "quiz": {
         "question": "How much better did the instrumentation amplifier reject common-mode noise?",
@@ -323,21 +322,24 @@
     "card": {
       "eyebrow": "2024 · Digital design",
       "title": "Gate-Level Heart Monitor",
-      "theme": "dark",
+      "theme": "light",
       "size": "tall",
-      "art": "circuit",
+      "art": "render",
       "src": "images/cards/heart-rate-monitor.webp",
       "thread": "biosignals",
       "quiz": {
-        "question": "An ECG and a pulse oximeter disagree. What should the alarm do?",
+        "question": "Flip the inputs and try each gate. Which one lights up only when A and B disagree?",
         "options": [
-          "Go red at once",
-          "Trust the ECG",
-          "Escalate if it repeats"
+          "AND",
+          "OR",
+          "XOR",
+          "NOR"
         ],
         "answer": 2,
-        "reveal": "Escalate. The circuit counts repeated disagreements and steps from green to amber to red."
-      }
+        "reveal": "XOR, short for exclusive OR: it outputs 1 only when its inputs differ. My heart monitor asked the same of two 8-bit heart-rate readings, using XOR gates inside a gate-level subtractor to measure how far the ECG and pulse oximeter disagreed.",
+        "sandbox": "gates"
+      },
+      "pos": "64% 50%"
     }
   },
   {
@@ -493,16 +495,9 @@
       "title": "Implant Follow-up",
       "theme": "light",
       "size": "tall",
-      "art": "logo",
+      "art": "render",
       "src": "images/cards/redcap-feedback-workflow.webp",
       "thread": "translation",
-      "steps": [
-        "Implant",
-        "Region",
-        "Assessment",
-        "Score bands",
-        "Follow-up"
-      ],
       "quiz": {
         "question": "Does the same score mean the same thing on a hip and a knee assessment?",
         "options": [
@@ -511,7 +506,9 @@
         ],
         "answer": 1,
         "reveal": "No. Each instrument has its own score bands, so I mapped every assessment separately."
-      }
+      },
+      "pos": "58% 50%",
+      "loop": "videos/cards/redcap-feedback-workflow.mp4"
     }
   },
   {
@@ -695,14 +692,14 @@
       "src": "images/cards/emg-controlled-robotic-arm.webp",
       "thread": "biosignals",
       "quiz": {
-        "question": "What did the parts for this hand cost?",
+        "question": "What is the most common signal used to control a powered prosthetic arm?",
         "options": [
-          "About £90",
-          "About £400",
-          "About £1,500"
+          "Brain waves (EEG)",
+          "Muscle signals (EMG)",
+          "Heart rhythm (ECG)"
         ],
-        "answer": 0,
-        "reveal": "About £91 in parts, with around 6 N of combined fingertip force in simple scale tests."
+        "answer": 1,
+        "reveal": "Muscle signals (EMG). Electrodes on the skin pick up the electrical activity of muscles as they contract. My hand did the same: it amplified and smoothed that signal into an open or close command, for about £91 in parts."
       }
     }
   },
@@ -818,20 +815,22 @@
     "card": {
       "eyebrow": "2026 · UCL MSc",
       "title": "Surgical Workflow AI",
-      "theme": "dark",
+      "theme": "light",
       "size": "tall",
-      "art": "workflow",
+      "art": "render",
       "thread": "surgical-ai",
       "quiz": {
-        "question": "Does knowing the surgical timeline help find the tools?",
+        "question": "Can a neural network watch keyhole surgery and predict how long the current step has left?",
         "options": [
-          "A lot",
-          "A little",
-          "Not at all"
+          "Yes, to the second",
+          "Roughly, within minutes",
+          "No, it can't"
         ],
         "answer": 1,
-        "reveal": "A little. Tool-detection mAP rose from 0.910 to 0.918, but with p = 0.11 the gain was not significant."
-      }
+        "reveal": "Roughly. Watching the last 60 seconds of video, my model was off by about 3.6 minutes on average (216 s) and within a minute 29% of the time. Giving it twice as much history did not help (263 s)."
+      },
+      "src": "images/cards/surgical-workflow-prediction.webp",
+      "loop": "videos/cards/surgical-workflow-prediction.mp4"
     }
   },
   {
@@ -1000,19 +999,18 @@
       "title": "OsteoTrack",
       "theme": "light",
       "size": "tall",
-      "art": "photo",
+      "art": "render",
       "src": "images/cards/bone-healing-monitoring-device.webp",
-      "pos": "40% 50%",
       "thread": "translation",
       "quiz": {
-        "question": "Who decides whether a fracture monitor gets adopted?",
+        "question": "Who decides whether a hospital adopts a new medical device?",
         "options": [
           "The patient",
           "Clinicians and procurement",
           "The inventors"
         ],
         "answer": 1,
-        "reveal": "Clinicians, fracture-clinic leads and procurement teams. Patients benefit, but those groups decide, so we pitched to them."
+        "reveal": "Clinicians and procurement teams. Patients benefit, but the clinicians who use a device and the teams who buy it decide. For OsteoTrack, our fracture-monitoring concept, that meant pitching to clinicians, fracture-clinic leads and procurement."
       }
     }
   },
@@ -1140,21 +1138,22 @@
     "card": {
       "eyebrow": "2026 · EU MDR",
       "title": "Route to a CE Mark",
-      "theme": "dark",
+      "theme": "light",
       "size": "reg",
-      "art": "ce",
+      "art": "render",
       "thread": "translation",
       "quiz": {
-        "question": "What risk class would you give this robot?",
+        "question": "A medical device that only touches intact skin is called non-invasive. Which EU risk class does it start in?",
         "options": [
           "Class I",
           "Class IIa",
           "Class IIb",
           "Class III"
         ],
-        "answer": 1,
-        "reveal": "Class IIa, under Annex VIII Rule 10, because it is an active device used for diagnosis."
-      }
+        "answer": 0,
+        "reveal": "Class I, the lowest. Under EU rules (MDR Annex VIII, Rule 1), non-invasive devices start there, but a more specific rule can move them up. The lung-ultrasound robot I assessed is non-invasive too, yet as an active device used for diagnosis it becomes Class IIa under Rule 10."
+      },
+      "src": "images/cards/ce-marking-lung-ultrasound-robot.webp"
     }
   },
   {
@@ -1283,7 +1282,7 @@
       "title": "Surgical Data Science",
       "theme": "light",
       "size": "reg",
-      "art": "sds",
+      "art": "render",
       "thread": "surgical-ai",
       "quiz": {
         "question": "What best separated expert surgeons from novices?",
@@ -1294,7 +1293,8 @@
         ],
         "answer": 1,
         "reveal": "Completion time. Experts averaged 86.5 s on the suturing task; novices averaged 141.2 s."
-      }
+      },
+      "src": "images/cards/surgical-data-science.webp"
     }
   },
   {
@@ -1482,12 +1482,12 @@
     "card": {
       "eyebrow": "2026 · MSc dissertation",
       "title": "Walking & the Brain",
-      "theme": "dark",
+      "theme": "light",
       "size": "tall",
-      "art": "fnirs",
+      "art": "render",
       "thread": "biosignals",
       "quiz": {
-        "question": "Could prefrontal signals tell the two groups apart?",
+        "question": "Could prefrontal brain signals (fNIRS) tell autistic and neurotypical adults apart during walking tasks?",
         "options": [
           "Yes, clearly",
           "Somewhat",
@@ -1495,7 +1495,9 @@
         ],
         "answer": 2,
         "reveal": "Not proven. The best model reached 61.9% balanced accuracy, but selection-adjusted testing did not show it beat chance."
-      }
+      },
+      "src": "images/cards/fnirs-classification.webp",
+      "loop": "videos/cards/fnirs-classification.mp4"
     }
   }
 ]

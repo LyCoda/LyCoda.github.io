@@ -195,3 +195,108 @@ document.querySelectorAll(".vc").forEach((card) => {
     });
   });
 });
+
+// Logic-gate sandbox on the heart monitor card: toggle A and B, cycle the gate, watch the output.
+const GATES = { AND: (a, b) => a && b, OR: (a, b) => a || b, XOR: (a, b) => a !== b, NOR: (a, b) => !(a || b) };
+const GATE_NAMES = Object.keys(GATES);
+document.querySelectorAll(".vc-gates").forEach((box) => {
+  const ins = [...box.querySelectorAll(".vc-in")];
+  const gate = box.querySelector(".vc-gate");
+  const lamp = box.querySelector(".vc-lamp");
+  const update = () => {
+    const [a, b] = ins.map((i) => i.getAttribute("aria-pressed") === "true");
+    const on = GATES[gate.textContent](a, b);
+    lamp.classList.toggle("is-on", on);
+    lamp.querySelector("b").textContent = on ? "1" : "0";
+  };
+  ins.forEach((btn) => btn.addEventListener("click", () => {
+    const on = btn.getAttribute("aria-pressed") !== "true";
+    btn.setAttribute("aria-pressed", String(on));
+    btn.querySelector("b").textContent = on ? "1" : "0";
+    update();
+  }));
+  gate.addEventListener("click", () => {
+    const next = GATE_NAMES[(GATE_NAMES.indexOf(gate.textContent) + 1) % GATE_NAMES.length];
+    gate.textContent = next;
+    gate.setAttribute("aria-label", `Gate: ${next}. Click to change.`);
+    update();
+  });
+  update();
+});
+
+// TL;DR: one reading preference shared by the archive and every case study.
+const readKey = "readMode";
+const savedMode = () => {
+  try {
+    return localStorage.getItem(readKey);
+  } catch (e) {
+    return null;
+  }
+};
+const saveMode = (m) => {
+  try {
+    localStorage.setItem(readKey, m);
+  } catch (e) {}
+};
+const tldrBtn = document.querySelector(".vault-tldr");
+if (tldrBtn && vaultGrid) {
+  const setArchive = (on) => {
+    tldrBtn.setAttribute("aria-pressed", String(on));
+    vaultGrid.classList.toggle("is-tldr", on);
+    // In TL;DR the card button opens the case study's TL;DR too.
+    vaultGrid.querySelectorAll(".vc-btn").forEach((a) => {
+      a.href = a.getAttribute("href").split("#")[0] + (on ? "#tldr" : "");
+    });
+  };
+  setArchive(savedMode() === "tldr");
+  tldrBtn.addEventListener("click", () => {
+    const on = tldrBtn.getAttribute("aria-pressed") !== "true";
+    setArchive(on);
+    saveMode(on ? "tldr" : "full");
+  });
+}
+const modeBtns = document.querySelectorAll(".read-mode button");
+if (modeBtns.length) {
+  const setMode = (m) => {
+    document.body.classList.toggle("is-tldr", m === "tldr");
+    modeBtns.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === m)));
+  };
+  setMode(location.hash === "#tldr" || savedMode() === "tldr" ? "tldr" : "full");
+  modeBtns.forEach((b) =>
+    b.addEventListener("click", () => {
+      setMode(b.dataset.mode);
+      saveMode(b.dataset.mode);
+    }),
+  );
+  // A part link in the TL;DR opens the full story at that section.
+  document.querySelectorAll(".tldr-parts a").forEach((a) =>
+    a.addEventListener("click", () => {
+      setMode("full");
+      saveMode("full");
+    }),
+  );
+}
+
+// 3D cards: a short turntable loop that plays only while the card is on screen.
+const loops = document.querySelectorAll(".vc-loop");
+if (loops.length && "IntersectionObserver" in window && !reduced.matches) {
+  // VP9 WebM where supported (smaller, plays in open-source Chromium), H.264 MP4 otherwise (Safari).
+  const webm = document.createElement("video").canPlayType('video/webm; codecs="vp9"') !== "";
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(({ target: v, isIntersecting }) => {
+        if (isIntersecting) {
+          if (!v.src) {
+            v.src = webm ? v.dataset.src.replace(/\.mp4$/, ".webm") : v.dataset.src;
+            v.addEventListener("playing", () => v.classList.add("is-playing"), { once: true });
+          }
+          v.play().catch(() => {});
+        } else {
+          v.pause();
+        }
+      });
+    },
+    { rootMargin: "200px 0px" },
+  );
+  loops.forEach((v) => io.observe(v));
+}
