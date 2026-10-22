@@ -329,14 +329,16 @@
       "src": "images/cards/heart-rate-monitor.webp",
       "thread": "biosignals",
       "quiz": {
-        "question": "An ECG and a pulse oximeter disagree. What should the alarm do?",
+        "question": "Flip the inputs and try each gate. Which one lights up only when A and B disagree?",
         "options": [
-          "Go red at once",
-          "Trust the ECG",
-          "Escalate if it repeats"
+          "AND",
+          "OR",
+          "XOR",
+          "NOR"
         ],
         "answer": 2,
-        "reveal": "Escalate. The circuit counts repeated disagreements and steps from green to amber to red."
+        "reveal": "XOR, short for exclusive OR: it outputs 1 only when its inputs differ. My heart monitor asked the same of two 8-bit heart-rate readings, using XOR gates inside a gate-level subtractor to measure how far the ECG and pulse oximeter disagreed.",
+        "sandbox": "gates"
       }
     }
   },
@@ -695,14 +697,14 @@
       "src": "images/cards/emg-controlled-robotic-arm.webp",
       "thread": "biosignals",
       "quiz": {
-        "question": "What did the parts for this hand cost?",
+        "question": "What is the most common signal used to control a powered prosthetic arm?",
         "options": [
-          "About £90",
-          "About £400",
-          "About £1,500"
+          "Brain waves (EEG)",
+          "Muscle signals (EMG)",
+          "Heart rhythm (ECG)"
         ],
-        "answer": 0,
-        "reveal": "About £91 in parts, with around 6 N of combined fingertip force in simple scale tests."
+        "answer": 1,
+        "reveal": "Muscle signals (EMG). Electrodes on the skin pick up the electrical activity of muscles as they contract. My hand did the same: it amplified and smoothed that signal into an open or close command, for about £91 in parts."
       }
     }
   },
@@ -823,14 +825,14 @@
       "art": "workflow",
       "thread": "surgical-ai",
       "quiz": {
-        "question": "Does knowing the surgical timeline help find the tools?",
+        "question": "Can a neural network watch keyhole surgery and predict how long the current step has left?",
         "options": [
-          "A lot",
-          "A little",
-          "Not at all"
+          "Yes, to the second",
+          "Roughly, within minutes",
+          "No, it can't"
         ],
         "answer": 1,
-        "reveal": "A little. Tool-detection mAP rose from 0.910 to 0.918, but with p = 0.11 the gain was not significant."
+        "reveal": "Roughly. Watching the last 60 seconds of video, my model was off by about 3.6 minutes on average (216 s) and within a minute 29% of the time. Giving it twice as much history did not help (263 s)."
       }
     }
   },
@@ -1005,14 +1007,14 @@
       "pos": "40% 50%",
       "thread": "translation",
       "quiz": {
-        "question": "Who decides whether a fracture monitor gets adopted?",
+        "question": "Who decides whether a hospital adopts a new medical device?",
         "options": [
           "The patient",
           "Clinicians and procurement",
           "The inventors"
         ],
         "answer": 1,
-        "reveal": "Clinicians, fracture-clinic leads and procurement teams. Patients benefit, but those groups decide, so we pitched to them."
+        "reveal": "Clinicians and procurement teams. Patients benefit, but the clinicians who use a device and the teams who buy it decide. For OsteoTrack, our fracture-monitoring concept, that meant pitching to clinicians, fracture-clinic leads and procurement."
       }
     }
   },
@@ -1145,15 +1147,15 @@
       "art": "ce",
       "thread": "translation",
       "quiz": {
-        "question": "What risk class would you give this robot?",
+        "question": "A medical device that only touches intact skin is called non-invasive. Which EU risk class does it start in?",
         "options": [
           "Class I",
           "Class IIa",
           "Class IIb",
           "Class III"
         ],
-        "answer": 1,
-        "reveal": "Class IIa, under Annex VIII Rule 10, because it is an active device used for diagnosis."
+        "answer": 0,
+        "reveal": "Class I, the lowest. Under EU rules (MDR Annex VIII, Rule 1), non-invasive devices start there, but a more specific rule can move them up. The lung-ultrasound robot I assessed is non-invasive too, yet as an active device used for diagnosis it becomes Class IIa under Rule 10."
       }
     }
   },
@@ -1487,7 +1489,7 @@
       "art": "fnirs",
       "thread": "biosignals",
       "quiz": {
-        "question": "Could prefrontal signals tell the two groups apart?",
+        "question": "Could prefrontal brain signals (fNIRS) tell autistic and neurotypical adults apart during walking tasks?",
         "options": [
           "Yes, clearly",
           "Somewhat",
