@@ -2885,3 +2885,110 @@ body.is-tldr .article-layout {
   background: #30d158;
   box-shadow: inset 0 0 0 1.5px #1f9e45, 0 0 18px rgba(48, 209, 88, 0.75);
 }
+
+/* ---------- Case study links show each project's card art ---------- */
+.tab-art {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background: #cfcfd0;
+}
+.tab-art img,
+.tab-art .vc-loop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease);
+}
+.has-art:hover .tab-art img,
+.has-art:hover .tab-art .vc-loop {
+  transform: scale(1.04);
+}
+.thread-nav a.has-art {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 14px;
+}
+.thread-nav .tab-text {
+  display: block;
+  padding: 12px 16px 16px;
+}
+.thread-nav a.has-art[aria-current] {
+  box-shadow: 0 0 0 1px var(--ink);
+}
+.thread-nav a.has-art[aria-current] .tab-art::after {
+  content: "You are here";
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--white);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+}
+.pager-link.has-art {
+  display: grid;
+  grid-template-columns: minmax(120px, 34%) 1fr;
+  align-items: center;
+  gap: 22px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  text-align: left;
+}
+.pager-link.has-art .tab-text {
+  display: block;
+  padding: 18px 22px 18px 0;
+}
+.pager-link.has-art .tab-art {
+  aspect-ratio: 4 / 3;
+  height: 100%;
+}
+/* The text block is a span too: keep the title in its normal style, only the date line small */
+.thread-nav a .tab-text {
+  font-size: 14px;
+  color: inherit;
+  margin: 0;
+}
+.pager-link .tab-text {
+  font-family: var(--display);
+  font-size: clamp(19px, 2vw, 24px);
+  letter-spacing: normal;
+  text-transform: none;
+  color: inherit;
+  margin: 0;
+}
+.pager-link .tab-text > span {
+  margin-bottom: 8px;
+}
+@media (max-width: 600px) {
+  .thread-nav ol {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .thread-nav a.has-art .tab-art {
+    aspect-ratio: 4 / 3;
+  }
+  .thread-nav .tab-text {
+    padding: 10px 12px 12px;
+    font-size: 13px;
+  }
+  .pager-link.has-art {
+    grid-template-columns: 112px 1fr;
+    gap: 14px;
+  }
+  .pager-link.has-art .tab-art {
+    aspect-ratio: 1 / 1;
+  }
+  .pager-link.has-art .tab-text {
+    padding: 12px 14px 12px 0;
+    font-size: 18px;
+  }
+}
