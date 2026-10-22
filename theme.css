@@ -2508,3 +2508,209 @@ html:not(.js) .vc-classes li.is-answer {
     margin-top: 40px;
   }
 }
+
+/* ---------- TL;DR: skim the archive or a case study ---------- */
+.vault-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.vault-tldr,
+.read-mode button {
+  border: 1px solid var(--line);
+  background: var(--white);
+  border-radius: 999px;
+  padding: 7px 16px;
+  font: 500 13px/1.4 var(--body);
+  color: var(--muted);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.vault-tldr {
+  margin-right: 8px;
+}
+.vault-tldr:hover,
+.read-mode button:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.vault-tldr[aria-pressed="true"],
+.read-mode button[aria-pressed="true"] {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: var(--white);
+}
+html:not(.js) .vault-tldr,
+html:not(.js) .read-mode {
+  display: none;
+}
+/* Archive in TL;DR: every card shows its question and answer, no guessing */
+.vault-grid.is-tldr .vc-opts {
+  display: none;
+}
+.js .vault-grid.is-tldr .vc-reveal {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.vault-grid.is-tldr .vc-verdict {
+  display: none;
+}
+.js .vault-grid.is-tldr .vc:not(.is-answered) .vc-quiz .vc-btn::before {
+  content: none;
+}
+
+/* Case study switch and panel */
+.read-mode {
+  display: inline-flex;
+  gap: 6px;
+  margin-top: 28px;
+}
+.tldr {
+  margin-bottom: 72px;
+}
+.js body:not(.is-tldr) .tldr,
+body.is-tldr .case-lead,
+body.is-tldr .article-layout {
+  display: none;
+}
+.tldr h2 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+.tldr-label {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.tldr-qa {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--line);
+}
+.tldr-qa > div {
+  padding: 32px 36px 36px;
+  background: var(--wash);
+}
+.tldr-qa > div + div {
+  background: #0b0d12;
+  color: #f5f5f7;
+}
+.tldr-qa > div + div .tldr-label {
+  color: rgba(245, 245, 247, 0.6);
+}
+.tldr-q,
+.tldr-a {
+  font-family: var(--display);
+  font-size: clamp(22px, 2.3vw, 30px);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.tldr-a {
+  font-size: clamp(19px, 1.8vw, 24px);
+}
+.tldr-body {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 60px;
+  padding: 40px 36px 0;
+}
+.tldr-body p:not(.tldr-label) {
+  font-size: 17px;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+.tldr-body .tldr-tools {
+  font-size: 14px;
+  color: var(--muted);
+}
+.tldr-parts {
+  list-style: none;
+  counter-reset: part;
+  border-top: 1px solid var(--line);
+}
+.tldr-parts li {
+  counter-increment: part;
+  border-bottom: 1px solid var(--line);
+}
+.tldr-parts a {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  font-size: 15px;
+  line-height: 1.45;
+  transition: color 0.2s;
+}
+.tldr-parts a::before {
+  content: counter(part, decimal-leading-zero);
+  color: var(--muted);
+  font-size: 12px;
+  padding-top: 2px;
+}
+.tldr-parts a:hover {
+  color: var(--blue);
+}
+@media (max-width: 720px) {
+  .tldr-qa,
+  .tldr-body {
+    grid-template-columns: 1fr;
+  }
+  .tldr-qa > div {
+    padding: 24px 22px 26px;
+  }
+  .tldr-body {
+    gap: 12px;
+    padding: 28px 0 0;
+  }
+}
+@media print {
+  .read-mode,
+  .vault-tldr {
+    display: none;
+  }
+}
+
+/* ---------- 3D studio renders ---------- */
+.vc-art-render.vc-dark {
+  --bg: #010102;
+}
+.vc-art-render.vc-light {
+  --bg: #eceef1;
+}
+.vc-art-render .vc-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, var(--scrim) 0%, transparent 30%);
+}
+.vc-spin {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.35s, transform 1.2s var(--ease);
+}
+.vc-spin.is-ready {
+  opacity: 1;
+}
+.vc:hover .vc-spin {
+  transform: scale(1.045);
+}
+@media (prefers-reduced-motion: reduce) {
+  .vc-spin {
+    display: none;
+  }
+}

@@ -9,8 +9,8 @@
 - `images/projects/heart-rate-monitor-overview.png`: a block diagram drawn for this site from the EE2600 report. `heart-rate-monitor.png`, `-system.png`, `-alarm.png`: Logisim schematics Nate built, extracted unchanged from the report.
 - `images/projects/surgical-workflow*.png`: Nate's model diagrams and results chart, extracted unchanged from the MPHY0043 coursework paper.
 - `images/projects/surgical-data-science.png`: an overview card drawn for this site. MPHY0047 notebook figures are not published.
-- `images/cards/*.webp`: compressed copies of project images used on the homepage archive cards. `heart-rate-monitor.webp` is the Logisim alarm-logic screenshot recoloured onto a dark background.
-- Archive cards for fNIRS, CE marking, surgical workflow and surgical data science use drawn CSS/SVG art. The waves and phase bars are illustrative, not study data.
+- `images/cards/*.webp`: compressed copies of project images used on the homepage archive cards (ECG amplifier, EMG arm, OsteoTrack).
+- 3D card renders (fNIRS, CE marking, surgical workflow, surgical data science, heart monitor, implant follow-up) and the turntable sprites in `images/cards/spin/` were made for this site in Blender (Cycles) from scripts, with no third-party models. They are symbolic: the headband, light paths, phase bar, sphere clusters, logic gates and fixation plate are illustrations, not study data, real devices or KOLN 3D products. The heart-monitor project was designed and tested in simulation, so its card shows logic gates rather than hardware.
 - `images/hero-*.webp`: compressed copies of the hero portraits; the PNGs are kept for social previews.
 - `images/projects/ce-marking-pathway.png`: a diagram drawn for this site that summarises the MPHY0046 assessment.
 - `images/companies/zortex.png`: Zortex logo, supplied by Nate.
