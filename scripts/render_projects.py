@@ -224,7 +224,9 @@ def art(p):
         waves = ''.join(f'<path class="w{i}" d="M0 {150 + i * 26}' + ''.join(f' Q{x + 25} {150 + i * 26 - (38 - i * 6) * (1 if (x // 50) % 2 else -1)} {x + 50} {150 + i * 26}' for x in range(0, 600, 50)) + '"/>' for i in range(5))
         return f'<svg class="vc-svg vc-waves" viewBox="0 0 600 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true">{waves}</svg>'
     if kind == 'ce':
-        items = ''.join(f'<li{" class=\"is-answer\"" if k == "IIa" else ""}>{k}</li>' for k in ('I', 'IIa', 'IIb', 'III'))
+        q = p['card']['quiz']
+        lit = q['options'][q['answer']].removeprefix('Class ')
+        items = ''.join(f'<li{" class=\"is-answer\"" if k == lit else ""}>{k}</li>' for k in ('I', 'IIa', 'IIb', 'III'))
         return f'<ol class="vc-classes" aria-hidden="true">{items}</ol>'
     if kind == 'workflow':
         # Seven phases, as in Cholec80; widths are illustrative.
@@ -239,12 +241,26 @@ def art(p):
     raise ValueError(f'unknown card art: {kind}')
 
 
+def sandbox(q):
+    """Optional try-it-yourself widget shown above the answer chips (needs JavaScript)."""
+    if q.get('sandbox') != 'gates':
+        return ''
+    return ('<div class="vc-gates" role="group" aria-label="Logic gate sandbox">'
+            '<div class="vc-ins"><button type="button" class="vc-in" aria-pressed="false">A <b>0</b></button>'
+            '<button type="button" class="vc-in" aria-pressed="false">B <b>0</b></button></div>'
+            '<span class="vc-wire" aria-hidden="true"></span>'
+            '<button type="button" class="vc-gate" aria-label="Gate: AND. Click to change.">AND</button>'
+            '<span class="vc-wire" aria-hidden="true"></span>'
+            '<output class="vc-lamp" aria-live="polite"><i aria-hidden="true"></i><span>Out <b>0</b></span></output>'
+            '<p class="vc-gate-hint">Tap A, B and the gate to try it</p></div>')
+
+
 def quiz(p, tid):
     """Guess-first panel: a question, answer chips, then the answer and a link to the case study."""
     q = p['card']['quiz']
     opts = ''.join(f'<button type="button" class="vc-opt" data-correct="{str(i == q["answer"]).lower()}">{E(o)}</button>'
                    for i, o in enumerate(q['options']))
-    return (f'<div class="vc-quiz"><p class="vc-q">{E(q["question"])}</p>'
+    return (f'<div class="vc-quiz"><p class="vc-q">{E(q["question"])}</p>{sandbox(q)}'
             f'<div class="vc-opts" role="group" aria-label="Your guess">{opts}</div>'
             f'<div class="vc-reveal" aria-live="polite"><p><span class="vc-verdict"></span>{E(q["reveal"])}</p></div>'
             f'<a class="vc-btn" href="projects/{p["slug"]}.html" aria-describedby="{tid}">See how I found out</a></div>')

@@ -195,3 +195,31 @@ document.querySelectorAll(".vc").forEach((card) => {
     });
   });
 });
+
+// Logic-gate sandbox on the heart monitor card: toggle A and B, cycle the gate, watch the output.
+const GATES = { AND: (a, b) => a && b, OR: (a, b) => a || b, XOR: (a, b) => a !== b, NOR: (a, b) => !(a || b) };
+const GATE_NAMES = Object.keys(GATES);
+document.querySelectorAll(".vc-gates").forEach((box) => {
+  const ins = [...box.querySelectorAll(".vc-in")];
+  const gate = box.querySelector(".vc-gate");
+  const lamp = box.querySelector(".vc-lamp");
+  const update = () => {
+    const [a, b] = ins.map((i) => i.getAttribute("aria-pressed") === "true");
+    const on = GATES[gate.textContent](a, b);
+    lamp.classList.toggle("is-on", on);
+    lamp.querySelector("b").textContent = on ? "1" : "0";
+  };
+  ins.forEach((btn) => btn.addEventListener("click", () => {
+    const on = btn.getAttribute("aria-pressed") !== "true";
+    btn.setAttribute("aria-pressed", String(on));
+    btn.querySelector("b").textContent = on ? "1" : "0";
+    update();
+  }));
+  gate.addEventListener("click", () => {
+    const next = GATE_NAMES[(GATE_NAMES.indexOf(gate.textContent) + 1) % GATE_NAMES.length];
+    gate.textContent = next;
+    gate.setAttribute("aria-label", `Gate: ${next}. Click to change.`);
+    update();
+  });
+  update();
+});
