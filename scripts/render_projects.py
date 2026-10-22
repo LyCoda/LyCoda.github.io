@@ -136,6 +136,18 @@ def thread_nav(p):
             f'<strong>{E(t["title"])}</strong> · {E(t["subtitle"])}</p><ol>{items}</ol></nav>')
 
 
+def tldr(p):
+    """Skim view built only from text already on the page: the card question and answer, the takeaway, tools and section titles."""
+    q = p['card']['quiz']
+    parts = ''.join(f'<li><a href="#{s["id"]}">{E(s["title"])}</a></li>' for s in p['sections'])
+    return (f'<section class="tldr wrap" id="tldr" aria-labelledby="tldr-title"><h2 id="tldr-title">TL;DR</h2>'
+            f'<div class="tldr-qa"><div><p class="tldr-label">The question</p><p class="tldr-q">{E(q["question"])}</p></div>'
+            f'<div><p class="tldr-label">What I found</p><p class="tldr-a">{E(q["reveal"])}</p></div></div>'
+            f'<div class="tldr-body"><div><p class="tldr-label">What I did</p><p>{E(p["takeaway"])}</p>'
+            f'<p class="tldr-label">Tools &amp; methods</p><p class="tldr-tools">{E(p["tools"])}</p></div>'
+            f'<div><p class="tldr-label">The full story, in {len(p["sections"])} parts</p><ol class="tldr-parts">{parts}</ol></div></div></section>')
+
+
 def case_page(i, p):
     prev_p = data[i - 1] if i > 0 else None
     next_p = data[i + 1] if i + 1 < len(data) else None
@@ -158,7 +170,10 @@ def case_page(i, p):
         f'<header class="case-header wrap">{link("../index.html#archive", "All projects", "back-link")}<p class="case-kicker">{E(p["label"])} · {E(month(p))}</p>'
         f'<h1>{E(p["title"])}</h1><p class="case-intro">{E(p["summary"])}</p>'
         f'<div class="case-meta"><div><span>My role</span><strong>{E(p["role"])}</strong></div><div><span>Context</span><strong>{E(p["institution"])}</strong></div>'
-        f'<div><span>Project stage</span><strong>{E(p["status"])}</strong></div></div></header>',
+        f'<div><span>Project stage</span><strong>{E(p["status"])}</strong></div></div>'
+        '<div class="read-mode" role="group" aria-label="How much to read"><button type="button" data-mode="full" aria-pressed="true">Full story</button>'
+        '<button type="button" data-mode="tldr" aria-pressed="false">TL;DR</button></div></header>',
+        tldr(p),
         f'<div class="case-lead wrap"><figure class="case-image case-image-{fit}"><img src="../{p["image"]}" alt="{E(p["alt"])}" width="{w}" height="{h}"></figure>'
         f'<div class="case-summary"><h2>At a glance</h2><p>{E(p["takeaway"])}</p><dl><dt>Tools &amp; methods</dt><dd>{E(p["tools"])}</dd></dl></div></div>',
         f'<div class="article-layout wrap"><aside class="article-nav"><nav aria-label="On this page"><p>In this project</p>{toc}<a href="#sources">Project material</a></nav></aside>',
@@ -212,10 +227,15 @@ def masonry(cards, cols):
 def art(p):
     c = p['card']
     kind = c['art']
-    if kind in ('photo', 'product', 'logo', 'circuit'):
+    if kind in ('photo', 'product', 'logo', 'circuit', 'render'):
         w, h = image_size(c['src'])
         pos = f' style="object-position:{c["pos"]}"' if 'pos' in c else ''
         img = f'<img class="vc-img vc-{kind}" src="{c["src"]}" alt="" loading="lazy" width="{w}" height="{h}"{pos}>'
+        if 'loop' in c:
+            # A short turntable video that plays only while the card is on screen; main.js picks
+            # the .webm twin when the browser plays VP9 and falls back to the .mp4 (Safari).
+            img += (f'<video class="vc-loop" data-src="{c["loop"]}" muted loop playsinline preload="none" '
+                    f'aria-hidden="true" tabindex="-1"{pos}></video>')
         if 'steps' in c:
             img += '<ol class="vc-steps" aria-hidden="true">' + ''.join(f'<li style="--i:{i}">{E(t)}</li>' for i, t in enumerate(c['steps'])) + '</ol>'
         return img
@@ -284,9 +304,10 @@ def archive():
     chips = '<button type="button" aria-pressed="true" data-filter="all">All</button>' + ''.join(
         f'<button type="button" aria-pressed="false" data-filter="{k}">{v}</button>' for k, v in THREAD_NAMES.items())
     return (f'<div class="vault" id="archive"><div class="vault-head"><div><h3 class="spaced">Archive</h3>'
-            f'<p class="vault-intro">Every project starts with a question. Guess the answer, then see how I found out.'
+            f'<p class="vault-intro">Every project starts with a question. Guess the answer, or switch on TL;DR to skim them all.'
             f' <span class="vault-score" hidden>You have guessed <b>0</b> of {len(cards)}, <b>0</b> right.</span></p></div>'
-            f'<div class="vault-filter" role="group" aria-label="Filter projects">{chips}</div></div>'
+            f'<div class="vault-tools"><button type="button" class="vault-tldr" aria-pressed="false" title="Show every answer without guessing">TL;DR</button>'
+            f'<div class="vault-filter" role="group" aria-label="Filter projects">{chips}</div></div></div>'
             f'<div class="vault-grid">\n' + '\n'.join(out) + '\n</div></div>')
 
 
@@ -300,6 +321,9 @@ def main():
     for p in data:
         assert 'card' in p and p['card']['size'] in UNITS and p['card']['thread'] in THREAD_NAMES, f'bad card for {p["slug"]}'
         assert 'src' not in p['card'] or (root / p['card']['src']).exists(), f'missing card image for {p["slug"]}'
+        if 'loop' in p['card']:
+            for ext in ('.mp4', '.webm'):
+                assert (root / p['card']['loop']).with_suffix(ext).exists(), f'missing loop video ({ext}) for {p["slug"]}'
     for i, p in enumerate(data):
         (root / 'projects' / f'{p["slug"]}.html').write_text(case_page(i, p), encoding='utf-8')
     idx = root / 'index.html'

@@ -2,3 +2,6 @@
 .impeccable/mocks/
 __pycache__/
 node_modules/
+scripts/card_art/venv/
+scripts/card_art/sweep/
+scripts/card_art/*.ttf

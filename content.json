@@ -134,11 +134,10 @@
     "card": {
       "eyebrow": "2024 · Year 2 lab",
       "title": "ECG Amplifier",
-      "theme": "dark",
+      "theme": "light",
       "size": "reg",
-      "art": "photo",
+      "art": "render",
       "src": "images/cards/ecg-amplifier.webp",
-      "pos": "50% 45%",
       "thread": "biosignals",
       "quiz": {
         "question": "How much better did the instrumentation amplifier reject common-mode noise?",
@@ -323,9 +322,9 @@
     "card": {
       "eyebrow": "2024 · Digital design",
       "title": "Gate-Level Heart Monitor",
-      "theme": "dark",
+      "theme": "light",
       "size": "tall",
-      "art": "circuit",
+      "art": "render",
       "src": "images/cards/heart-rate-monitor.webp",
       "thread": "biosignals",
       "quiz": {
@@ -339,7 +338,8 @@
         "answer": 2,
         "reveal": "XOR, short for exclusive OR: it outputs 1 only when its inputs differ. My heart monitor asked the same of two 8-bit heart-rate readings, using XOR gates inside a gate-level subtractor to measure how far the ECG and pulse oximeter disagreed.",
         "sandbox": "gates"
-      }
+      },
+      "pos": "64% 50%"
     }
   },
   {
@@ -495,16 +495,9 @@
       "title": "Implant Follow-up",
       "theme": "light",
       "size": "tall",
-      "art": "logo",
+      "art": "render",
       "src": "images/cards/redcap-feedback-workflow.webp",
       "thread": "translation",
-      "steps": [
-        "Implant",
-        "Region",
-        "Assessment",
-        "Score bands",
-        "Follow-up"
-      ],
       "quiz": {
         "question": "Does the same score mean the same thing on a hip and a knee assessment?",
         "options": [
@@ -513,7 +506,9 @@
         ],
         "answer": 1,
         "reveal": "No. Each instrument has its own score bands, so I mapped every assessment separately."
-      }
+      },
+      "pos": "58% 50%",
+      "loop": "videos/cards/redcap-feedback-workflow.mp4"
     }
   },
   {
@@ -820,9 +815,9 @@
     "card": {
       "eyebrow": "2026 · UCL MSc",
       "title": "Surgical Workflow AI",
-      "theme": "dark",
+      "theme": "light",
       "size": "tall",
-      "art": "workflow",
+      "art": "render",
       "thread": "surgical-ai",
       "quiz": {
         "question": "Can a neural network watch keyhole surgery and predict how long the current step has left?",
@@ -833,7 +828,9 @@
         ],
         "answer": 1,
         "reveal": "Roughly. Watching the last 60 seconds of video, my model was off by about 3.6 minutes on average (216 s) and within a minute 29% of the time. Giving it twice as much history did not help (263 s)."
-      }
+      },
+      "src": "images/cards/surgical-workflow-prediction.webp",
+      "loop": "videos/cards/surgical-workflow-prediction.mp4"
     }
   },
   {
@@ -1002,9 +999,8 @@
       "title": "OsteoTrack",
       "theme": "light",
       "size": "tall",
-      "art": "photo",
+      "art": "render",
       "src": "images/cards/bone-healing-monitoring-device.webp",
-      "pos": "40% 50%",
       "thread": "translation",
       "quiz": {
         "question": "Who decides whether a hospital adopts a new medical device?",
@@ -1142,9 +1138,9 @@
     "card": {
       "eyebrow": "2026 · EU MDR",
       "title": "Route to a CE Mark",
-      "theme": "dark",
+      "theme": "light",
       "size": "reg",
-      "art": "ce",
+      "art": "render",
       "thread": "translation",
       "quiz": {
         "question": "A medical device that only touches intact skin is called non-invasive. Which EU risk class does it start in?",
@@ -1156,7 +1152,8 @@
         ],
         "answer": 0,
         "reveal": "Class I, the lowest. Under EU rules (MDR Annex VIII, Rule 1), non-invasive devices start there, but a more specific rule can move them up. The lung-ultrasound robot I assessed is non-invasive too, yet as an active device used for diagnosis it becomes Class IIa under Rule 10."
-      }
+      },
+      "src": "images/cards/ce-marking-lung-ultrasound-robot.webp"
     }
   },
   {
@@ -1285,7 +1282,7 @@
       "title": "Surgical Data Science",
       "theme": "light",
       "size": "reg",
-      "art": "sds",
+      "art": "render",
       "thread": "surgical-ai",
       "quiz": {
         "question": "What best separated expert surgeons from novices?",
@@ -1296,7 +1293,8 @@
         ],
         "answer": 1,
         "reveal": "Completion time. Experts averaged 86.5 s on the suturing task; novices averaged 141.2 s."
-      }
+      },
+      "src": "images/cards/surgical-data-science.webp"
     }
   },
   {
@@ -1484,9 +1482,9 @@
     "card": {
       "eyebrow": "2026 · MSc dissertation",
       "title": "Walking & the Brain",
-      "theme": "dark",
+      "theme": "light",
       "size": "tall",
-      "art": "fnirs",
+      "art": "render",
       "thread": "biosignals",
       "quiz": {
         "question": "Could prefrontal brain signals (fNIRS) tell autistic and neurotypical adults apart during walking tasks?",
@@ -1497,7 +1495,9 @@
         ],
         "answer": 2,
         "reveal": "Not proven. The best model reached 61.9% balanced accuracy, but selection-adjusted testing did not show it beat chance."
-      }
+      },
+      "src": "images/cards/fnirs-classification.webp",
+      "loop": "videos/cards/fnirs-classification.mp4"
     }
   }
 ]
