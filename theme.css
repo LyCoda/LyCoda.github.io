@@ -2857,3 +2857,31 @@ body.is-tldr .article-layout {
   overscroll-behavior: contain;
   scrollbar-width: thin;
 }
+/* Gate sandbox on a light card: dark outlines and wires so each control reads clearly */
+.vc-light .vc-gates {
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(29, 29, 31, 0.12);
+}
+.vc-light .vc-in,
+.vc-light .vc-gate {
+  border: 1.5px solid #1d1d1f;
+}
+.vc-light .vc-in[aria-pressed="true"] {
+  border-color: #1f9e45;
+  background: #30d158;
+}
+.vc-light .vc-in:hover,
+.vc-light .vc-gate:hover {
+  border-color: #0066cc;
+}
+.vc-light .vc-wire {
+  background: #1d1d1f;
+}
+.vc-light .vc-lamp i {
+  background: rgba(29, 29, 31, 0.08);
+  box-shadow: inset 0 0 0 1.5px #1d1d1f;
+}
+.vc-light .vc-lamp.is-on i {
+  background: #30d158;
+  box-shadow: inset 0 0 0 1.5px #1f9e45, 0 0 18px rgba(48, 209, 88, 0.75);
+}
