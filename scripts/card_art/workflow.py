@@ -29,7 +29,7 @@ for i, (w, c) in enumerate(zip(widths, cols)):
     o.scale = (L, 0.26, 0.16)
     bpy.ops.object.transform_apply(scale=True)
     smooth(o, bevel=0.06, segments=8)
-    assign(o, mat(f'sh{i}', tuple(0.55 + 0.45 * v for v in c), rough=0.05, trans=1.0, ior=1.45, coat=0.4))
+    assign(o, mat(f'sh{i}', tuple(0.15 + 0.85 * v for v in c), rough=0.05, trans=1.0, ior=1.45, coat=0.4))
     o.parent = root
     bpy.ops.mesh.primitive_cube_add(size=1, location=(cx, 0, 0))
     core = bpy.context.object
@@ -47,7 +47,7 @@ ph = bpy.context.object
 ph.scale = (0.018, 0.018, 0.62)
 bpy.ops.object.transform_apply(scale=True)
 smooth(ph, bevel=0.009, segments=4)
-assign(ph, emission('ph', (1, 1, 1), 10))
+assign(ph, mat('ph', (0.03, 0.03, 0.04), rough=0.3))
 ph.parent = root
 
 # --- grasper ---
@@ -99,8 +99,7 @@ inst.location = (ph_x - 0.02, -0.02, 0.42)
 inst.rotation_euler = (math.radians(0), math.radians(-42), math.radians(-20))
 
 # --- studio ---
-floor = mat('floor', (0.003, 0.003, 0.004), rough=0.22, spec=0.3)
-fl = backdrop(floor, size=40, z=-0.55)
+fl = studio(z=-0.55)
 key = area('key', (-1.0, -1.0, 4.5), (0, 0, 0), 1.6, 160, (0.95, 0.97, 1.0))
 area('rim', (2.5, 3.5, 3.0), (0, 0, 0.3), 1.5, 260, (0.6, 0.55, 1.0))
 area('strip', (-0.5, 3.0, 2.2), (0, 0, 0.4), 4.0, 90, (1, 1, 1), size_y=0.2)

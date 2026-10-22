@@ -2684,8 +2684,11 @@ body.is-tldr .article-layout {
 .vc-art-render.vc-dark {
   --bg: #010102;
 }
-.vc-art-render.vc-light {
-  --bg: #eceef1;
+.vc-art-render.vc-light,
+.vc-art-product.vc-light {
+  /* one studio grey for every card, matched to the renders */
+  --bg: #cfcfd0;
+  --scrim: rgba(207, 207, 208, 0.85);
 }
 .vc-art-render .vc-art::after {
   content: "";
@@ -2695,22 +2698,18 @@ body.is-tldr .article-layout {
   pointer-events: none;
   background: linear-gradient(180deg, var(--scrim) 0%, transparent 30%);
 }
-.vc-spin {
+.vc-loop {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
   opacity: 0;
-  transition: opacity 0.35s, transform 1.2s var(--ease);
+  transition: opacity 0.6s, transform 1.2s var(--ease);
 }
-.vc-spin.is-ready {
+.vc-loop.is-playing {
   opacity: 1;
 }
-.vc:hover .vc-spin {
+.vc:hover .vc-loop {
   transform: scale(1.045);
-}
-@media (prefers-reduced-motion: reduce) {
-  .vc-spin {
-    display: none;
-  }
 }

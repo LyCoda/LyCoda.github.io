@@ -133,8 +133,7 @@ for i, c in enumerate(cols):
     lo.location = (x, y, 0.15)
     lo.parent = root
 
-floor = mat('floor', (0.004, 0.005, 0.007), rough=0.16, spec=0.5)
-fl = backdrop(floor, size=40, z=0.0)
+fl = studio(z=0.0)
 k = area('key', (-2.5, -3.0, 5.0), (0, 0, 0), 3.0, 380, (0.9, 0.93, 1.0))
 r = area('rim', (3.0, 4.0, 2.5), (0, 0.5, 0), 3.0, 600, (0.55, 0.7, 1.0))
 s = area('strip', (-4.0, 2.0, 2.0), (0, 0, 0), 4.0, 220, (1, 1, 1), size_y=0.3)

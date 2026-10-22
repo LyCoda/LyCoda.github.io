@@ -144,8 +144,7 @@ for fx, fy, rz in ((-3.2, 0.5, 70), (3.2, 0.8, -70), (0.0, 3.0, 0)):
     fo.visible_camera = False
     fo.visible_shadow = False
     fo.visible_diffuse = False
-floor = mat('floor', (0.9, 0.9, 0.92), rough=0.55, spec=0.3)
-backdrop(floor, size=40, z=0.0)
+fl = studio(z=0.0)
 area('key', (-2.0, -2.5, 5.0), (0, 0, 0.4), 3.0, 520)
 area('fill', (4.0, -3.0, 2.0), (0, 0, 0.4), 4.0, 160, (0.95, 0.97, 1.0))
 area('back', (0.5, 5.0, 3.0), (0.5, 8, 1.5), 6.0, 900)

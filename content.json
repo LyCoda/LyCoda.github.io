@@ -134,7 +134,7 @@
     "card": {
       "eyebrow": "2024 · Year 2 lab",
       "title": "ECG Amplifier",
-      "theme": "dark",
+      "theme": "light",
       "size": "reg",
       "art": "render",
       "src": "images/cards/ecg-amplifier.webp",
@@ -322,7 +322,7 @@
     "card": {
       "eyebrow": "2024 · Digital design",
       "title": "Gate-Level Heart Monitor",
-      "theme": "dark",
+      "theme": "light",
       "size": "tall",
       "art": "render",
       "src": "images/cards/heart-rate-monitor.webp",
@@ -506,10 +506,7 @@
         "reveal": "No. Each instrument has its own score bands, so I mapped every assessment separately."
       },
       "pos": "58% 50%",
-      "spin": {
-        "src": "images/cards/spin/redcap-feedback-workflow.webp",
-        "frames": 9
-      }
+      "loop": "videos/cards/redcap-feedback-workflow.mp4"
     }
   },
   {
@@ -816,7 +813,7 @@
     "card": {
       "eyebrow": "2026 · UCL MSc",
       "title": "Surgical Workflow AI",
-      "theme": "dark",
+      "theme": "light",
       "size": "tall",
       "art": "render",
       "thread": "surgical-ai",
@@ -831,10 +828,7 @@
         "reveal": "A little. Tool-detection mAP rose from 0.910 to 0.918, but with p = 0.11 the gain was not significant."
       },
       "src": "images/cards/surgical-workflow-prediction.webp",
-      "spin": {
-        "src": "images/cards/spin/surgical-workflow-prediction.webp",
-        "frames": 9
-      }
+      "loop": "videos/cards/surgical-workflow-prediction.mp4"
     }
   },
   {
@@ -1142,7 +1136,7 @@
     "card": {
       "eyebrow": "2026 · EU MDR",
       "title": "Route to a CE Mark",
-      "theme": "dark",
+      "theme": "light",
       "size": "reg",
       "art": "render",
       "thread": "translation",
@@ -1486,7 +1480,7 @@
     "card": {
       "eyebrow": "2026 · MSc dissertation",
       "title": "Walking & the Brain",
-      "theme": "dark",
+      "theme": "light",
       "size": "tall",
       "art": "render",
       "thread": "biosignals",
@@ -1501,10 +1495,7 @@
         "reveal": "Not proven. The best model reached 61.9% balanced accuracy, but selection-adjusted testing did not show it beat chance."
       },
       "src": "images/cards/fnirs-classification.webp",
-      "spin": {
-        "src": "images/cards/spin/fnirs-classification.webp",
-        "frames": 9
-      }
+      "loop": "videos/cards/fnirs-classification.mp4"
     }
   }
 ]

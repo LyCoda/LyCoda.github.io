@@ -249,62 +249,26 @@ if (modeBtns.length) {
   );
 }
 
-// 3D cards: move the pointer across a card to turn the object.
-// Frames live in one sprite that only loads when a mouse user first hovers.
-if (tiltOK) {
-  document.querySelectorAll(".vc-spin").forEach((cv) => {
-    const card = cv.closest(".vc");
-    const still = card.querySelector(".vc-img");
-    const n = Number(cv.dataset.frames);
-    const mid = (n - 1) / 2;
-    const pos = ((still && still.style.objectPosition) || "50% 50%").split(" ").map((v) => parseFloat(v) / 100);
-    let img = null;
-    let frame = mid;
-    let target = mid;
-    let raf = 0;
-    const draw = () => {
-      const r = cv.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const w = Math.round(r.width * dpr);
-      const h = Math.round(r.height * dpr);
-      if (cv.width !== w || cv.height !== h) {
-        cv.width = w;
-        cv.height = h;
-      }
-      const fw = img.naturalWidth / n;
-      const fh = img.naturalHeight;
-      const s = Math.max(w / fw, h / fh);
-      const ctx = cv.getContext("2d");
-      ctx.drawImage(img, Math.round(frame) * fw, 0, fw, fh, (w - fw * s) * pos[0], (h - fh * s) * pos[1], fw * s, fh * s);
-    };
-    const tick = () => {
-      frame += (target - frame) * 0.16;
-      if (Math.abs(target - frame) < 0.05) frame = target;
-      draw();
-      raf = frame === target ? 0 : requestAnimationFrame(tick);
-    };
-    const go = () => {
-      if (img && img.complete && !raf) raf = requestAnimationFrame(tick);
-    };
-    card.addEventListener("pointerenter", () => {
-      if (img) return;
-      img = new Image();
-      img.decoding = "async";
-      img.onload = () => {
-        draw();
-        cv.classList.add("is-ready");
-        go();
-      };
-      img.src = cv.dataset.src;
-    });
-    card.addEventListener("pointermove", (e) => {
-      const r = card.getBoundingClientRect();
-      target = Math.max(0, Math.min(n - 1, ((e.clientX - r.left) / r.width) * (n - 1)));
-      go();
-    });
-    card.addEventListener("pointerleave", () => {
-      target = mid;
-      go();
-    });
-  });
+// 3D cards: a short turntable loop that plays only while the card is on screen.
+const loops = document.querySelectorAll(".vc-loop");
+if (loops.length && "IntersectionObserver" in window && !reduced.matches) {
+  // VP9 WebM where supported (smaller, plays in open-source Chromium), H.264 MP4 otherwise (Safari).
+  const webm = document.createElement("video").canPlayType('video/webm; codecs="vp9"') !== "";
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(({ target: v, isIntersecting }) => {
+        if (isIntersecting) {
+          if (!v.src) {
+            v.src = webm ? v.dataset.src.replace(/\.mp4$/, ".webm") : v.dataset.src;
+            v.addEventListener("playing", () => v.classList.add("is-playing"), { once: true });
+          }
+          v.play().catch(() => {});
+        } else {
+          v.pause();
+        }
+      });
+    },
+    { rootMargin: "200px 0px" },
+  );
+  loops.forEach((v) => io.observe(v));
 }

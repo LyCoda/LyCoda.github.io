@@ -123,8 +123,7 @@ for i in range(len(pods) - 1):
     o2.parent = root
 
 # Dark studio
-floor = mat('floor', (0.004, 0.004, 0.006), rough=0.3, spec=0.4)
-fl = backdrop(floor, size=40, z=-0.75)
+fl = studio(z=-0.75)
 area('key', (-2.6, -2.2, 4.6), (0, 0, 0.0), 5.0, 300, (0.92, 0.95, 1.0))
 area('rim', (3.4, 2.6, 1.6), (0, 0, 0.3), 2.2, 700, (0.55, 0.65, 1.0))
 area('rim2', (-2.5, 3.5, 3.5), (0, 0, 0.0), 3.5, 300, (1.0, 0.45, 0.45))

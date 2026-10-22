@@ -231,9 +231,11 @@ def art(p):
         w, h = image_size(c['src'])
         pos = f' style="object-position:{c["pos"]}"' if 'pos' in c else ''
         img = f'<img class="vc-img vc-{kind}" src="{c["src"]}" alt="" loading="lazy" width="{w}" height="{h}"{pos}>'
-        if 'spin' in c:
-            # Turntable frames in one sprite, fetched only when a mouse user hovers the card.
-            img += f'<canvas class="vc-spin" data-src="{c["spin"]["src"]}" data-frames="{c["spin"]["frames"]}" aria-hidden="true"></canvas>'
+        if 'loop' in c:
+            # A short turntable video that plays only while the card is on screen; main.js picks
+            # the .webm twin when the browser plays VP9 and falls back to the .mp4 (Safari).
+            img += (f'<video class="vc-loop" data-src="{c["loop"]}" muted loop playsinline preload="none" '
+                    f'aria-hidden="true" tabindex="-1"{pos}></video>')
         if 'steps' in c:
             img += '<ol class="vc-steps" aria-hidden="true">' + ''.join(f'<li style="--i:{i}">{E(t)}</li>' for i, t in enumerate(c['steps'])) + '</ol>'
         return img
@@ -303,7 +305,9 @@ def main():
     for p in data:
         assert 'card' in p and p['card']['size'] in UNITS and p['card']['thread'] in THREAD_NAMES, f'bad card for {p["slug"]}'
         assert 'src' not in p['card'] or (root / p['card']['src']).exists(), f'missing card image for {p["slug"]}'
-        assert 'spin' not in p['card'] or (root / p['card']['spin']['src']).exists(), f'missing spin sprite for {p["slug"]}'
+        if 'loop' in p['card']:
+            for ext in ('.mp4', '.webm'):
+                assert (root / p['card']['loop']).with_suffix(ext).exists(), f'missing loop video ({ext}) for {p["slug"]}'
     for i, p in enumerate(data):
         (root / 'projects' / f'{p["slug"]}.html').write_text(case_page(i, p), encoding='utf-8')
     idx = root / 'index.html'

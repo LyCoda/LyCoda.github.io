@@ -7,7 +7,7 @@ from mathutils import Vector
 
 out, W, H, SPP, F = args()
 sc = reset(W, H, SPP, bg=(0.9, 0.91, 0.93), strength=0.45)
-sc.view_settings.look = 'AgX - Punchy'
+
 random.seed(11)
 
 root = bpy.data.objects.new('root', None)
@@ -39,8 +39,7 @@ for ci, (col, c) in enumerate(palettes):
         assign(s, random.choice((gloss, gloss, satin, glass)))
         s.parent = root
 
-floor = mat('floor', (0.88, 0.89, 0.91), rough=0.5, spec=0.3)
-backdrop(floor, size=40, z=0.0)
+fl = studio(z=0.0)
 area('key', (-2.5, -3.0, 5.0), (0, 0, 1.0), 4.0, 420)
 area('fill', (4.0, -3.0, 2.0), (0, 0, 1.0), 4.0, 110, (0.95, 0.97, 1.0))
 area('back', (0.5, 5.0, 3.0), (0.5, 8, 1.5), 6.0, 900)

@@ -148,8 +148,21 @@ def backdrop(m, size=30, z=0.0, curve=True):
 
 
 def render(out):
-    bpy.context.scene.render.filepath = out
-    bpy.ops.render.render(write_still=True)
+    _studio_links()
+    sweep = os.environ.get('SWEEP')  # "frames,degrees": a sinusoidal turntable sweep instead of one still
+    if not sweep:
+        bpy.context.scene.render.filepath = out
+        bpy.ops.render.render(write_still=True)
+        return
+    n, deg = sweep.split(',')
+    n, amp = int(n), math.radians(float(deg))
+    root = bpy.data.objects['root']
+    base = root.rotation_euler.z
+    bpy.context.scene.cycles.seed = 7
+    for i in range(n):
+        root.rotation_euler.z = base - amp * math.cos(math.pi * i / (n - 1))
+        bpy.context.scene.render.filepath = out % i
+        bpy.ops.render.render(write_still=True)
 
 
 def exclude(light, objs):
@@ -160,3 +173,26 @@ def exclude(light, objs):
     light.light_linking.receiver_collection = c
     for co in c.collection_objects:
         co.light_linking.link_state = 'EXCLUDE'
+
+
+TONE = 1.15  # one grey for every card
+
+
+def studio(z=0.0):
+    """Shared grey sweep. Lit only by the grey world, so every card gets the same background."""
+    w = bpy.context.scene.world.node_tree.nodes['Background']
+    w.inputs[0].default_value = (TONE, TONE, TONE * 1.02, 1)
+    w.inputs[1].default_value = 1.0
+    m = mat('studio', (0.88, 0.88, 0.89), rough=0.5, spec=0.3)
+    o = backdrop(m, size=40, z=z)
+    o.name = 'studio'
+    return o
+
+
+def _studio_links():
+    fl = bpy.data.objects.get('studio')
+    if not fl:
+        return
+    for o in list(bpy.data.objects):
+        if o.type == 'LIGHT' and o.data.type == 'AREA' and o.light_linking.receiver_collection is None:
+            exclude(o, [fl])

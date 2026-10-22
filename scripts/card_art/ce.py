@@ -25,7 +25,7 @@ for i, (lab, h) in enumerate(zip(labels, heights)):
     p.scale = (pw, pw, h)
     bpy.ops.object.transform_apply(scale=True)
     smooth(p, bevel=0.05, segments=8)
-    assign(p, mat(f'g{i}', (0.86, 0.9, 1.0), rough=0.16, trans=1.0, ior=1.45, coat=1.0))
+    assign(p, mat(f'g{i}', (0.35, 0.55, 1.0), rough=0.1, trans=1.0, ior=1.45, coat=1.0))
     p.parent = root
     objs.append(p)
     # glowing base plate inside the pillar
@@ -54,7 +54,7 @@ for i, (lab, h) in enumerate(zip(labels, heights)):
     bpy.context.collection.objects.link(tx)
     tx.location = (x, -pw / 2 - 0.02, h - 0.32)
     tx.rotation_euler = (math.pi / 2, 0, 0)
-    tx.data.materials.append(emission(f'tm{i}', (0.92, 0.95, 1.0), 4))
+    tx.data.materials.append(mat(f'tm{i}', (0.02, 0.05, 0.15), rough=0.3))
     tx.parent = root
 
 # soft blue glow wall behind the pillars
@@ -72,8 +72,8 @@ nt.links.new(tc.outputs['Generated'], mp.inputs[0]); nt.links.new(mp.outputs[0],
 nt.links.new(gr.outputs['Fac'], cr.inputs[0]); nt.links.new(cr.outputs[0], em.inputs[0]); nt.links.new(em.outputs[0], o.inputs[0])
 mp.inputs['Location'].default_value = (-0.8, -1.0, 0)
 gw.data.materials.append(gm)
-floor = mat('floor', (0.004, 0.007, 0.016), rough=0.1, spec=0.5)
-fl = backdrop(floor, size=40, z=0.0)
+gw.hide_render = True
+fl = studio(z=0.0)
 k = area('key', (-2.6, -3.2, 5.2), (0, 0, 1), 2.4, 420, (0.85, 0.9, 1.0))
 r = area('rim', (2.8, 3.2, 3.6), (0, 0, 1.0), 2.5, 600, (0.4, 0.5, 1.0))
 s = area('strip', (-3.6, 1.4, 2.0), (0, 0, 1.2), 3.0, 260, (0.8, 0.85, 1.0), size_y=0.25)

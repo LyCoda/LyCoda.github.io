@@ -191,11 +191,11 @@ sp = cu.splines.new('POLY')
 sp.points.add(N - 1)
 for i, q in enumerate(pts):
     sp.points[i].co = (*q, 1)
-cu.bevel_depth = 0.012
+cu.bevel_depth = 0.022
 cu.bevel_resolution = 4
 tr = bpy.data.objects.new('trace', cu)
 bpy.context.collection.objects.link(tr)
-tr.data.materials.append(emission('green', (0.12, 1.0, 0.06), 2.2))
+tr.data.materials.append(mat('green', (0.02, 0.55, 0.08), rough=0.25, coat=0.6, emit=(0.1, 1.0, 0.1), emit_strength=0.6))
 tr.parent = root
 cu2 = cu.copy()
 cu2.bevel_depth = 0.045
@@ -203,6 +203,7 @@ tr2 = bpy.data.objects.new('halo', cu2)
 bpy.context.collection.objects.link(tr2)
 tr2.data.materials.append(mat('halo', (0, 0, 0), rough=1, emit=(0.1, 1.0, 0.05), emit_strength=0.25, alpha=0.12))
 tr2.parent = root
+tr2.hide_render = True
 gl = bpy.data.lights.new('glow', 'AREA')
 gl.energy = 60
 gl.color = (0.4, 1.0, 0.3)
@@ -215,8 +216,7 @@ glo.location = (0, 0.25, 1.1)
 glo.rotation_euler = (0, 0, 0)
 glo.parent = root
 
-floor = mat('floor', (0.004, 0.005, 0.006), rough=0.2, spec=0.5)
-fl = backdrop(floor, size=40, z=0.0)
+fl = studio(z=0.0)
 k = area('key', (-2.5, -3.0, 5.0), (0, 0, 0), 3.0, 260, (0.9, 0.93, 1.0))
 r = area('rim', (3.0, 4.0, 2.5), (0, 0.5, 0), 3.0, 520, (0.6, 0.7, 1.0))
 for l in (k, r):
