@@ -136,9 +136,8 @@
       "title": "ECG Amplifier",
       "theme": "dark",
       "size": "reg",
-      "art": "photo",
+      "art": "render",
       "src": "images/cards/ecg-amplifier.webp",
-      "pos": "50% 45%",
       "thread": "biosignals",
       "quiz": {
         "question": "How much better did the instrumentation amplifier reject common-mode noise?",
@@ -1004,9 +1003,8 @@
       "title": "OsteoTrack",
       "theme": "light",
       "size": "tall",
-      "art": "photo",
+      "art": "render",
       "src": "images/cards/bone-healing-monitoring-device.webp",
-      "pos": "40% 50%",
       "thread": "translation",
       "quiz": {
         "question": "Who decides whether a fracture monitor gets adopted?",
