@@ -1475,9 +1475,9 @@ archive ---------- */
   list-style: none;
   position: relative;
   overflow: clip;
-  overflow-clip-margin: 6px;
-  padding: 6px 6px 0;
-  margin-inline: -6px;
+  /* Room inside the clip for each step's hover outline. */
+  padding: 16px 18px 18px;
+  margin: -10px -18px -18px;
   display: grid;
   grid-template-columns: repeat(var(--steps), minmax(0, 1fr));
   gap: 32px;
@@ -1486,9 +1486,9 @@ archive ---------- */
 .thread-track::after {
   content: "";
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 12px;
+  left: 18px;
+  right: 18px;
+  top: 22px;
   height: 1px;
   background: var(--e-line);
 }
@@ -1496,7 +1496,7 @@ archive ---------- */
   background: linear-gradient(90deg, transparent, var(--e-accent), transparent);
   width: 22%;
   height: 2px;
-  top: 11px;
+  top: 21px;
   animation: pulse-run 5s linear infinite;
 }
 @keyframes pulse-run {
@@ -1541,9 +1541,29 @@ archive ---------- */
   background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
   transition: background-size 0.3s var(--ease), color 0.2s;
 }
-.thread-step h4 a:hover {
+.thread-step h4 a::after {
+  /* Stretch the link over the whole step so any part of it opens the project. */
+  content: "";
+  position: absolute;
+  inset: -14px -16px;
+  border-radius: 14px;
+  z-index: 1;
+  transition: background-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.thread-step:hover h4 a,
+.thread-step h4 a:focus-visible {
   color: var(--e-accent);
   background-size: 100% 1px;
+}
+.thread-step:hover h4 a::after {
+  background-color: rgba(37, 99, 235, 0.045);
+  box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.14);
+}
+.thread-step h4 a:focus-visible {
+  outline: none;
+}
+.thread-step h4 a:focus-visible::after {
+  box-shadow: inset 0 0 0 2px var(--e-accent);
 }
 .thread-step dl {
   font-size: 13.5px;
@@ -1648,15 +1668,15 @@ archive ---------- */
   .thread-track {
     grid-template-columns: 1fr;
     gap: 36px;
-    padding-left: 34px;
+    padding-left: 46px;
   }
   .thread-track::after {
     display: none;
   }
   .thread-track::before {
-    left: 12px;
+    left: 24px;
     right: auto;
-    top: 12px;
+    top: 22px;
     bottom: 0;
     width: 1px;
     height: auto;
@@ -1668,6 +1688,8 @@ archive ---------- */
   .thread-node {
     left: -28px;
     top: 6px;
+  }  .thread-step h4 a::after {
+    inset: -12px 0 -12px -14px;
   }
 }
 @media (max-width: 720px) {
@@ -1917,7 +1939,7 @@ light */
   transform: scale(1.045);
 }
 .vc-top {
-  position: relative;
+  position: static; /* lets the title link stretch over the whole card */
 }
 .vc-eyebrow {
   font-family: var(--display);
@@ -2507,4 +2529,33 @@ html:not(.js) .vc-classes li.is-answer {
   .about-grid {
     margin-top: 40px;
   }
+}
+
+/* Archive cards: the quiz panel lets clicks through to the card link,
+   except on the guess buttons and the reveal link themselves. */
+.vc-quiz {
+  pointer-events: none;
+}
+.vc-quiz button,
+.vc-quiz a {
+  pointer-events: auto;
+}
+
+/* Wide screens: scale the whole page up in steps so the layout keeps
+   roughly the same share of the screen it has on a laptop, instead of
+   sitting in a narrow column with empty margins. */
+@media (min-width: 1680px) {
+  html { zoom: 1.15; }
+}
+@media (min-width: 1960px) {
+  html { zoom: 1.3; }
+}
+@media (min-width: 2300px) {
+  html { zoom: 1.5; }
+}
+@media (min-width: 2800px) {
+  html { zoom: 1.75; }
+}
+@media (min-width: 3300px) {
+  html { zoom: 2; }
 }
