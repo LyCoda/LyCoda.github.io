@@ -277,26 +277,46 @@ if (modeBtns.length) {
   );
 }
 
-// 3D cards: a short turntable loop that plays only while the card is on screen.
+// 3D cards: hovering a card plays its turntable loop; otherwise the still image shows.
+// Touch screens and reduced-motion settings keep the still and never download the clip.
 const loops = document.querySelectorAll(".vc-loop");
-if (loops.length && "IntersectionObserver" in window && !reduced.matches) {
+const finePointer = matchMedia("(hover: hover) and (pointer: fine)");
+if (loops.length && finePointer.matches && !reduced.matches) {
   // VP9 WebM where supported (smaller, plays in open-source Chromium), H.264 MP4 otherwise (Safari).
   const webm = document.createElement("video").canPlayType('video/webm; codecs="vp9"') !== "";
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(({ target: v, isIntersecting }) => {
-        if (isIntersecting) {
-          if (!v.src) {
-            v.src = webm ? v.dataset.src.replace(/\.mp4$/, ".webm") : v.dataset.src;
-            v.addEventListener("playing", () => v.classList.add("is-playing"), { once: true });
-          }
-          v.play().catch(() => {});
-        } else {
-          v.pause();
-        }
-      });
-    },
-    { rootMargin: "200px 0px" },
-  );
-  loops.forEach((v) => io.observe(v));
+  const load = (v) => {
+    if (v.src) return;
+    v.preload = "auto";
+    v.src = webm ? v.dataset.src.replace(/\.mp4$/, ".webm") : v.dataset.src;
+  };
+  // Fetch each clip as its card nears the screen, so the first hover starts at once.
+  const io =
+    "IntersectionObserver" in window
+      ? new IntersectionObserver(
+          (entries) =>
+            entries.forEach(({ target, isIntersecting }) => {
+              if (isIntersecting) {
+                load(target);
+                io.unobserve(target);
+              }
+            }),
+          { rootMargin: "300px 0px" },
+        )
+      : null;
+  loops.forEach((v) => {
+    if (io) io.observe(v);
+    const card = v.closest(".vc");
+    card.addEventListener("pointerenter", () => {
+      load(v);
+      v.currentTime = 0;
+      v.play().then(() => {
+        if (card.matches(":hover")) v.classList.add("is-playing");
+      }).catch(() => {});
+    });
+    card.addEventListener("pointerleave", () => v.classList.remove("is-playing"));
+    // Pause once the fade back to the still has finished.
+    v.addEventListener("transitionend", (e) => {
+      if (e.propertyName === "opacity" && !v.classList.contains("is-playing")) v.pause();
+    });
+  });
 }
