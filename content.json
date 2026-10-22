@@ -148,7 +148,8 @@
         ],
         "answer": 2,
         "reveal": "About 20×. Common-mode rejection rose from 32.6 dB to 59.0 dB."
-      }
+      },
+      "loop": "videos/cards/ecg-amplifier.mp4"
     }
   },
   {
@@ -339,7 +340,8 @@
         "reveal": "XOR, short for exclusive OR: it outputs 1 only when its inputs differ. My heart monitor asked the same of two 8-bit heart-rate readings, using XOR gates inside a gate-level subtractor to measure how far the ECG and pulse oximeter disagreed.",
         "sandbox": "gates"
       },
-      "pos": "64% 50%"
+      "pos": "64% 50%",
+      "loop": "videos/cards/heart-rate-monitor.mp4"
     }
   },
   {
@@ -688,7 +690,7 @@
       "title": "Muscle to Motion",
       "theme": "light",
       "size": "tall",
-      "art": "product",
+      "art": "render",
       "src": "images/cards/emg-controlled-robotic-arm.webp",
       "thread": "biosignals",
       "quiz": {
@@ -700,7 +702,8 @@
         ],
         "answer": 1,
         "reveal": "Muscle signals (EMG). Electrodes on the skin pick up the electrical activity of muscles as they contract. My hand did the same: it amplified and smoothed that signal into an open or close command, for about £91 in parts."
-      }
+      },
+      "loop": "videos/cards/emg-controlled-robotic-arm.mp4"
     }
   },
   {
@@ -1011,7 +1014,8 @@
         ],
         "answer": 1,
         "reveal": "Clinicians and procurement teams. Patients benefit, but the clinicians who use a device and the teams who buy it decide. For OsteoTrack, our fracture-monitoring concept, that meant pitching to clinicians, fracture-clinic leads and procurement."
-      }
+      },
+      "loop": "videos/cards/bone-healing-monitoring-device.mp4"
     }
   },
   {
@@ -1153,7 +1157,8 @@
         "answer": 0,
         "reveal": "Class I, the lowest. Under EU rules (MDR Annex VIII, Rule 1), non-invasive devices start there, but a more specific rule can move them up. The lung-ultrasound robot I assessed is non-invasive too, yet as an active device used for diagnosis it becomes Class IIa under Rule 10."
       },
-      "src": "images/cards/ce-marking-lung-ultrasound-robot.webp"
+      "src": "images/cards/ce-marking-lung-ultrasound-robot.webp",
+      "loop": "videos/cards/ce-marking-lung-ultrasound-robot.mp4"
     }
   },
   {
@@ -1294,7 +1299,8 @@
         "answer": 1,
         "reveal": "Completion time. Experts averaged 86.5 s on the suturing task; novices averaged 141.2 s."
       },
-      "src": "images/cards/surgical-data-science.webp"
+      "src": "images/cards/surgical-data-science.webp",
+      "loop": "videos/cards/surgical-data-science.mp4"
     }
   },
   {

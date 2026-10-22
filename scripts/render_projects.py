@@ -232,7 +232,7 @@ def art(p):
         pos = f' style="object-position:{c["pos"]}"' if 'pos' in c else ''
         img = f'<img class="vc-img vc-{kind}" src="{c["src"]}" alt="" loading="lazy" width="{w}" height="{h}"{pos}>'
         if 'loop' in c:
-            # A short turntable video that plays only while the card is on screen; main.js picks
+            # A short turntable video that plays while the card is hovered; main.js picks
             # the .webm twin when the browser plays VP9 and falls back to the .mp4 (Safari).
             img += (f'<video class="vc-loop" data-src="{c["loop"]}" muted loop playsinline preload="none" '
                     f'aria-hidden="true" tabindex="-1"{pos}></video>')

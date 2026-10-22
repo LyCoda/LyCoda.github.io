@@ -1,11 +1,11 @@
 #!/bin/sh
-# loop.sh <scene> <slug>: render a 120-degree sweep and encode it as a seamless card loop.
+# loop.sh <scene> <slug> [degrees]: render a sweep of ±degrees (default 60) and encode it as a seamless card loop.
 # Frames play middle -> end -> start -> middle at 30 fps, so the clip loops without a jump.
 set -e
 cd "$(dirname "$0")"
-k=$1; slug=$2; d=sweep/$k
+k=$1; slug=$2; deg=${3:-60}; d=sweep/$k
 mkdir -p "$d"
-SWEEP=90,60 venv/bin/python -I "$k.py" "$PWD/$d/f%03d.png" 540 960 20
+SWEEP=90,$deg venv/bin/python -I "$k.py" "$PWD/$d/f%03d.png" 540 960 20
 L=$d/list.txt; : > "$L"
 for i in $(seq 45 89) $(seq 88 -1 1) $(seq 0 44); do printf "file 'f%03d.png'\nduration 0.0333333\n" "$i" >> "$L"; done
 mkdir -p ../../videos/cards
